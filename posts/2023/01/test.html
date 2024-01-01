@@ -6,10 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
-<meta name="dcterms.date" content="2024-01-01">
+<meta name="author" content="Paul Foster">
 
-<title>pf981.github.io - Post With Code</title>
+<title>pf981.github.io - Chart with popup dialog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,22 +58,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -94,9 +93,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="modal.css">
 </head>
 
 <body class="nav-fixed fullcontent">
@@ -106,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">pf981.github.io</span>
     </a>
   </div>
@@ -117,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -147,13 +149,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Post With Code</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">news</div>
-    <div class="quarto-category">code</div>
-    <div class="quarto-category">analysis</div>
-  </div>
-  </div>
+<div class="quarto-title-block"><div><h1 class="title">Chart with popup dialog</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<p class="subtitle lead">Driven by micromodal.js</p>
+</div>
 
 
 
@@ -162,16 +160,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Harlow Malloc </p>
+             <p>Paul Foster </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">January 1, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -179,17 +171,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This is a post with executable code.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<!-- here's the link that opens it. it can be anywhere!
+     it matches to the modal's id, #mymodal -->
+<p><strong><a href="#" data-micromodal-trigger="mymodal" tabindex="0"> <i class="bi bi-clipboard-data"></i> Click to see a popup! </a></strong></p>
+<p>Here’s a quick chart:</p>
+<!-- the rest of this stuff is for the popup! -->
+<div class="cell" data-include="false">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="29" data-source-offset="-43"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 28;"><span id="cb1-29"><a href="#cb1-29"></a>micro <span class="op">=</span> <span class="pp">require</span>(<span class="st">"https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"</span>)<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a></span>
+<span id="cb1-31"><a href="#cb1-31"></a></span>
+<span id="cb1-32"><a href="#cb1-32"></a>micro<span class="op">.</span><span class="fu">init</span>({</span>
+<span id="cb1-33"><a href="#cb1-33"></a>  <span class="dt">awaitOpenAnimation</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>  <span class="dt">awaitCloseAnimation</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<!-- and here's the popup itself! -->
+<div id="mymodal" class="modal micromodal-slide" aria-hidden="true">
+<div class="modal__overlay" tabindex="-1" data-micromodal-close="true">
+<div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="mymodal-title">
+<button class="modal__close" aria-label="Close modal" data-micromodal-close="">
+</button>
+<header>
+<section id="mymodal-title" class="level2">
+<h2 class="anchored" data-anchor-id="mymodal-title">Look at this cool chart!</h2>
+</section></header>
+<div id="modal-1-content">
+<p>I should probably tell you all about it, but 🤷🏻‍♂️</p>
+</div>
+
+</div>
 </div>
 </div>
 
+
+<!-- -->
 
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\r\n//micro = require(\"micromodal@0.4.10\");\r\nmicro = require(\"https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js\");\r\n\r\n\r\nmicro.init({\r\n  awaitOpenAnimation: true,\r\n  awaitCloseAnimation: true\r\n});\r\n"}]}
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../posts/2023/01";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -269,6 +312,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -422,7 +516,65 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="an">title:</span><span class="co"> "Chart with popup dialog"</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="an">subtitle:</span><span class="co"> "Driven by micromodal.js"</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="an">execute:</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">  echo: false</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="an">format:</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">  html:</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">    resources: "*.csv"</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">    css: modal.css</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">    code-tools: true</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">---</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">&lt;!-- here's the link that opens it. it can be anywhere!</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">     it matches to the modal's id, #mymodal --&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>**<span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#"</span> <span class="er">data-micromodal-trigger</span><span class="ot">=</span><span class="st">"mymodal"</span> <span class="er">tabindex</span><span class="ot">=</span><span class="st">"0"</span><span class="kw">&gt;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>  <span class="kw">&lt;i</span> <span class="er">class</span><span class="ot">=</span><span class="st">"bi bi-clipboard-data"</span><span class="kw">&gt;&lt;/i&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>  Click to see a popup!</span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="kw">&lt;/a&gt;</span>**</span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a>Here's a quick chart:</span>
+<span id="cb2-21"><a href="#cb2-21"></a></span>
+<span id="cb2-22"><a href="#cb2-22"></a></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">&lt;!-- the rest of this stuff is for the popup! --&gt;</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="in">```{ojs}</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">//| include: false</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">//micro = require("micromodal@0.4.10");</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a>micro <span class="op">=</span> <span class="pp">require</span>(<span class="st">"https://cdnjs.cloudflare.com/ajax/libs/micromodal/0.4.10/micromodal.min.js"</span>)<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32"></a></span>
+<span id="cb2-33"><a href="#cb2-33"></a></span>
+<span id="cb2-34"><a href="#cb2-34"></a>micro<span class="op">.</span><span class="fu">init</span>({</span>
+<span id="cb2-35"><a href="#cb2-35"></a>  <span class="dt">awaitOpenAnimation</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-36"><a href="#cb2-36"></a>  <span class="dt">awaitCloseAnimation</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a>})<span class="op">;</span></span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="in">```</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a></span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="co">&lt;!-- and here's the popup itself! --&gt;</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a></span>
+<span id="cb2-42"><a href="#cb2-42"></a>:::::: {#mymodal .modal .micromodal-slide aria-hidden="true"}</span>
+<span id="cb2-43"><a href="#cb2-43"></a>::::: {.modal__overlay tabindex="-1" data-micromodal-close="true"}</span>
+<span id="cb2-44"><a href="#cb2-44"></a>:::: {.modal__container role="dialog" aria-modal="true" aria-labelledby="mymodal-title"}</span>
+<span id="cb2-45"><a href="#cb2-45"></a></span>
+<span id="cb2-46"><a href="#cb2-46"></a><span class="kw">&lt;button</span> <span class="er">class</span><span class="ot">=</span><span class="st">"modal__close"</span> <span class="er">aria-label</span><span class="ot">=</span><span class="st">"Close modal"</span> <span class="er">data-micromodal-close</span><span class="kw">&gt;&lt;/button&gt;</span></span>
+<span id="cb2-47"><a href="#cb2-47"></a></span>
+<span id="cb2-48"><a href="#cb2-48"></a><span class="kw">&lt;header&gt;</span></span>
+<span id="cb2-49"><a href="#cb2-49"></a><span class="fu">## Look at this cool chart! {#mymodal-title}</span></span>
+<span id="cb2-50"><a href="#cb2-50"></a><span class="kw">&lt;/header&gt;</span></span>
+<span id="cb2-51"><a href="#cb2-51"></a></span>
+<span id="cb2-52"><a href="#cb2-52"></a>::: {#modal-1-content}</span>
+<span id="cb2-53"><a href="#cb2-53"></a>I should probably tell you all about it, but 🤷🏻‍♂️</span>
+<span id="cb2-54"><a href="#cb2-54"></a>:::</span>
+<span id="cb2-55"><a href="#cb2-55"></a></span>
+<span id="cb2-56"><a href="#cb2-56"></a>::::</span>
+<span id="cb2-57"><a href="#cb2-57"></a>:::::</span>
+<span id="cb2-58"><a href="#cb2-58"></a>::::::</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 
 
