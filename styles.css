@@ -1,1 +1,6 @@
 /* css styles */
+.footer {
+   border-top-width: 1px;
+   border-top-style: solid;
+   border-top-color: #ced4da;
+}
