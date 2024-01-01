@@ -1,8 +1,6 @@
 ---
-title: "01: Trebuchet?!"
+title: "2023 Day 01: Trebuchet?!"
 date: 2023-12-01
-author:
-  - name: Paul Foster
 categories: [python]
 draft: false
 ---
