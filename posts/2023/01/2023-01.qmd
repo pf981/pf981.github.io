@@ -6,26 +6,6 @@ categories: [python]
 draft: false
 ---
 
-```{r}
-#| label: setup
-#| echo: false
-knitr::knit_hooks$set(timeit = function(before, options, envir) {
-  if (before) {
-    tictoc::tic()
-  } else {
-    elapsed <- tictoc::toc()$toc
-    
-    tictoc::tic()
-    reticulate::py_run_string("")
-    reticulate_overhead <- tictoc::toc()$toc
-    
-    net_elapsed <- max(elapsed - reticulate_overhead, 0.01)
-    
-    print(paste0("<small class='text-muted'>*Execution took ", net_elapsed, " seconds*</small>"))
-  }
-})
-```
-
 ```{python}
 with open('input.txt', "r") as f:
     lines = f.readlines()
@@ -34,8 +14,6 @@ with open('input.txt', "r") as f:
 ## Part 1
 
 ```{python}
-#| timeit: true
-
 def first_value(line, m):
   for i, _ in enumerate(line):
     for text, val in m.items():
@@ -52,7 +30,6 @@ print(answer1)
 ## Part 2
 
 ```{python}
-#| timeit: true
 words = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 m.update({text: i for i, text in enumerate(words, 1)})
 rev_m = {text[::-1]: value for text, value in m.items()}
@@ -63,24 +40,25 @@ print(answer2)
 
 ```{=html}
 <!-- Button trigger modal -->
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   <i class="bi"></i> Full Solution
 </button>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{< meta title >}} Full Solution</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <small><i>Execution took 1.1 seconds</i></small>
       </div>
     </div>
   </div>
