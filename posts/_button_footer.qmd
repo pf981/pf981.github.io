@@ -18,7 +18,7 @@ python_execution_seconds <- function(file_path) {
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
   <!-- Problem Button -->
-  <a type="button" class="btn btn-secondary" href="https://adventofcode.com/2023/day/1" role="button">
+  <a type="button" class="btn btn-secondary" href="{{< meta problem_url >}}" role="button">
     <i class="bi bi-box-arrow-up-right"></i> Problem
   </a>
 
