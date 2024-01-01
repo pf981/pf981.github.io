@@ -221,25 +221,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <!-- Buttons -->
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-<!-- Input Button -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#inputModal">
-<i class="bi bi-file-earmark-text"></i> Input
-</button>
-<!-- Solution Modal Button -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#solutionModal">
-<i class="bi bi-code-slash"></i> Full Solution
-</button>
+
+  <!-- Problem Button -->
+  <a type="button" class="btn btn-secondary" href="https://adventofcode.com/2023/day/1" role="button">
+    <i class="bi bi-box-arrow-up-right"></i> Problem
+  </a>
+
+  <!-- Input Button -->
+  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#inputModal">
+    <i class="bi bi-file-earmark-text"></i> Input
+  </button>
+
+  <!-- Solution Modal Button -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#solutionModal">
+    <i class="bi bi-code-slash"></i> Full Solution
+  </button>
+
 </div>
+
+
 <!-- Input Modal -->
-<div id="inputModal" class="modal fade" tabindex="-1" aria-labelledby="inputModalLabel" aria-hidden="true">
+<div class="modal fade" id="inputModal" tabindex="-1" aria-labelledby="inputModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-xl">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title anchored" id="inputModalLabel">
-2023 Day 01 Input
-</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-</button>
+  <h5 class="modal-title anchored" id="inputModalLabel">2023 Day 01 Input</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
 <div class="cell" data-file="input.txt">
@@ -1246,21 +1253,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
 
-</div>
-</div>
-</div>
-</div>
+
 <!-- Solution Modal -->
-<div id="solutionModal" class="modal fade" tabindex="-1" aria-labelledby="solutionModalLabel" aria-hidden="true">
+<div class="modal fade" id="solutionModal" tabindex="-1" aria-labelledby="solutionModalLabel" aria-hidden="true">
 <div class="modal-dialog modal-dialog-scrollable modal-xl">
 <div class="modal-content">
 <div class="modal-header">
-<h5 class="modal-title anchored" id="solutionModalLabel">
-2023 Day 01 Full Solution
-</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-</button>
+  <h5 class="modal-title anchored" id="solutionModalLabel">2023 Day 01 Full Solution</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
 <div class="cell" data-file="solution.py">
@@ -1291,7 +1296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="modal-footer">
-<p><small><i>Execution took 0.01 seconds</i></small></p>
+<small><i>Execution took 0.01 seconds</i></small>
 </div>
 </div>
 </div>
