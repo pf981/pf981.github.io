@@ -1,5 +1,4 @@
 ---
-title: "pf981.github.io"
 listing:
   contents: posts
   sort: "date desc"
@@ -10,5 +9,3 @@ listing:
 page-layout: full
 title-block-banner: false
 ---
-
-Hello World!
