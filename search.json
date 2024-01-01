@@ -16,23 +16,23 @@
   {
     "objectID": "posts/2023/01/2023-01.html",
     "href": "posts/2023/01/2023-01.html",
-    "title": "01: Trebuchet?!",
+    "title": "2023 Day 01",
     "section": "",
     "text": "with open('input.txt', \"r\") as f:\n    lines = f.readlines()"
   },
   {
     "objectID": "posts/2023/01/2023-01.html#part-1",
     "href": "posts/2023/01/2023-01.html#part-1",
-    "title": "01: Trebuchet?!",
+    "title": "2023 Day 01",
     "section": "Part 1",
-    "text": "Part 1\n\ndef first_value(line, m):\n  for i, _ in enumerate(line):\n    for text, val in m.items():\n      if line[i:].startswith(text):\n        return val\n\n\nm = {c: int(c) for c in '123456789'}\n\nanswer1 = sum(10 * first_value(line, m) + first_value(line[::-1], m) for line in lines)\nprint(answer1)\n\n55712"
+    "text": "Part 1\n\ndef first_value(line, m):\n  for i, _ in enumerate(line):\n    for text, val in m.items():\n      if line[i:].startswith(text):\n        return val\n\n\nm = {c: int(c) for c in '123456789'}\n\nanswer1 = sum(10 * first_value(line, m) + first_value(line[::-1], m) for line in lines)\nprint(answer1)\n\n55712\n\nExecution took 0.01 seconds"
   },
   {
     "objectID": "posts/2023/01/2023-01.html#part-2",
     "href": "posts/2023/01/2023-01.html#part-2",
-    "title": "01: Trebuchet?!",
+    "title": "2023 Day 01",
     "section": "Part 2",
-    "text": "Part 2\n\nwords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']\nm.update({text: i for i, text in enumerate(words, 1)})\nrev_m = {text[::-1]: value for text, value in m.items()}\n\nanswer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)\nprint(answer2)\n\n55413"
+    "text": "Part 2\n\nwords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']\nm.update({text: i for i, text in enumerate(words, 1)})\nrev_m = {text[::-1]: value for text, value in m.items()}\n\nanswer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)\nprint(answer2)\n\n55413\n\nExecution took 0.01 seconds\n\n\n\n   Full Solution\n\n\n\n\n  \n    \n      \n        Modal title\n        \n      \n      \n        ...\n      \n      \n        Close\n        Save changes"
   },
   {
     "objectID": "posts/post-with-code/index.html",

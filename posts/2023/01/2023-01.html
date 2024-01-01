@@ -147,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">01: Trebuchet?!</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Full Solution</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">2023 Day 01</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Full Solution</button></div></div>
 <p class="subtitle lead">Trebuchet?!</p>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
@@ -178,13 +178,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell" data-execution_count="1">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'input.txt'</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    lines <span class="op">=</span> f.readlines()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="part-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-timeit="true">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">def</span> first_value(line, m):</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="cf">for</span> i, _ <span class="kw">in</span> <span class="bu">enumerate</span>(line):</span>
 <span id="cb2-3"><a href="#cb2-3"></a>    <span class="cf">for</span> text, val <span class="kw">in</span> m.items():</span>
@@ -199,11 +199,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>55712</code></pre>
 </div>
+<p><small class="text-muted"><em>Execution took 0.01 seconds</em></small></p>
 </div>
 </section>
 <section id="part-2" class="level2">
 <h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-timeit="true">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a>words <span class="op">=</span> [<span class="st">'one'</span>, <span class="st">'two'</span>, <span class="st">'three'</span>, <span class="st">'four'</span>, <span class="st">'five'</span>, <span class="st">'six'</span>, <span class="st">'seven'</span>, <span class="st">'eight'</span>, <span class="st">'nine'</span>]</span>
 <span id="cb4-2"><a href="#cb4-2"></a>m.update({text: i <span class="cf">for</span> i, text <span class="kw">in</span> <span class="bu">enumerate</span>(words, <span class="dv">1</span>)})</span>
 <span id="cb4-3"><a href="#cb4-3"></a>rev_m <span class="op">=</span> {text[::<span class="op">-</span><span class="dv">1</span>]: value <span class="cf">for</span> text, value <span class="kw">in</span> m.items()}</span>
@@ -213,6 +214,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>55413</code></pre>
 </div>
+<p><small class="text-muted"><em>Execution took 0.01 seconds</em></small></p>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <i class="bi"></i> Full Solution
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title anchored" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
