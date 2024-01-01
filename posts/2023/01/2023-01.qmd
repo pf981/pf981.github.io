@@ -4,6 +4,10 @@ subtitle: "Trebuchet?!"
 date: 2023-12-01
 categories: [python]
 draft: false
+# This doesn't work when I put it in _metadata.yml
+knitr:
+  opts_chunk: 
+    comment: "#>"
 ---
 
 ```{python}
