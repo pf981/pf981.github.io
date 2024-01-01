@@ -4,15 +4,15 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
+    - icon: github
+      text: GitHub
+      href: https://github.com/pf981/pf981.github.io
+    - icon: stack-overflow
+      text: Stack Overflow
+      href: https://stackoverflow.com/users/1751961/paul
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
-    - icon: github
-      text: Github
-      href: https://github.com
+      href: https://www.linkedin.com/in/paulfoster01/
 ---
 
-About this blog
+Paul Foster's Advent of Code Blog
