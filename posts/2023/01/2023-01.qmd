@@ -1,9 +1,30 @@
 ---
-title: "2023 Day 01: Trebuchet?!"
+title: "2023 Day 01"
+subtitle: "Trebuchet?!"
 date: 2023-12-01
 categories: [python]
 draft: false
 ---
+
+```{r}
+#| label: setup
+#| echo: false
+knitr::knit_hooks$set(timeit = function(before, options, envir) {
+  if (before) {
+    tictoc::tic()
+  } else {
+    elapsed <- tictoc::toc()$toc
+    
+    tictoc::tic()
+    reticulate::py_run_string("")
+    reticulate_overhead <- tictoc::toc()$toc
+    
+    net_elapsed <- max(elapsed - reticulate_overhead, 0.01)
+    
+    print(paste0("<small class='text-muted'>*Execution took ", net_elapsed, " seconds*</small>"))
+  }
+})
+```
 
 ```{python}
 with open('input.txt', "r") as f:
@@ -13,6 +34,8 @@ with open('input.txt', "r") as f:
 ## Part 1
 
 ```{python}
+#| timeit: true
+
 def first_value(line, m):
   for i, _ in enumerate(line):
     for text, val in m.items():
@@ -29,6 +52,7 @@ print(answer1)
 ## Part 2
 
 ```{python}
+#| timeit: true
 words = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 m.update({text: i for i, text in enumerate(words, 1)})
 rev_m = {text[::-1]: value for text, value in m.items()}

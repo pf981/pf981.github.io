@@ -5,6 +5,8 @@
 freeze: true
 
 title-block-banner: false
-
+code-block-bg: true
+highlight-style: a11y
+code-line-numbers: true
 author:
   - name: Paul Foster
