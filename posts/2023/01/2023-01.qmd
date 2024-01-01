@@ -8,6 +8,7 @@ draft: false
 knitr:
   opts_chunk: 
     comment: "#>"
+    collapse: true
 problem_url: "https://adventofcode.com/2023/day/1"
 ---
 
