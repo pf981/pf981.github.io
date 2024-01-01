@@ -5,3 +5,6 @@
 freeze: true
 
 title-block-banner: false
+
+author:
+  - name: Paul Foster
