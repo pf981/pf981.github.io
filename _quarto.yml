@@ -9,10 +9,15 @@ website:
       - about.qmd
       - icon: github
         href: https://github.com/pf981/pf981.github.io
+      - icon: stack-overflow
+        href: https://stackoverflow.com/users/1751961/paul
+      - icon: linkedin
+        href: https://www.linkedin.com/in/paulfoster01/
+  page-footer:
+    left: '&copy; Paul Foster, 2023'
 format:
   html:
     theme: lux
     css: styles.css
 
 editor: source
-
