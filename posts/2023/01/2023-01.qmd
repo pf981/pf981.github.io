@@ -4,10 +4,6 @@ subtitle: "Trebuchet?!"
 date: 2023-12-01
 categories: [python]
 draft: false
-code-tools:
-  source: true
-  toggle: false
-  caption: Full Solution
 ---
 
 ```{r}
