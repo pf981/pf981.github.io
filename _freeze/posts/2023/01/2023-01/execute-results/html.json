@@ -1,11 +1,14 @@
 {
-  "hash": "c7cf5143773adefa5232e2fac59cf6f4",
+  "hash": "a48a6e549bb32c13c3f26e8817089ac5",
   "result": {
-    "markdown": "---\ntitle: \"01: Trebuchet?!\"\ndate: 2023-12-01\nauthor:\n  - name: Paul Foster\ncategories: [python]\ndraft: false\n---\n\n::: {.cell execution_count=1}\n``` {.python .cell-code}\nwith open('input.txt', \"r\") as f:\n    lines = f.readlines()\n```\n:::\n\n\n## Part 1\n\n::: {.cell execution_count=2}\n``` {.python .cell-code}\ndef first_value(line, m):\n  for i, _ in enumerate(line):\n    for text, val in m.items():\n      if line[i:].startswith(text):\n        return val\n\n\nm = {c: int(c) for c in '123456789'}\n\nanswer1 = sum(10 * first_value(line, m) + first_value(line[::-1], m) for line in lines)\nprint(answer1)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n55712\n```\n:::\n:::\n\n\n## Part 2\n\n::: {.cell execution_count=3}\n``` {.python .cell-code}\nwords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']\nm.update({text: i for i, text in enumerate(words, 1)})\nrev_m = {text[::-1]: value for text, value in m.items()}\n\nanswer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)\nprint(answer2)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n55413\n```\n:::\n:::\n\n\n",
-    "supporting": [
-      "2023-01_files"
+    "markdown": "---\ntitle: \"2023 Day 01\"\nsubtitle: \"Trebuchet?!\"\ndate: 2023-12-01\ncategories: [python]\ndraft: false\ncode-tools:\n  source: true\n  toggle: false\n  caption: Full Solution\n---\n\n::: {.cell}\n\n:::\n\n::: {.cell}\n\n```{.python .cell-code}\nwith open('input.txt', \"r\") as f:\n    lines = f.readlines()\n```\n:::\n\n\n## Part 1\n\n\n::: {.cell timeit='true'}\n\n```{.python .cell-code}\ndef first_value(line, m):\n  for i, _ in enumerate(line):\n    for text, val in m.items():\n      if line[i:].startswith(text):\n        return val\n\n\nm = {c: int(c) for c in '123456789'}\n\nanswer1 = sum(10 * first_value(line, m) + first_value(line[::-1], m) for line in lines)\nprint(answer1)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n55712\n```\n:::\n\n<small class='text-muted'>*Execution took 0.01 seconds*</small>\n:::\n\n\n## Part 2\n\n\n::: {.cell timeit='true'}\n\n```{.python .cell-code}\nwords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']\nm.update({text: i for i, text in enumerate(words, 1)})\nrev_m = {text[::-1]: value for text, value in m.items()}\n\nanswer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)\nprint(answer2)\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n55413\n```\n:::\n\n<small class='text-muted'>*Execution took 0.01 seconds*</small>\n:::\n\n```{=html}\n<!-- Button trigger modal -->\n<button type=\"button\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">\n  <i class=\"bi\"></i> Full Solution\n</button>\n\n<!-- Modal -->\n<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>\n      </div>\n      <div class=\"modal-body\">\n        ...\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-bs-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>\n```\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
     ],
-    "filters": [],
-    "includes": {}
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
   }
 }
