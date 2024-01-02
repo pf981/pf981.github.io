@@ -19,7 +19,7 @@ with open('input.txt', "r") as f:
     lines = f.readlines()
 ```
 
-## Part 1 <small class="text-body-secondary">Deciphering Trebuchet Instructions for Calibration</small>
+## Part 1 <small class="text-body-secondary">Deciphering Trebuchet Calibration Instructions</small>
 
 ::: {.hidden}
 $$
