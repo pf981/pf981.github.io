@@ -5,8 +5,9 @@ project:
 website:
   title: "Paul Foster - Advent of Code"
   navbar:
-    right:
+    left:
       - about.qmd
+    right:
       - icon: github
         href: https://github.com/pf981/pf981.github.io
       - icon: stack-overflow
