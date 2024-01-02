@@ -2,7 +2,7 @@
 title: "2023 Day 01"
 subtitle: "Trebuchet?!"
 date: 2023-12-01
-categories: [python]
+categories: [python, easy]
 draft: false
 # This doesn't work when I put it in _metadata.yml
 knitr:
@@ -12,12 +12,58 @@ knitr:
 problem_url: "https://adventofcode.com/2023/day/1"
 ---
 
+Ho ho ho, fellow adventurers! [Advent of Code's day 1]({{< meta problem_url >}}) has catapulted us into a realm of medieval engineering.
+
 ```{python}
 with open('input.txt', "r") as f:
     lines = f.readlines()
 ```
 
-## Part 1
+## Part 1 <small class="text-body-secondary">Deciphering Trebuchet Instructions for Calibration</small>
+
+::: {.hidden}
+$$
+% \underline doesn't support thickness, so I just redraw the underline slightly offset three times
+\newcommand{\thickul}[2]{%
+\large{\textbf{#2}}%
+\color{#1}%
+\llap{\underline{\phantom{\large{\textbf{#2}}}}}%
+\llap{\underline{\lower{.05ex}\phantom{\large{\textbf{#2}}}}}%
+\llap{\underline{\lower{.1ex}\phantom{\large{\textbf{#2}}}}}%
+\llap{\underline{\lower{.15ex}\phantom{\large{\textbf{#2}}}}}%
+\color{##55595C}\normalsize%
+}
+$$
+
+$$
+\newcommand{\first}[1]{\thickul{##2F7E4A}{#1}}
+$$
+
+$$
+\newcommand{\last}[1]{\thickul{##1577A0}{#1}}
+$$
+
+$$
+\newcommand{\both}[1]{%
+\thickul{##2F7E4A}{#1}%
+\color{##1577A0}%
+\llap{\underline{\lower{1ex}\phantom{\large{\textbf{#1}}}}}%
+\llap{\underline{\lower{1.05ex}\phantom{\large{\textbf{#1}}}}}%
+\llap{\underline{\lower{1.1ex}\phantom{\large{\textbf{#1}}}}}%
+\llap{\underline{\lower{1.15ex}\phantom{\large{\textbf{#1}}}}}%
+\color{##55595C}\normalsize%
+}
+$$
+:::
+
+$$
+\begin{aligned}
+\first{1}\text{abc}\last{2} \\
+\text{pqr}\first{3}\text{stu}\last{8}\text{vwx} \\
+\text{a}\first{1}\text{b2c3d4e}\last{5}\text{f} \\
+\text{treb}\both{7}\text{uchet} \\
+\end{aligned}
+$$
 
 ```{python}
 def first_value(line, m):
@@ -42,6 +88,22 @@ rev_m = {text[::-1]: value for text, value in m.items()}
 
 answer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)
 print(answer2)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto" style="max-width: 30rem;">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* The `first_value` function uses regex to extract the first numerical value from each instruction.
+* The dictionary, `m`, maps digits to their integer values
+
+```{=html}
+    </p>
+  </div>
+</div>
 ```
 
 {{< include ../../_button_footer.qmd >}}
