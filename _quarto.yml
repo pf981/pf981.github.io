@@ -15,6 +15,7 @@ website:
         href: https://www.linkedin.com/in/paulfoster01/
   page-footer:
     left: '&copy; Paul Foster, 2023'
+
 format:
   html:
     theme: lux
