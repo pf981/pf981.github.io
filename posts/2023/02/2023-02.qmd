@@ -54,7 +54,7 @@ $$
 :::
 
 
-::::: {.p-1 style="min-width: fit-content;"}
+::::: {.p-0 style="min-width: fit-content;"}
 
 :::: {.px-4}
 ```{=html}
