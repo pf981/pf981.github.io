@@ -8,5 +8,7 @@ title-block-banner: false
 code-block-bg: true
 highlight-style: a11y
 code-line-numbers: true
+toc: true
+toc-title: Contents
 author:
   - name: Paul Foster
