@@ -75,11 +75,11 @@ Combine the <u class='fw-bold' style='text-decoration-thickness: 2px;color: #2F7
 
 $$
 \begin{aligned}
-\first{1}\text{abc}\last{2} & ~~~~~ & \color{#969696}21 & \smash{\lower{0.5pc}\color{#969696}+}\\
+\first{1}\text{abc}\last{2} & ~~~~~ & \color{#969696}12 & \smash{\lower{0.5pc}\color{#969696}+}\\
 \text{pqr}\first{3}\text{stu}\last{8}\text{vwx} & & \color{#969696}38 & \smash{\lower{0.5pc}\color{#969696}+}\\
 \text{a}\first{1}\text{b2c3d4e}\last{5}\text{f} & & \color{#969696}15 & \smash{\lower{0.5pc}\color{#969696}+}\\
-\text{treb}\both{7}\text{uchet} & & \color{#969696}77\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{151}}}}} & \\
- & & \color{#91672C}\large{\textbf{151}} &\\
+\text{treb}\both{7}\text{uchet} & & \color{#969696}77\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{142}}}}} & \\
+ & & \color{#91672C}\large{\textbf{142}} &\\
 \end{aligned}
 $$
 
