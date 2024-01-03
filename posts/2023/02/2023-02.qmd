@@ -139,7 +139,7 @@ print(answer1)
     <p class="card-text">
 ```
 
-Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>game IDs</b> <b class='fw-bold' style='color: #BE4844;'>excluding</b> games with more than <b class='fw-bold'>12 red</b>, <b class='fw-bold'>13 green</b>, or <b class='fw-bold'>14 blue</b>.
+<b class='fw-bold'>Multiply</b> the <b class='fw-bold'>largest</b> <b class='fw-bold' style='color: #BE4844;'>red</b>, <b class='fw-bold' style='color: #2F7E4A;'>green</b>, and <b class='fw-bold' style='color: #1577A0;'>blue</b> values. Then get the <b class='fw-bold' style='color: #91672C;'>sum</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
