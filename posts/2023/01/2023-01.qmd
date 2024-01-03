@@ -65,7 +65,7 @@ $$
 ```{=html}
 <div class="card border-secondary mb-3 mx-auto" style="width: 20rem;">
   <div class="card-body p-3 m-1">
-    <h4 class="card-title mt-0">Task</h4>
+    <h4 class="card-title mt-0">Task 1</h4>
     <p class="card-text">
 ```
 
@@ -91,11 +91,15 @@ $$
 ```
 ::::
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+In part 1, we need to get the trebuchet calibration values by extracting the first and last digits of each line of the input.
+
+This can be done with regex, but instead I'll iterate through each letter until I find a digit.
 
 :::::
 
-First, we'll read the input.
+<div style="clear: both;"></div> 
+
+
 ```{python}
 def first_value(line, m):
   for i, _ in enumerate(line):
