@@ -14,11 +14,11 @@ def extract_max(line, c):
     return max(int(num) for num in re.findall(r'(\d+) ' + c, line))
 
 
-min_cubes = [extract_cubes(line) for line in lines]
-answer1 = sum(i * (cubes[0] <= 12 and cubes[1] <= 13 and cubes[2] <= 14) for i, cubes in enumerate(min_cubes, 1))
+max_cubes = [extract_cubes(line) for line in lines]
+answer1 = sum(i for i, cubes in enumerate(max_cubes, 1) if cubes[0] <= 12 and cubes[1] <= 13 and cubes[2] <= 14)
 print(answer1)
 
 
 # Part 2
-answer2 = sum(math.prod(cubes) for cubes in min_cubes)
+answer2 = sum(math.prod(cubes) for cubes in max_cubes)
 print(answer2)
