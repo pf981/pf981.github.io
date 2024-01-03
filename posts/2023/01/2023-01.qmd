@@ -12,8 +12,11 @@ knitr:
 problem_url: "https://adventofcode.com/2023/day/1"
 ---
 
-Ho ho ho, fellow adventurers! [Advent of Code's day 1]({{< meta problem_url >}}) has catapulted us into a realm of medieval engineering.
+Ho ho ho, fellow adventurers!
 
+[Advent of Code day 1]({{< meta problem_url >}}) has catapulted us into a realm of medieval engineering. Day 1 starts off easy with string manipulation.
+
+First, we'll read the input.
 ```{python}
 with open('input.txt', "r") as f:
     lines = f.readlines()
