@@ -8,3 +8,11 @@
    border-top-style: solid;
    border-top-color: #ced4da;
 }
+
+/* Fix bug with code line wrapping: https://github.com/quarto-dev/quarto-cli/issues/3442 */
+pre.numberSource {
+  margin: 0;
+}
+pre.numberSource code > span {
+  left: 0;
+}
