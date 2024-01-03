@@ -1,5 +1,5 @@
 ---
-title: "2023 Day 01"
+title: "2023 Day 1"
 subtitle: "Trebuchet?!"
 date: 2023-12-01
 categories: [python, easy]
