@@ -190,4 +190,26 @@ print(answer2)
 </div>
 ```
 
+## Bonus
+
+Pretty much every line in the solution is a list comprehension. They can easily be combined to construct some juicy one-liners.
+
+```{python filename="Part 1"}
+#| code-overflow: wrap
+sum(i for i, cubes in enumerate(([max(int(num) for num in re.findall(r'(\d+) ' + c, line)) for c in ['red', 'green', 'blue']] for line in lines), 1) if cubes[0] <= 12 and cubes[1] <= 13 and cubes[2] <= 14)
+```
+
+```{python filename="Part 2"}
+#| code-overflow: wrap
+sum(math.prod(cubes) for cubes in [[max(int(num) for num in re.findall(r'(\d+) ' + c, line)) for c in ['red', 'green', 'blue']] for line in lines])
+```
+
+We can even do both parts in the same line!
+```{python filename="Part 1 & 2"}
+#| code-overflow: wrap
+[sum(l) for l in zip(*[(i * (cubes[0] <= 12 and cubes[1] <= 13 and cubes[2] <= 14), math.prod(cubes)) for i, cubes in enumerate(([max(int(num) for num in re.findall(r'(\d+) ' + c, line)) for c in ['red', 'green', 'blue']] for line in lines), 1)])]
+```
+
+
+
 {{< include ../../_button_footer.qmd >}}
