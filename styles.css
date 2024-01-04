@@ -16,3 +16,8 @@ pre.numberSource {
 pre.numberSource code > span {
   left: 0;
 }
+
+/* font-weight: bolder; doesn't seem to work with Nunito Sans */
+b, strong {
+  font-weight: bold;
+}
