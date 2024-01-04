@@ -3,7 +3,7 @@ title: "2023 Day 2"
 subtitle: "Cube Conundrum"
 date: 2023-12-02
 categories: [python, easy]
-draft: true
+draft: false
 knitr:
   opts_chunk: 
     comment: "#>"
