@@ -14,6 +14,15 @@ website:
         href: https://stackoverflow.com/users/1751961/paul
       - icon: linkedin
         href: https://www.linkedin.com/in/paulfoster01/
+  sidebar:
+    - contents:
+        - section: "2023"
+          contents:
+            - text: "1. Trebuchet?!"
+              file: posts/2023/01/2023-01.qmd
+            - text: "2. Cube Conundrum "
+              file: posts/2023/02/2023-02.qmd
+  page-navigation: true
   page-footer:
     left: '&copy; Paul Foster, 2023'
 
