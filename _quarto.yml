@@ -22,6 +22,8 @@ website:
               file: posts/2023/01/2023-01.qmd
             - text: "2. Cube Conundrum"
               file: posts/2023/02/2023-02.qmd
+            - text: "3. Gear Ratios"
+              file: posts/2023/03/2023-03.qmd
   page-navigation: true
   page-footer:
     left: '&copy; Paul Foster, 2023'
