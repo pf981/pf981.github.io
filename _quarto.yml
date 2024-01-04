@@ -20,7 +20,7 @@ website:
           contents:
             - text: "1. Trebuchet?!"
               file: posts/2023/01/2023-01.qmd
-            - text: "2. Cube Conundrum "
+            - text: "2. Cube Conundrum"
               file: posts/2023/02/2023-02.qmd
   page-navigation: true
   page-footer:
