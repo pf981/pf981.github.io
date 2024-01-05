@@ -295,22 +295,83 @@ print(answer1)
     <p class="card-text">
 ```
 
-* Identify `*`s <b class='fw-bold' style='color: #1577A0;'>neighbouring exactly two</b> <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
+* Identify <b class='fw-bold' style='color: #BE4844;'>*</b>s <b class='fw-bold' style='color: #1577A0;'>neighbouring exactly two</b> <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
 * **Multiply** its two neighbours
 * <b class='fw-bold' style='color: #91672C;'>Sum</b> these values.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
-$$
-\begin{aligned}
-&\text{Game 1: 3 blue, }\red{4 red}\text{; 1 red, }\green{2 green}\text{, }\blue{6 blue}\text{; 2 green} & \grey{4 \times 2 \times 6} & \plus\\
-&\text{Game 2: 1 blue, 2 green; }\green{3 green}\text{, }\blue{4 blue}\text{, }\red{1 red}\text{; 1 green, 1 blue} & \grey{3 \times 4 \times 1} & \plus\\
-&\text{Game 3: 8 green, }\blue{6 blue}\text{, }\red{20 red}\text{; 5 blue, 4 red, }\green{13 green}\text{; 5 green, 1 red} & \grey{6 \times 20 \times 13} & \plus\\
-&\text{Game 4: 1 green, 3 red, 6 blue; }\green{3 green}\text{, 6 red; 3 green, }\blue{15 blue}\text{, }\red{14 red} & \grey{3 \times 15 \times 14} & \plus\\
-&\text{Game 5: }\red{6 red}\text{, 1 blue, }\green{3 green}\text{; }\blue{2 blue}\text{, 1 red, 2 green} & \grey{6 \times 3 \times 2} \llap{\lower{0.4pc}\underline{\phantom{3 \times 15 \times 14}}} \\
-& & \color{#91672C}\large{\textbf{2286}}
-\end{aligned}
-$$
+```{r dev="svg"}
+#| fig-width: 5.5
+#| fig-height: 4
+#| dpi: 72
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+neighbors2 <- function(row, col, highlight = character(), color = "#1577A0") {
+  draw_arrow <- function(direction) {
+    dr <- 0.55 * (str_detect(direction, "S") - str_detect(direction, "N"))
+    dc <- 0.55 * (str_detect(direction, "E") - str_detect(direction, "W"))
+    if (dr != 0 && dc != 0) {
+      dr <- dr * 0.8
+      dc <- dc * 0.8
+    }
+    annotate(
+      geom = "segment",
+      x = col + dc,
+      xend = col + (dc * 1.00001),
+      y = row + dr,
+      yend = row + (dr * 1.00001),
+      color = color,
+      arrow = arrow(length = unit(0.015, "npc"), type = "closed")
+    )
+  }
+  map(highlight, draw_arrow)
+}
+
+df |>
+  mutate(
+    color = case_when(
+      row == 4 & col == 7 ~ "#969696",
+      row == 5 & col == 4 ~ "#969696",
+      row == 6 & col == 6 ~ "#969696",
+      row == 9 & col == 4 ~ "#969696",
+      
+      row == 3 & col > 4 ~ "#969696",
+      row %in% c(5, 7) ~ "#969696",
+      row == 10 & col <= 4 ~ "#969696",
+      .default = color
+    ),
+    fontface = case_when(
+      color != "#969696" ~ "bold",
+      .default = "plain"
+    )
+  ) |>
+  ggplot(aes(col, row, label = value, fontface = fontface, col = I(color))) +
+  geom_text(size = 7, family = "LM Roman 10") +
+  scale_y_reverse(
+    limits = c(12, 0),
+    expand = c(0, 0)
+  ) +
+  add(2, expression("467 " %*% " 35")) +
+  add(9, expression("755 " %*% " 598"), plus = FALSE) +
+  add(11, "467835", plus = FALSE, is_result = TRUE) +
+  neighbors2(2, 4, c("S", "NW")) +
+  neighbors2(4, 7, c("N"), "#C2C2C2") +
+  neighbors2(5, 4, c("W"), "#C2C2C2") +
+  neighbors2(6, 6, c("SW"), "#C2C2C2") +
+  neighbors2(9, 4, c("S"), "#C2C2C2") +
+  neighbors2(9, 6, c("NE", "S")) +
+  annotate(
+    geom = "segment",
+    x = 11.3,
+    xend = 15,
+    y = 10.5,
+    yend = 10.5,
+    color = "#969696"
+  ) +
+  theme_void()
+```
 
 ```{=html}
     </p>
@@ -353,6 +414,10 @@ print(answer2)
     </p>
   </div>
 </div>
+```
+
+```{python}
+windowed
 ```
 
 ## Stocking Stuffers <small class="text-body-secondary">...</small>
