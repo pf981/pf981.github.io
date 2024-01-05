@@ -64,20 +64,129 @@ $$
     <p class="card-text">
 ```
 
-Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>game IDs</b> <b class='fw-bold' style='color: #BE4844;'>excluding</b> games with more than <b class='fw-bold'>12 red</b>, <b class='fw-bold'>13 green</b>, or <b class='fw-bold'>14 blue</b>.
+Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>numbers</b> <b class='fw-bold' style='color: #1577A0;'>neighboring</b> a <b class='fw-bold' style='color: #BE4844;'>symbol</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
-$$
-\begin{aligned}
-&\text{Game }\Game{1}\text{: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green} & \grey{1} & \plus\\
-&\text{Game }\Game{2}\text{: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue} & \grey{2} & \plus\\
-&\text{Game }\game{3}\text{: 8 green, 6 blue, }\red{20 red}\text{; 5 blue, 4 red, 13 green; 5 green, 1 red} & \\
-&\text{Game }\game{4}\text{: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, }\red{15 blue}\text{, }\red{14 red} & \\
-&\text{Game }\Game{5}\text{: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green} & \grey{5} \llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{8}}}}} \\
-& & \color{#91672C}\large{\textbf{8}}
-\end{aligned}
-$$
+```{r dev="svg"}
+#| fig-width: 5.5
+#| fig-height: 4
+#| dpi: 72
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+library(tidyverse)
+
+df <-
+  read_lines("467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598.."
+) |>
+  str_split("") |>
+  map(enframe, name = "col") |>
+  list_rbind(names_to = "row") |>
+  mutate(
+    color = case_when(
+      value %in% c("*", "#", "+", "$") ~ "#BE4844",
+      row == 1 & col > 5 ~ "#969696",
+      row == 6 ~ "#969696",
+      !is.na(as.numeric(value)) ~ "#2F7E4A",
+      .default = "#969696"
+    ),
+    fontface = case_when(
+      color != "#969696" ~ "bold",
+      .default = "plain"
+    )
+  )
+
+add <- function(row, label, plus = TRUE) {
+  component <- annotate(
+    geom = "text",
+    x = 15,
+    y = row,
+    size = 7,
+    hjust = "right",
+    vjust = "middle",
+    color = "#969696",
+    label = label
+  )
+  if (plus) {
+    component <- list(
+      component, 
+      annotate(
+        geom = "text",
+        x = 15,
+        y = row + 0.5,
+        size = 6,
+        hjust = "left",
+        vjust = "middle",
+        color = "#969696",
+        label = "+"
+      )
+    )
+  }
+  component
+}
+
+neighbors <- function(row, col, highlight = character()) {
+  draw_arrow <- function(direction) {
+    dr <- 0.55 * (str_detect(direction, "S") - str_detect(direction, "N"))
+    dc <- 0.55 * (str_detect(direction, "E") - str_detect(direction, "W"))
+    if (dr != 0 && dc != 0) {
+      dr <- dr * 0.8
+      dc <- dc * 0.8
+    }
+    annotate(
+      geom = "segment",
+      x = col + dc,
+      xend = col + (dc * 1.00001),
+      y = row + dr,
+      yend = row + (dr * 1.00001),
+      #size = 1,
+      color = ifelse(direction %in% highlight, "#1577A0", "#C2C2C2"),
+      arrow = arrow(length = unit(0.015, "npc"), type = "closed")
+    )
+  }
+  map(c("N", "NE", "E", "SE", "S", "SW", "W", "NW"), draw_arrow)
+}
+
+df |>
+  ggplot(aes(col, row, label = value, fontface = fontface, col = I(color))) +
+  geom_text(size = 7) +
+  scale_y_reverse(
+    limits = c(12, 0),
+    expand = c(0, 0)
+  ) +
+  add(1, "467") +
+  add(3, "35 + 633") +
+  add(5, "617") +
+  add(7, "592") +
+  add(8, "755") +
+  add(10, "664 + 598", plus = FALSE) +
+  add(11, "4361", plus = FALSE) +
+  neighbors(2, 4, c("S", "SW", "NW")) +
+  neighbors(4, 7, c("N", "NE")) +
+  neighbors(5, 4, c("W")) +
+  neighbors(6, 6, c("SW")) +
+  neighbors(9, 4, c("S", "SW")) +
+  neighbors(9, 6, c("NE", "SE", "S")) +
+  annotate(
+    geom = "segment",
+    x = 12,
+    xend = 15,
+    y = 10.5,
+    yend = 10.5,
+    color = "#969696"
+  ) +
+  theme_void()
+```
 
 ```{=html}
     </p>
