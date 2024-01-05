@@ -11,6 +11,22 @@ knitr:
 problem_url: "https://adventofcode.com/2023/day/3"
 ---
 
+```{r}
+# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
+sysfonts::font_paths("../../../fonts")
+
+sysfonts::font_add(
+  "LM Roman 10",
+  regular = "lmroman10-regular-webfont.ttf",
+  bold = "lmroman10-bold-webfont.ttf",
+  italic = "lmroman10-italic-webfont.ttf",
+  bolditalic = "lmroman10-bolditalic-webfont.ttf"
+)
+
+showtext::showtext_auto()
+```
+
+
 Ho ho ho, fellow adventurers!
 
 [Advent of Code day 3]({{< meta problem_url >}}) ...
@@ -106,7 +122,7 @@ df <-
     )
   )
 
-add <- function(row, label, plus = TRUE) {
+add <- function(row, label, plus = TRUE, is_result = FALSE) {
   component <- annotate(
     geom = "text",
     x = 15,
@@ -114,8 +130,10 @@ add <- function(row, label, plus = TRUE) {
     size = 7,
     hjust = "right",
     vjust = "middle",
-    color = "#969696",
-    label = label
+    color = ifelse(is_result, "#91672C", "#969696"),
+    fontface = ifelse(is_result, "bold", "plain"),
+    label = label,
+    family = "LM Roman 10"
   )
   if (plus) {
     component <- list(
@@ -128,7 +146,8 @@ add <- function(row, label, plus = TRUE) {
         hjust = "left",
         vjust = "middle",
         color = "#969696",
-        label = "+"
+        label = "+",
+        family = "LM Roman 10"
       )
     )
   }
@@ -159,7 +178,7 @@ neighbors <- function(row, col, highlight = character()) {
 
 df |>
   ggplot(aes(col, row, label = value, fontface = fontface, col = I(color))) +
-  geom_text(size = 7) +
+  geom_text(size = 7, family = "LM Roman 10") +
   scale_y_reverse(
     limits = c(12, 0),
     expand = c(0, 0)
@@ -170,7 +189,7 @@ df |>
   add(7, "592") +
   add(8, "755") +
   add(10, "664 + 598", plus = FALSE) +
-  add(11, "4361", plus = FALSE) +
+  add(11, "4361", plus = FALSE, is_result = TRUE) +
   neighbors(2, 4, c("S", "SW", "NW")) +
   neighbors(4, 7, c("N", "NE")) +
   neighbors(5, 4, c("W")) +
@@ -179,7 +198,7 @@ df |>
   neighbors(9, 6, c("NE", "SE", "S")) +
   annotate(
     geom = "segment",
-    x = 12,
+    x = 11.5,
     xend = 15,
     y = 10.5,
     yend = 10.5,
@@ -187,6 +206,7 @@ df |>
   ) +
   theme_void()
 ```
+
 
 ```{=html}
     </p>
@@ -263,7 +283,7 @@ print(answer1)
 </div>
 ```
 
-## Part 2 <small class="text-body-secondary">Combining Cube Colour Counts</small>
+## Part 2 <small class="text-body-secondary">...</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -275,7 +295,7 @@ print(answer1)
     <p class="card-text">
 ```
 
-* Identify `*`s <b class='fw-bold' style='color: #1577A0;'>neighbouring</b> exactly two <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
+* Identify `*`s <b class='fw-bold' style='color: #1577A0;'>neighbouring exactly two</b> <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
 * **Multiply** its two neighbours
 * <b class='fw-bold' style='color: #91672C;'>Sum</b> these values.
 
