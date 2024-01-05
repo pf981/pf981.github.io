@@ -64,7 +64,7 @@ $$
     <p class="card-text">
 ```
 
-Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>numbers</b> <b class='fw-bold' style='color: #1577A0;'>neighboring</b> a <b class='fw-bold' style='color: #BE4844;'>symbol</b>.
+Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>numbers</b> <b class='fw-bold' style='color: #1577A0;'>neighbouring</b> a <b class='fw-bold' style='color: #BE4844;'>symbol</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
@@ -195,19 +195,7 @@ df |>
 ```
 ::::
 
-In part 1, we need to identify which games would be possible if there were only
-
- * `12` red cubes
- * `13` green cubes, and
- * `14` blue cubes
-
-For example, if a line contains `"13 red"`, we know we need to **exclude** it.
-
-We'll use regex to extract the largest red, green, and blue values. Then we'll keep only games where
-
- * `largest_red ≤ 12`, and
- * `largest_green ≤ 13`, and
- * `largest_blue ≤ 14`
+...
 
 :::::
 
@@ -267,9 +255,7 @@ print(answer1)
     <p class="card-text">
 ```
 
-* `extract_max` finds highest quantity of a single colour using regex
-* `extract_cubes` function find highest quantity of every colour
-* Filter and sum the game IDs based on the colour constraints
+* ...
 
 ```{=html}
     </p>
@@ -289,7 +275,9 @@ print(answer1)
     <p class="card-text">
 ```
 
-<b class='fw-bold'>Multiply</b> the <b class='fw-bold'>largest</b> <b class='fw-bold' style='color: #BE4844;'>red</b>, <b class='fw-bold' style='color: #2F7E4A;'>green</b>, and <b class='fw-bold' style='color: #1577A0;'>blue</b> values. Then get the <b class='fw-bold' style='color: #91672C;'>sum</b>.
+* Identify `*`s <b class='fw-bold' style='color: #1577A0;'>neighbouring</b> exactly two <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
+* **Multiply** its two neighbours
+* <b class='fw-bold' style='color: #91672C;'>Sum</b> these values.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
@@ -311,13 +299,7 @@ $$
 ```
 ::::
 
-Part 2 asks
-
-> what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
-
-The word "fewest" might lead you to think we need to get the minimum. But actually, we need to find the **maximum** of each colour.
-
-Luckily, that's precisely what we did in part 1. So we just need to multiply the largest of each colour and get the sum.
+...
 
 :::::
 
@@ -345,8 +327,7 @@ print(answer2)
     <p class="card-text">
 ```
 
-* We already have the largest of each colour from part 1
-* Multiply the largest of each colour and get the sum
+* ...
 
 ```{=html}
     </p>
@@ -355,6 +336,7 @@ print(answer2)
 ```
 
 ## Stocking Stuffers <small class="text-body-secondary">...</small>
+...
 
 
 {{< include ../../_button_footer.qmd >}}
