@@ -21,3 +21,7 @@ pre.numberSource code > span {
 b, strong {
   font-weight: bold;
 }
+
+details {
+  margin-bottom: 0;
+}
