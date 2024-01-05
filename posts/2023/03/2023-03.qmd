@@ -2,7 +2,7 @@
 title: "2023 Day 3"
 subtitle: "Gear Ratios"
 date: 2023-12-03
-categories: [python, easy]
+categories: [python, medium]
 draft: true
 knitr:
   opts_chunk: 
@@ -31,7 +31,7 @@ showtext::showtext_auto()
 
 Ho ho ho, fellow adventurers!
 
-[Advent of Code day 3]({{< meta problem_url >}}) ...
+[Advent of Code day 3]({{< meta problem_url >}}) [Intro here]
 
 First, we'll read the input.
 ```{python}
@@ -39,7 +39,7 @@ with open('input.txt', "r") as f:
     lines = f.readlines()
 ```
 
-## Part 1 <small class="text-body-secondary">...</small>
+## Part 1 <small class="text-body-secondary">Neighbourly Numbers</small>
 
 ::: {.hidden}
 $$
@@ -74,12 +74,11 @@ $$
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
-:::: {.px-4}
+:::: {.px-4 .float-md-start}
 ```{=html}
-<div class="card border-secondary mb-3 mx-auto">
-  <div class="card-body p-3 m-1">
+<div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
     <h4 class="card-title mt-0">Task 1</h4>
-    <p class="card-text">
 ```
 
 Get the <b class='fw-bold' style='color: #91672C;'>sum</b> of <b class='fw-bold' style='color: #2F7E4A;'>numbers</b> <b class='fw-bold' style='color: #1577A0;'>neighbouring</b> a <b class='fw-bold' style='color: #BE4844;'>symbol</b>.
@@ -211,13 +210,12 @@ df |>
 
 
 ```{=html}
-    </p>
   </div>
 </div>
 ```
 ::::
 
-...
+[Part 1 summary here]
 
 :::::
 
@@ -251,7 +249,7 @@ print(answer1)
     <p class="card-text">
 ```
 
-* ...
+* [Part 1 key points here]
 
 ```{=html}
     </p>
@@ -259,16 +257,15 @@ print(answer1)
 </div>
 ```
 
-## Part 2 <small class="text-body-secondary">...</small>
+## Part 2 <small class="text-body-secondary">Asterisk Adjacencies</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
-:::: {.px-0}
+:::: {.px-4 .float-md-start}
 ```{=html}
-<div class="card border-secondary mb-3 mx-auto">
-  <div class="card-body p-3 m-1">
+<div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
     <h4 class="card-title mt-0">Task 2</h4>
-    <p class="card-text">
 ```
 
 * Identify <b class='fw-bold' style='color: #BE4844;'>*</b>s <b class='fw-bold' style='color: #1577A0;'>neighbouring exactly two</b> <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
@@ -350,13 +347,12 @@ df |>
 ```
 
 ```{=html}
-    </p>
   </div>
 </div>
 ```
 ::::
 
-...
+[Part 2 summary here]
 
 :::::
 
@@ -377,16 +373,12 @@ print(answer2)
     <p class="card-text">
 ```
 
-* ...
+* [Part 2 key points here]
 
 ```{=html}
     </p>
   </div>
 </div>
 ```
-
-## Stocking Stuffers <small class="text-body-secondary">...</small>
-...
-
 
 {{< include ../../_button_footer.qmd >}}
