@@ -1,15 +1,15 @@
 ```{r}
 #| echo: false
 python_execution_seconds <- function(file_path) {
-  tictoc::tic()
-  reticulate::py_run_file(file_path)
-  elapsed <- tictoc::toc()$toc
+  start <- Sys.time()
+  reticulate::py_run_file(file_path, convert = FALSE)
+  elapsed <- as.numeric(Sys.time() - start)
   
-  tictoc::tic()
+  start <- Sys.time()
   reticulate::py_run_string("")
-  reticulate_overhead <- tictoc::toc()$toc
+  reticulate_overhead <- as.numeric(Sys.time() - start)
   
-  max(elapsed - reticulate_overhead, 0.01)
+  max(round(elapsed - reticulate_overhead, 2), 0.01)
 }
 ```
 
