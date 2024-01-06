@@ -123,7 +123,7 @@ print(answer1)
 ```
 
 ```{=html}
-<div class="card border-info mb-3 mx-auto" style="max-width: 30rem;">
+<div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
   <div class="card-body p-1">
     <p class="card-text">
@@ -194,7 +194,7 @@ print(answer2)
 ```
 
 ```{=html}
-<div class="card border-info mb-3 mx-auto" style="max-width: 30rem;">
+<div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
   <div class="card-body p-1">
     <p class="card-text">
