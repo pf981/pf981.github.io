@@ -3,7 +3,7 @@ title: "2023 Day 3"
 subtitle: "Gear Ratios"
 date: 2023-12-03
 categories: [python, medium]
-draft: true
+draft: false
 knitr:
   opts_chunk: 
     comment: "#>"
@@ -32,9 +32,11 @@ showtext::showtext_auto()
 
 Ho ho ho, fellow adventurers!
 
-Gear up for a grid-based challenge. In [Advent of Code day 3]({{< meta problem_url >}}), we are tasked with deciphering engine schematics to fix a gondola lift. This puzzle is trickier than the previous ones, but still manageable. It's our first grid question and involves parsing numbers, getting adjacencies, and handling duplicates.
+Gear up for a grid-based challenge. In [Advent of Code day 3]({{< meta problem_url >}}), we are tasked with deciphering engine schematics to fix a gondola lift.
 
-First, we'll read the input.
+This puzzle is trickier than the previous ones, but still manageable. It's our first grid question and involves parsing numbers, getting adjacencies, and handling duplicates.
+
+First, we'll read the input. Note that we use `f.read().splitlines()` instead of `f.readlines()` so our lines don't include `\n`.
 ```{python}
 with open('input.txt', "r") as f:
     lines = f.read().splitlines()
@@ -75,9 +77,8 @@ $$
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
-:::: {.px-4 .float-md-start}
 ```{=html}
-<div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
+<div class="card border-secondary mb-3 mx-auto" style="max-width: 28rem;">
   <div class="card-body p-3 m-1 pb-0 mb-0">
     <h4 class="card-title mt-0">Task 1</h4>
 ```
@@ -214,34 +215,97 @@ df |>
   </div>
 </div>
 ```
-::::
 
-We need to do the following.
 
-1. Combine contiguous digits into numbers
-2. Get the neighbouring numbers of each symbol
-3. De-duplicate and sum those numbers
-
-Assume that no number has more than one symbol neighbour.
-
-In the example, the `#` symbol is touching `633` twice in the `N` and `NE` directions. We need to be mindful to not double count.
-  
-
-<!-- me-2 -->
-
-##### 1. Combine contiguous digits into numbers
-Construct a dictionary, `numbers` which maps every digit's coordinate to its representation
-
-##### 2. Get the neighbouring numbers of each symbol
-`numbers`
-...
-
-##### 3. Sum those numbers
-...
 
 :::::
 
 <div style="clear: both;"></div> 
+
+In part 1 we need to locate all the symbols and neighbouring numbers. Our approach is essentially this.
+```{python}
+#| eval: false
+for each symbol:
+  get the 8 neighbouring numbers
+  remove duplicates
+  add the numbers to the answer
+```
+
+Removing duplicates is important. Consider the `#` symbol in the example. It is touching `633` to the north *and* touching it again to the north-east. We need to be mindful to not **double-count**.
+
+Also, we want to be mindful to not accidentally **under-count**. Consider `..123*123..` where `*` has two *distinct* neighbours, `123` and `123`. We want to only discard true duplicates.
+
+### Digital Fingerprints
+We'll construct a dictionary, `numbers`, which maps every digit's coordinate to its representation.
+```python
+numbers = {
+  (0, 0): <467>,
+  (0, 1): <467>,
+  (0, 2): <467>,
+  (0, 5): <114>,
+  (0, 6): <114>,
+  (0, 7): <114>,
+  ...
+}
+```
+
+What should the values of this dictionary be? It can't just be the integer value as that wouldn't necessarily uniquely identify each number.
+
+We're going to use `re.finditer` to get the start, end, and value of each number. We'll do something sneaky and just use the `re.Match` objects as the values of `numbers`!
+
+In the code below, `match` is a `re.Match` object which contains the start, end, and value a number. It uniquely identifies that number as each `re.Match` object has its own object ID - even if the string is identical.
+
+```{python}
+#| eval: false
+import re
+
+
+numbers = {}
+for row, line in enumerate(lines):
+    for match in re.finditer(r'\d+', line):
+        for col in range(match.start(), match.end()):
+            numbers[(row, col)] = match
+```
+
+### Symbol Surroundings
+We want another dictionary, `symbols`, which maps every symbol's coordinate to its character and neighbouring numbers.
+```python
+symbols = {
+  (1, 3): ['*', [467, 35]],
+  (3, 6): ['#', [633]],
+  ...
+}
+```
+
+Again, we can get the symbol locations using `re.finditer`.
+```{python}
+#| eval: false
+symbols = {}
+for row, line in enumerate(lines):
+    for match in re.finditer(r'[^0-9.]', line):
+        symbols[(row, match.start())] = [match.group()]
+```
+
+Then append the neighbours. Note that `neighbours` is constructed using `set` comprehension, so it is de-duplicated.
+```{python}
+#| eval: false
+for (row, col), l in symbols.items():
+    neighbours = {numbers[(row + dr, col + dc)] for dr in range(-1, 2) for dc in range(-1, 2) if (row + dr, col + dc) in numbers}
+    l.append([int(match.group()) for match in neighbours])
+```
+
+### Assumption
+
+Finally, the answer is just the sum of all the neighbours.
+
+Note that this assumes that no number is neighbouring more than one symbol. If that were the case, it would be double-counted.
+```{python}
+#| eval: false
+answer1 = sum(num for _, neighbours in symbols.values() for num in neighbours)
+```
+
+### Summing It Up
+Now, let's put it all together.
 
 ```{python}
 import re
@@ -265,13 +329,17 @@ print(answer1)
 ```
 
 ```{=html}
-<div class="card border-info mb-3 mx-auto" style="max-width: 30rem;">
+<div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
   <div class="card-body p-1">
     <p class="card-text">
 ```
 
-* [Part 1 key points here]
+* `re.finditer` locates the symbols and numbers
+* The `numbers` dictionary maps digit positions to their `re.Match` object
+* The `symbols` dictionary maps symbol positions to their character and a list of neighbouring integers
+* The answer is the sum of those integers
+* This solution assumes that a number has at most one symbol neighbour
 
 ```{=html}
     </p>
@@ -283,7 +351,7 @@ print(answer1)
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
-:::: {.px-4 .float-md-start}
+:::: {.pe-4 .float-md-start}
 ```{=html}
 <div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
   <div class="card-body p-3 m-1 pb-0 mb-0">
@@ -374,7 +442,9 @@ df |>
 ```
 ::::
 
-[Part 2 summary here]
+Part 2 tasks us with indentifying gears which are `*` symbols with exactly `2` neighbours.
+
+This is straightforward as we have the `symbols` dictionary from part 1.
 
 :::::
 
@@ -389,18 +459,69 @@ print(answer2)
 ```
 
 ```{=html}
-<div class="card border-info mb-3 mx-auto" style="max-width: 30rem;">
+<div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
   <div class="card-body p-1">
     <p class="card-text">
 ```
 
-* [Part 2 key points here]
+* Filter `symbols` where the symbol is `*` and the number of neighbours is `2`
+* Get the product of neighbours, then the sum
 
 ```{=html}
     </p>
   </div>
 </div>
 ```
+
+## Stocking Stuffers <small class="text-body-secondary">Auspicious Assumptions</small>
+Our solution assumes that no number is neighbouring more than one symbol. This is true of our input.
+
+To make the solution more general and handle cases where numbers could neighbor multiple symbols, we'd need to adjust our approach to avoid potential double-counting. However, this makes the solution clunkier.
+```{python}
+import math
+import re
+
+
+numbers = {}
+symbols = {}
+for row, line in enumerate(lines):
+    for match in re.finditer(r'\d+', line):
+        for col in range(match.start(), match.end()):
+            numbers[(row, col)] = match
+    for match in re.finditer(r'[^0-9.]', line):
+        symbols[(row, match.start())] = [match.group()]
+
+for (row, col), l in symbols.items():
+    neighbours = {numbers[(row + dr, col + dc)] for dr in range(-1, 2) for dc in range(-1, 2) if (row + dr, col + dc) in numbers}
+    l.append(neighbours)
+
+part_number_matches = set().union(*(neighbours for _, neighbours in symbols.values()))
+answer1 = sum(int(match.group()) for match in part_number_matches)
+print(answer1)
+
+answer2 = sum(math.prod(int(match.group()) for match in matches) for symbol, matches in symbols.values() if symbol == '*' and len(matches) == 2)
+print(answer2)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* `numbers` now stores its neighbours as a `set` of `re.Match` objects and not just a `list` of `int`s
+* `set().union(*l)` will union all the `set`s in `l`
+* The matches are only converted to integers after de-duplication
+* This solution does **not** assume that a number has at most one symbol neighbour
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+It's fine to taylor your solution to your input. While a general solution was possible for this problem, [some days](../20/2023-20.html) are practically impossible to solve in the general case and **require** crafting a solution specific to your input.
 
 {{< include ../../_button_footer.qmd >}}
