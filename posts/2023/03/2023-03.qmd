@@ -269,7 +269,7 @@ print(answer1)
 ```
 
 * Identify <b class='fw-bold' style='color: #BE4844;'>*</b>s <b class='fw-bold' style='color: #1577A0;'>neighbouring exactly two</b> <b class='fw-bold' style='color: #2F7E4A;'>numbers</b>
-* **Multiply** its two neighbours
+* Multiply its two neighbours
 * <b class='fw-bold' style='color: #91672C;'>Sum</b> these values.
 
 <h6 class="card-subtitle text-muted">Example</h6>
