@@ -1,0 +1,179 @@
+---
+title: "2023 Day 4"
+subtitle: "Scratchcards"
+date: 2023-12-03
+categories: [python, medium, dynamic programming]
+draft: true
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    collapse: true
+problem_url: "https://adventofcode.com/2023/day/4"
+description: "Medium difficulty dynamic programming puzzle."
+---
+
+```{r}
+#| echo: false
+#| output: false
+# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
+sysfonts::font_paths("../../../fonts")
+
+sysfonts::font_add(
+  "LM Roman 10",
+  regular = "lmroman10-regular-webfont.ttf",
+  bold = "lmroman10-bold-webfont.ttf",
+  italic = "lmroman10-italic-webfont.ttf",
+  bolditalic = "lmroman10-bolditalic-webfont.ttf"
+)
+
+showtext::showtext_auto()
+```
+
+
+Ho ho ho, fellow adventurers!
+
+[Advent of Code day 4]({{< meta problem_url >}}) [Intro here]
+
+First, we'll read the input.
+```{python}
+with open('input.txt', "r") as f:
+    lines = f.read().splitlines()
+```
+
+## Part 1 <small class="text-body-secondary">[Subtitle]</small>
+
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+```{=html}
+<div class="card border-secondary mb-3 mx-auto" style="max-width: 28rem;">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 1</h4>
+```
+
+[Task here]
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+```{r dev="svg"}
+#| fig-width: 5.5
+#| fig-height: 4
+#| dpi: 72
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+# [fig here]
+```
+
+
+```{=html}
+  </div>
+</div>
+```
+
+:::::
+
+<div style="clear: both;"></div> 
+
+[Part 1 here]
+
+```{python}
+import re
+
+
+with open(r'input.txt', "r") as f:
+    lines = f.read().splitlines()
+
+
+cards = [[set(re.findall(r'\d+', side)) for side in line.split(':')[1].split('|')] for line in lines]
+n_wins = [len(have.intersection(want)) for have, want in cards]
+answer1 = sum(2**(n - 1) for n in n_wins if n > 0)
+print(answer1)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* [Part 1 key points]
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+## Part 2 <small class="text-body-secondary">[Subtitle here]</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+:::: {.pe-4 .float-md-start}
+```{=html}
+<div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 2</h4>
+```
+
+[Task 2 description]
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+```{r dev="svg"}
+#| fig-width: 5.5
+#| fig-height: 4
+#| dpi: 72
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+# [Figure here]
+```
+
+```{=html}
+  </div>
+</div>
+```
+::::
+
+[Part 2 here]
+
+:::::
+
+<div style="clear: both;"></div> 
+
+```{python}
+import functools
+
+
+@functools.cache
+def count_scratchcards(i):
+  if i > len(n_wins):
+    return 0
+  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+
+
+answer2 = sum(count_scratchcards(i) for i in range(len(n_wins)))
+print(answer2)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* [Part 2 key points here]
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+## Stocking Stuffers <small class="text-body-secondary">[Subtitle here]</small>
+[Extras here]
+
+{{< include ../../_button_footer.qmd >}}
