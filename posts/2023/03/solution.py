@@ -3,7 +3,7 @@ import re
 
 
 with open(r'input.txt', "r") as f:
-    lines = f.readlines()
+    lines = f.read().splitlines()
 
 
 numbers = {}
@@ -12,7 +12,7 @@ for row, line in enumerate(lines):
     for match in re.finditer(r'\d+', line):
         for col in range(match.start(), match. end()):
             numbers[(row, col)] = match
-    for match in re.finditer(r'[^0-9.\n]', line):
+    for match in re.finditer(r'[^0-9.]', line):
         symbols[(row, match.start())] = [match.group()]
 
 for (row, col), l in symbols.items():

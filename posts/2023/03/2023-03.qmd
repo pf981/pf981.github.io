@@ -31,12 +31,12 @@ showtext::showtext_auto()
 
 Ho ho ho, fellow adventurers!
 
-[Advent of Code day 3]({{< meta problem_url >}}) [Intro here]
+Gear up for a grid-based challenge. In [Advent of Code day 3]({{< meta problem_url >}}), we are tasked with deciphering engine schematics to fix a gondola lift. This puzzle is trickier than the previous ones, but still manageable. It's our first grid question and involves parsing numbers, getting adjacencies, and handling duplicates.
 
 First, we'll read the input.
 ```{python}
 with open('input.txt', "r") as f:
-    lines = f.readlines()
+    lines = f.read().splitlines()
 ```
 
 ## Part 1 <small class="text-body-secondary">Neighbourly Numbers</small>
@@ -215,7 +215,25 @@ df |>
 ```
 ::::
 
-[Part 1 summary here]
+We need to do the following.
+
+1. Combine contiguous digits into numbers
+2. Get the neighbouring numbers of each symbol
+3. De-duplicate and sum those numbers
+
+Assume that no number has more than one symbol neighbour.
+  
+
+<!-- me-2 -->
+
+##### 1. Combine contiguous digits into numbers
+...
+
+##### 2. Get the neighbouring numbers of each symbol
+...
+
+##### 3. Sum those numbers
+...
 
 :::::
 
@@ -231,7 +249,7 @@ for row, line in enumerate(lines):
     for match in re.finditer(r'\d+', line):
         for col in range(match.start(), match. end()):
             numbers[(row, col)] = match
-    for match in re.finditer(r'[^0-9.\n]', line):
+    for match in re.finditer(r'[^0-9.]', line):
         symbols[(row, match.start())] = [match.group()]
 
 for (row, col), l in symbols.items():
