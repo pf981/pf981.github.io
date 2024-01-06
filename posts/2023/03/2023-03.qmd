@@ -522,6 +522,6 @@ print(answer2)
 </div>
 ```
 
-It's fine to taylor your solution to your input. While a general solution was possible for this problem, [some days](../20/2023-20.html) are practically impossible to solve in the general case and **require** crafting a solution specific to your input.
+It's fine to tailor your solution to your input. While a general solution was possible for this problem, [some days](../20/2023-20.html) are practically impossible to solve in the general case and **require** crafting a solution specific to your input.
 
 {{< include ../../_button_footer.qmd >}}
