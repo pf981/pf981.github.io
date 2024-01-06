@@ -31,3 +31,7 @@ details {
   margin-bottom: 3rem;
   border-bottom: 1px solid #dee2e6;
 }
+
+code {
+  white-space: pre-wrap;
+}
