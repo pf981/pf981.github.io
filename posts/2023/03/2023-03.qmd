@@ -44,37 +44,6 @@ with open('input.txt', "r") as f:
 
 ## Part 1 <small class="text-body-secondary">Neighbourly Numbers</small>
 
-::: {.hidden}
-$$
-\newcommand{\game}[1]{\large\phantom{\textbf{9}}\normalsize\llap{\text{#1}}}
-$$
-
-$$
-\newcommand{\Game}[1]{\color{##2F7E4A}\large\phantom{\textbf{9}}\llap{\textbf{#1}}\color{##55595C}\normalsize}
-$$
-
-$$
-\newcommand{\grey}[1]{\color{##969696}#1}
-$$
-
-$$
-\newcommand{\plus}{\smash{\lower{0.5pc}\color{##969696}+}}
-$$
-
-$$
-\newcommand{\red}[1]{\large\text{\color{##BE4844}\textbf{#1}}\normalsize}
-$$
-
-$$
-\newcommand{\green}[1]{\large\text{\color{##2F7E4A}\textbf{#1}}\normalsize}
-$$
-
-$$
-\newcommand{\blue}[1]{\large\text{\color{##1577A0}\textbf{#1}}\normalsize}
-$$
-:::
-
-
 ::::: {.p-0 style="min-width: fit-content;"}
 
 ```{=html}
