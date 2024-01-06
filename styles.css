@@ -25,3 +25,9 @@ b, strong {
 details {
   margin-bottom: 0;
 }
+
+#title-block-header {
+  padding-bottom: 1rem;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid #dee2e6;
+}
