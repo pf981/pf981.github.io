@@ -10,6 +10,7 @@ knitr:
     comment: "#>"
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/1"
+description: "Easy string manipulation."
 ---
 
 Ho ho ho, fellow adventurers!

@@ -9,6 +9,7 @@ knitr:
     comment: "#>"
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/2"
+description: "Easy puzzle with basic regex and arithmetic."
 ---
 
 Ho ho ho, fellow adventurers!

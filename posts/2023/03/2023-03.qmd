@@ -9,6 +9,7 @@ knitr:
     comment: "#>"
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/3"
+description: "Medium difficulty grid puzzle involving parsing numbers, getting adjacencies, and handling duplicates."
 ---
 
 ```{r}
@@ -222,14 +223,17 @@ We need to do the following.
 3. De-duplicate and sum those numbers
 
 Assume that no number has more than one symbol neighbour.
+
+In the example, the `#` symbol is touching `633` twice in the `N` and `NE` directions. We need to be mindful to not double count.
   
 
 <!-- me-2 -->
 
 ##### 1. Combine contiguous digits into numbers
-...
+Construct a dictionary, `numbers` which maps every digit's coordinate to its representation
 
 ##### 2. Get the neighbouring numbers of each symbol
+`numbers`
 ...
 
 ##### 3. Sum those numbers
