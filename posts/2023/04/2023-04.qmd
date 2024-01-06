@@ -81,10 +81,6 @@ with open('input.txt', "r") as f:
 import re
 
 
-with open(r'input.txt', "r") as f:
-    lines = f.read().splitlines()
-
-
 cards = [[set(re.findall(r'\d+', side)) for side in line.split(':')[1].split('|')] for line in lines]
 n_wins = [len(have.intersection(want)) for have, want in cards]
 answer1 = sum(2**(n - 1) for n in n_wins if n > 0)
@@ -175,5 +171,6 @@ print(answer2)
 
 ## Stocking Stuffers <small class="text-body-secondary">[Subtitle here]</small>
 [Extras here]
+[Put stuff about top-down vs bottom-up dynamic programming. Use fibonacci as an example. Overlapping subproblems. Recursion with memoisation is by far the easiest]
 
 {{< include ../../_button_footer.qmd >}}
