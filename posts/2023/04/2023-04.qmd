@@ -148,6 +148,8 @@ print(answer1)
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
+In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 starting cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won cards</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
+
 $$
 \begin{aligned}
 &\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&&\grey{\text{Wins cards 2, 3, 4, \& 5}}\\
@@ -159,6 +161,7 @@ $$
 \end{aligned}
 $$
 
+:::{.d-flex .justify-content-center}
 ```{mermaid}
 %%{
   init: {
@@ -173,45 +176,40 @@ $$
       'background': '#FFFFFF',
       'mainBkg': '#FFFFFF',
       'clusterBkg': '#ededed'
+    },
+    'flowchart': {
+      'nodeSpacing': 15,
+      'rankSpacing': 50
     }
   }
 }%%
 flowchart LR
-  subgraph s1 [Original Cards]
-    A[Card 1]
-    B[Card 2]
-    C[Card 3]
-    D[Card 4]
-    E[Card 5]
-    F[Card 6]
-  end
-  A --> A1[Card 2]
-  A --> A2[Card 3]
-  A --> A3[Card 4]
-  A --> A4[Card 5]
-  subgraph s2 [Won Cards]
-    A1 --> A11[Card 3]
-    A1 --> A12[Card 4]
-    A2 --> A21[Card 4]
-    A2 --> A22[Card 5]
-    A3
-    A4
-    A11 --> A111[Card 4]
-    A11 --> A112[Card 5]
+  A[Card 1]:::starting --> A1[Card 2]
+  A[Card 1] --> A2[Card 3]
+  A[Card 1] --> A3[Card 4]
+  A[Card 1] --> A4[Card 5]
+  A1 --> A11[Card 3]
+  A1 --> A12[Card 4]
+  A2 --> A21[Card 4]
+  A2 --> A22[Card 5]
+  A11 --> A111[Card 4]
+  A11 --> A112[Card 5]
+
+  B[Card 2]:::starting --> B1[Card 3]
+  B[Card 2] --> B2[Card 4]
+  B1 --> B11[Card 4]
+  B1 --> B12[Card 5]
   
-    B[Card 2] --> B1[Card 3]
-    B[Card 2] --> B2[Card 4]
-    B1 --> B11[Card 4]
-    B1 --> B12[Card 5]
-    
-    C[Card 3] --> C1[Card 4]
-    C[Card 3] --> C2[Card 5]
-    
-    D[Card 4]
-    E[Card 5]
-    F[Card 6]
-  end
+  C[Card 3]:::starting --> C1[Card 4]
+  C[Card 3] --> C2[Card 5]
+  
+  D[Card 4]:::starting
+  E[Card 5]:::starting
+  F[Card 6]:::starting
+  classDef default fill:#EDECFF
+  classDef starting fill:#FFF3BF
 ```
+:::
 
 ```{=html}
   </div>
