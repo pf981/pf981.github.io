@@ -45,11 +45,15 @@ with open('input.txt', "r") as f:
 
 ::: {.hidden}
 $$
-\newcommand{\grey}[1]{\color{##969696}#1}
+\newcommand{\grey}[1]{\normalsize\color{##969696}#1\normalsize}
 $$
 
 $$
-\newcommand{\plus}{\smash{\lower{0.5pc}\color{##969696}+}}
+\newcommand{\score}[1]{\phantom{xxxxxxxx}\llap{\grey{#1}}}
+$$
+
+$$
+\newcommand{\plus}{\smash{\lower{0.5pc}\color{#969696}{+}}}
 $$
 
 $$
@@ -57,13 +61,20 @@ $$
 $$
 
 $$
-\newcommand{\num}[1]{\large\phantom{\textbf{\;88}}\llap{\text{\;#1}}}
+\newcommand{\num}[1]{\large\phantom{\textbf{\;1\;\;}}\llap{\text{\;#1}}}
 $$
 
 $$
-\newcommand{\match}[1]{\color{##2F7E4A}\large\phantom{\textbf{\;88}}\llap{\;\textbf{#1}}\color{##55595C}\normalsize}
+\newcommand{\match}[1]{\color{##2F7E4A}\large\phantom{\textbf{\;1\;\;}}\llap{\;\textbf{#1}}\color{##55595C}\normalsize}
+$$
+
+$$
+\newcommand{\wins}[1]{\phantom{xxx}\llap{\grey{\text{#1}}}}
 $$
 :::
+
+
+<!-- \newcommand{\score}[1]{\phantom{xxx}\llap{\grey{\text{#1}}}} -->
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -79,15 +90,29 @@ Calculate the <b class='fw-bold' style='color: #91672C;'>sum</b> of scores of ea
 
 $$
 \begin{aligned}
-&\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&\grey{\text{4 matches}}&&\grey{1 \times 2 \times 2 \times 2}\plus\\
-&\card{2}\num{13}\match{32}\num{20}\num{16}\match{61}\;|\match{61}\num{30}\num{68}\num{82}\num{17}\match{32}\num{24}\num{19}&\grey{\text{2 matches}}&&\grey{1 \times 2}\plus\\
-&\card{3}\match{ 1}\match{21}\num{53}\num{59}\num{44}\;|\num{69}\num{82}\num{63}\num{72}\num{16}\match{21}\num{14}\match{ 1}&\grey{\text{2 matches}}&&\grey{1 \times 2}\plus\\
-&\card{4}\num{41}\num{92}\num{73}\match{84}\num{69}\;|\num{59}\match{84}\num{76}\num{51}\num{58}\num{ 5}\num{54}\num{83}&\grey{\text{1 matches}}&&\grey{1}\plus\\
-&\card{5}\num{87}\num{83}\num{26}\num{28}\num{32}\;|\num{88}\num{30}\num{70}\num{12}\num{93}\num{22}\num{82}\num{36}&\grey{\text{0 matches}}&&\grey{0}\plus\\
-&\card{6}\num{31}\num{18}\num{13}\num{56}\num{72}\;|\num{74}\num{77}\num{10}\num{23}\num{35}\num{67}\num{36}\num{11}&\grey{\text{0 matches}}&&\grey{0}\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{13}}}}}\phantom{\plus}\\
+&\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&\wins{4 wins}&&\score{1 \times 2 \times 2 \times 2}\plus\\
+&\card{2}\num{13}\match{32}\num{20}\num{16}\match{61}\;|\match{61}\num{30}\num{68}\num{82}\num{17}\match{32}\num{24}\num{19}&\wins{2 wins}&&\score{1 \times 2}\plus\\
+&\card{3}\match{ 1}\match{21}\num{53}\num{59}\num{44}\;|\num{69}\num{82}\num{63}\num{72}\num{16}\match{21}\num{14}\match{ 1}&\wins{2 wins}&&\score{1 \times 2}\plus\\
+&\card{4}\num{41}\num{92}\num{73}\match{84}\num{69}\;|\num{59}\match{84}\num{76}\num{51}\num{58}\num{ 5}\num{54}\num{83}&\wins{1 wins}&&\score{1}\plus\\
+&\card{5}\num{87}\num{83}\num{26}\num{28}\num{32}\;|\num{88}\num{30}\num{70}\num{12}\num{93}\num{22}\num{82}\num{36}&\wins{0 wins}&&\score{0}\plus\\
+&\card{6}\num{31}\num{18}\num{13}\num{56}\num{72}\;|\num{74}\num{77}\num{10}\num{23}\num{35}\num{67}\num{36}\num{11}&\wins{0 wins}&&\score{0}\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{13}}}}}\phantom{\plus}\\
 & & && \color{#91672C}\large{\textbf{13}}\normalsize\phantom{\plus}
 \end{aligned}
 $$
+
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- &\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&\grey{\text{4 wins}}&&\grey{1\times 2\times 2\times2}\plus\\ -->
+<!-- &\card{2}\num{13}\match{32}\num{20}\num{16}\match{61}\;|\match{61}\num{30}\num{68}\num{82}\num{17}\match{32}\num{24}\num{19}&\grey{\text{2 wins}}&&\grey{1 \times 2}\plus\\ -->
+<!-- &\card{3}\match{ 1}\match{21}\num{53}\num{59}\num{44}\;|\num{69}\num{82}\num{63}\num{72}\num{16}\match{21}\num{14}\match{ 1}&\grey{\text{2 wins}}&&\grey{1 \times 2}\plus\\ -->
+<!-- &\card{4}\num{41}\num{92}\num{73}\match{84}\num{69}\;|\num{59}\match{84}\num{76}\num{51}\num{58}\num{ 5}\num{54}\num{83}&\grey{\text{1 wins}}&&\grey{1}\plus\\ -->
+<!-- &\card{5}\num{87}\num{83}\num{26}\num{28}\num{32}\;|\num{88}\num{30}\num{70}\num{12}\num{93}\num{22}\num{82}\num{36}&\grey{\text{0 wins}}&&\grey{0}\plus\\ -->
+<!-- &\card{6}\num{31}\num{18}\num{13}\num{56}\num{72}\;|\num{74}\num{77}\num{10}\num{23}\num{35}\num{67}\num{36}\num{11}&\grey{\text{0 wins}}&&\grey{0}\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{13}}}}}\phantom{\plus}\\ -->
+<!-- & & && \color{#91672C}\large{\textbf{13}}\normalsize\phantom{\plus} -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+
+
 
 <!-- }\underline{\phantom{\large{\textbf{13}}}}} \\ -->
 <!-- & && \color{#91672C}\large{\textbf{13}} -->
