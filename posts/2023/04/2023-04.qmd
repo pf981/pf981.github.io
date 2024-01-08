@@ -175,7 +175,8 @@ $$
       'tertiaryColor': '#fff',
       'background': '#FFFFFF',
       'mainBkg': '#FFFFFF',
-      'clusterBkg': '#ededed'
+      'clusterBkg': '#ededed',
+      'fontFamily': 'Nunito Sans'
     },
     'flowchart': {
       'nodeSpacing': 15,
@@ -192,18 +193,25 @@ flowchart LR
   A1 --> A12[Card 4]
   A2 --> A21[Card 4]
   A2 --> A22[Card 5]
+  A3[Card 4] --> A31[Card 5]
   A11 --> A111[Card 4]
   A11 --> A112[Card 5]
+  A12[Card 4] --> A121[Card 5]
+  A21[Card 4] --> A211[Card 5]
+  A111[Card 4] --> A1111[Card 5]
 
   B[Card 2]:::starting --> B1[Card 3]
   B[Card 2] --> B2[Card 4]
   B1 --> B11[Card 4]
   B1 --> B12[Card 5]
+  B11[Card 4] --> B111[Card 5]
+  B2 --> B21[Card 5]
   
   C[Card 3]:::starting --> C1[Card 4]
   C[Card 3] --> C2[Card 5]
+  C1[Card 4] --> C11[Card 5]
   
-  D[Card 4]:::starting
+  D[Card 4]:::starting --> D1[Card 5]
   E[Card 5]:::starting
   F[Card 6]:::starting
   classDef default fill:#EDECFF
