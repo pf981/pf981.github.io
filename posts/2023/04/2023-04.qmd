@@ -73,9 +73,6 @@ $$
 $$
 :::
 
-
-<!-- \newcommand{\score}[1]{\phantom{xxx}\llap{\grey{\text{#1}}}} -->
-
 ::::: {.p-0 style="min-width: fit-content;"}
 
 ```{=html}
@@ -99,33 +96,6 @@ $$
 & & && \color{#91672C}\large{\textbf{13}}\normalsize\phantom{\plus}
 \end{aligned}
 $$
-
-<!-- $$ -->
-<!-- \begin{aligned} -->
-<!-- &\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&\grey{\text{4 wins}}&&\grey{1\times 2\times 2\times2}\plus\\ -->
-<!-- &\card{2}\num{13}\match{32}\num{20}\num{16}\match{61}\;|\match{61}\num{30}\num{68}\num{82}\num{17}\match{32}\num{24}\num{19}&\grey{\text{2 wins}}&&\grey{1 \times 2}\plus\\ -->
-<!-- &\card{3}\match{ 1}\match{21}\num{53}\num{59}\num{44}\;|\num{69}\num{82}\num{63}\num{72}\num{16}\match{21}\num{14}\match{ 1}&\grey{\text{2 wins}}&&\grey{1 \times 2}\plus\\ -->
-<!-- &\card{4}\num{41}\num{92}\num{73}\match{84}\num{69}\;|\num{59}\match{84}\num{76}\num{51}\num{58}\num{ 5}\num{54}\num{83}&\grey{\text{1 wins}}&&\grey{1}\plus\\ -->
-<!-- &\card{5}\num{87}\num{83}\num{26}\num{28}\num{32}\;|\num{88}\num{30}\num{70}\num{12}\num{93}\num{22}\num{82}\num{36}&\grey{\text{0 wins}}&&\grey{0}\plus\\ -->
-<!-- &\card{6}\num{31}\num{18}\num{13}\num{56}\num{72}\;|\num{74}\num{77}\num{10}\num{23}\num{35}\num{67}\num{36}\num{11}&\grey{\text{0 wins}}&&\grey{0}\llap{\lower{0.4pc}\underline{\phantom{\large{\textbf{13}}}}}\phantom{\plus}\\ -->
-<!-- & & && \color{#91672C}\large{\textbf{13}}\normalsize\phantom{\plus} -->
-<!-- \end{aligned} -->
-<!-- $$ -->
-
-
-
-<!-- }\underline{\phantom{\large{\textbf{13}}}}} \\ -->
-<!-- & && \color{#91672C}\large{\textbf{13}} -->
-<!-- $$ -->
-<!-- \begin{aligned} -->
-<!-- &\text{Card 1: 41 48 83 86 17 }&|\text{ 83 86  6 31 17  9 48 53}&\\ -->
-<!-- &\text{Card 2: 13 32 20 16 61 }&|\text{ 61 30 68 82 17 32 24 19}&\\ -->
-<!-- &\text{Card 3:  1 21 53 59 44 }&|\text{ 69 82 63 72 16 21 14  1}&\\ -->
-<!-- &\text{Card 4: 41 92 73 84 69 }&|\text{ 59 84 76 51 58  5 54 83}&\\ -->
-<!-- &\text{Card 5: 87 83 26 28 32 }&|\text{ 88 30 70 12 93 22 82 36}&\\ -->
-<!-- &\text{Card 6: 31 18 13 56 72 }&|\text{ 74 77 10 23 35 67 36 11}& -->
-<!-- \end{aligned} -->
-<!-- $$ -->
 
 ```{=html}
   </div>
@@ -167,9 +137,9 @@ print(answer1)
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
-:::: {.pe-4 .float-md-start}
+:::: {.pe-4}
 ```{=html}
-<div class="card border-secondary mb-3 mx-auto" style="width: 25rem;">
+<div class="card border-secondary mb-3 mx-auto">
   <div class="card-body p-3 m-1 pb-0 mb-0">
     <h4 class="card-title mt-0">Task 2</h4>
 ```
@@ -178,15 +148,16 @@ print(answer1)
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
-```{r dev="svg"}
-#| fig-width: 5.5
-#| fig-height: 4
-#| dpi: 72
-#| code-fold: true
-#| code-summary: "Figure Source"
-#| warning: false
-# [Figure here]
-```
+$$
+\begin{aligned}
+&\card{1}\num{41}\match{48}\match{83}\match{86}\match{17}\;|\match{83}\match{86}\num{ 6}\num{31}\match{17}\num{ 9}\match{48}\num{53}&&\grey{\text{Wins cards 2, 3, 4, \& 5}}\\
+&\card{2}\num{13}\match{32}\num{20}\num{16}\match{61}\;|\match{61}\num{30}\num{68}\num{82}\num{17}\match{32}\num{24}\num{19}&&\grey{\text{Wins cards 3 \& 4}}\\
+&\card{3}\match{ 1}\match{21}\num{53}\num{59}\num{44}\;|\num{69}\num{82}\num{63}\num{72}\num{16}\match{21}\num{14}\match{ 1}&&\grey{\text{Wins cards 4 \& 5}}\\
+&\card{4}\num{41}\num{92}\num{73}\match{84}\num{69}\;|\num{59}\match{84}\num{76}\num{51}\num{58}\num{ 5}\num{54}\num{83}&&\grey{\text{Wins card 5}}\\
+&\card{5}\num{87}\num{83}\num{26}\num{28}\num{32}\;|\num{88}\num{30}\num{70}\num{12}\num{93}\num{22}\num{82}\num{36}&&\\
+&\card{6}\num{31}\num{18}\num{13}\num{56}\num{72}\;|\num{74}\num{77}\num{10}\num{23}\num{35}\num{67}\num{36}\num{11}&&\\
+\end{aligned}
+$$
 
 ```{mermaid}
 %%{
