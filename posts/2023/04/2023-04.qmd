@@ -14,26 +14,13 @@ mermaid:
   theme: neutral
 ---
 
-```{r}
-#| echo: false
-#| output: false
-# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
-sysfonts::font_paths("../../../fonts")
-
-sysfonts::font_add(
-  "LM Roman 10",
-  regular = "lmroman10-regular-webfont.ttf",
-  bold = "lmroman10-bold-webfont.ttf",
-  italic = "lmroman10-italic-webfont.ttf",
-  bolditalic = "lmroman10-bolditalic-webfont.ttf"
-)
-
-showtext::showtext_auto()
-```
-
 Ho ho ho, fellow adventurers!
 
-[Advent of Code day 4]({{< meta problem_url >}}) [Intro here]
+In [Advent of Code day 4]({{< meta problem_url >}}) we must convince an elf to lend us his boat by helping him decipher his scratchcards.
+
+This puzzle propels us into the exciting world of **dynamic programming**, a technique for efficiently solving problems with **overlapping subproblems**. It's secret weapon against repetitive calculations!
+
+Even if you're new to this, fear not! I'll share an easy intuitive approach that will work with almost any **dynamic programming** challenge.
 
 First, we'll read the input.
 ```{python}
@@ -106,8 +93,36 @@ $$
 
 <div style="clear: both;"></div> 
 
-[Part 1 here]
+Part 1 is straightforward. We need to find the overlap of two sets and do some basic scoring.
 
+We can parse out the left and right numbers into `set`s. Then the number of wins is just the length of the intersection of those sets.
+
+```{python}
+#| eval: false
+import re
+
+
+cards = [[set(re.findall(r'\d+', side)) for side in line.split(':')[1].split('|')] for line in lines]
+n_wins = [len(have.intersection(want)) for have, want in cards]
+```
+
+The score can be calculated as
+$$
+\begin{equation}
+\text{score}(\text{wins})=
+    \begin{cases}
+        2^{\text{wins} - 1} & \text{if wins} \gt 0\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+$$
+
+```{python}
+#| eval: false
+answer1 = sum(2**(n - 1) for n in n_wins if n > 0)
+```
+
+Putting it all together
 ```{python}
 import re
 
@@ -125,7 +140,9 @@ print(answer1)
     <p class="card-text">
 ```
 
-* [Part 1 key points]
+* Parse the left and right numbers into `set`s
+* Calculate the number of wins as the length of the intersection of those `set`s
+* Calculate the score based off the number of wins
 
 ```{=html}
     </p>
@@ -144,11 +161,12 @@ print(answer1)
     <h4 class="card-title mt-0">Task 2</h4>
 ```
 
-[Task 2 description]
+Each <b class='fw-bold' style='color: #2F7E4A;'>match</b> wins copies of subsequent cards. Count all <mark class='fw-bold' style='background-color: #FFF3BF'>original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>won copies</mark> to find the number of <b class='fw-bold' style='color: #91672C;'>total cards</b>.
+
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
-In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 starting cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won cards</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
+In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won copies</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
 
 $$
 \begin{aligned}
