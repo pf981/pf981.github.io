@@ -3,7 +3,7 @@ title: "2023 Day 4"
 subtitle: "Scratchcards"
 date: 2024-01-06
 categories: [python, medium, dynamic programming]
-draft: true
+draft: false
 knitr:
   opts_chunk: 
     comment: "#>"
@@ -278,17 +278,17 @@ Write the most naive and inefficient recursive solution you can come up with. Re
 ```{python}
 #| eval: false
 def count_scratchcards(i):
-  # 1. Base case: If we win a card that doesn't exist
-  if i > len(n_wins):
-    return 0
+    # 1. Base case: If we win a card that doesn't exist
+    if i > len(n_wins):
+        return 0
   
-  # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
-  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
 ```
 
 #### Step 2: Memoisation
 
-Our recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of the function.
+Our recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of a pure function.
 
 Luckily, this is just one line in python.
 
@@ -299,12 +299,12 @@ import functools
 
 @functools.cache # Memoisation
 def count_scratchcards(i):
-  # 1. Base case: If we win a card that doesn't exist
-  if i > len(n_wins):
-    return 0
+    # 1. Base case: If we win a card that doesn't exist
+    if i > len(n_wins):
+        return 0
   
-  # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
-  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
 ```
 
 
@@ -368,9 +368,9 @@ import functools
 
 @functools.cache
 def count_scratchcards(i):
-  if i > len(n_wins):
-    return 0
-  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+    if i > len(n_wins):
+        return 0
+    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
 
 
 answer2 = sum(count_scratchcards(i) for i in range(len(n_wins)))
@@ -396,8 +396,59 @@ print(answer2)
 </div>
 ```
 
-## Stocking Stuffers <small class="text-body-secondary">[Subtitle here]</small>
-[Extras here]
-[Put stuff about top-down vs bottom-up dynamic programming. Use fibonacci as an example. Overlapping subproblems. Recursion with memoisation is by far the easiest]
+<!-- ## Stocking Stuffers <small class="text-body-secondary">[Subtitle here]</small> -->
+
+<!-- **Dynamic programming** involves two steps: -->
+
+<!--  1. Breaking a problem down into subproblems. -->
+<!--  2. Recognising that many of these subproblems are equivalent. So as you solve each subproblem, you keep track of the answer. When you encounter a subproblem you've seen before, just reuse the answer. -->
+
+<!-- ::: {.callout-note} -->
+<!-- When you have `1` without `2`, you are employing **divide and conquer** and _not_ dynamic programming. E.g. quicksort and binary search. -->
+<!-- ::: -->
+
+<!-- Let's use the most common example, the **Fibonacci Numbers**. They're defined as -->
+<!-- $$ -->
+<!-- \begin{equation} -->
+<!-- F_n = -->
+<!--     \begin{cases} -->
+<!--         1 & \text{if } n = 1 \text{ or } n = 2\\ -->
+<!--         F_{n-1} + F_{n-2} & n \gt 2 -->
+<!--     \end{cases} -->
+<!-- \end{equation} -->
+<!-- $$ -->
+
+<!-- ### Top-Down: Memoisation -->
+<!-- The mathematical definition directly translates to a recursive definition in python. Slap a `@functools.cache` on that bad boy and you're done! -->
+<!-- ```{python} -->
+<!-- @functools.cache -->
+<!-- def fib(n): -->
+<!--   if n in (1, 2): -->
+<!--     return 1 -->
+<!--   return fib(n - 1) + fib(n - 2) -->
+<!-- ``` -->
+
+<!-- ### Bottom-Up: Tabulation -->
+<!-- ```{python} -->
+<!-- def fib(n): -->
+<!--   dp = [0] * (n + 1) -->
+<!--   dp[1] = 1 -->
+
+<!--   for i in range(2, n + 1): -->
+<!--     dp[i] = dp[i - 1] + dp[i - 2] -->
+
+<!--   return dp[n] -->
+<!-- ``` -->
+
+
+<!-- [Extras here] -->
+<!-- [Put stuff about top-down vs bottom-up dynamic programming. Use fibonacci as an example. Overlapping subproblems. Recursion with memoisation is by far the easiest] 
+
+Is it the fastest? Is it the most memory efficient?
+Consider the memory footprint - even though we don't have an array, we have STACK frames
+-->
+
+<!-- This grows _way_ faster than you'd expect
+What about 2 dimensional problems? What about 3 or more dimensions-->
 
 {{< include ../../_button_footer.qmd >}}
