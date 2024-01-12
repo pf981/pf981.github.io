@@ -18,7 +18,7 @@ Ho ho ho, fellow adventurers!
 
 In [Advent of Code day 4]({{< meta problem_url >}}) we must convince an elf to lend us his boat by helping him decipher his scratchcards.
 
-This puzzle propels us into the exciting world of **dynamic programming**, a technique for efficiently solving problems with **overlapping subproblems**. It's secret weapon against repetitive calculations!
+This puzzle propels us into the exciting world of **dynamic programming**, a technique for efficiently solving problems with **overlapping subproblems**. It's our secret weapon against repetitive calculations!
 
 Even if you're new to this, fear not! I'll share an easy intuitive approach that will work with almost any **dynamic programming** challenge.
 
@@ -150,7 +150,7 @@ print(answer1)
 </div>
 ```
 
-## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Clones</small>
+## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -242,10 +242,11 @@ flowchart LR
 </div>
 ```
 ::::
+:::::
 
 The example can be solved by constructing the graph and counting the number of nodes. However, our full input would have **millions** of nodes - that wouldn't be very efficient.
 
-### Identify DP
+### Spotting Subproblems Saves Seconds
 
 To tackle this problem, we first need to identify that this is a **dynamic programming** problem. How do we know that?
 
@@ -255,11 +256,13 @@ Now, how many **distinct subproblems** are there? That is, how many distinct nod
 
 This leads us to conclude that this is a dynamic programming problem as there are [**overlapping subproblems**]{.underline}.
 
-### What is DP
+### From Brute Force to Brilliance
+
+So how can dynamic programming help us?
 
 Rather than solving all `30` **subproblems**, we can just solve the `6` **distinct subproblems** and reuse those results. This saves us from repeating work we've already done.
 
-### Easy DP
+### Effortless Efficiency
 
 So now we know we need to use **dynamic programming**, but how do we do that? The thing is, unlike specific algorithms with defined steps, dynamic programming is a broad paradigm. There are multiple different ways to implement it.
 
@@ -267,7 +270,7 @@ I'm going to share the *easiest* and *most intuitive* way to implement dynamic p
 
 #### Step 1: Recursion
 
-Write the most naive and inefficient recursive solution you can come up with. Remember that a recursive has two components:
+Write the most naive and inefficient recursive solution you can come up with. Remember that a recursive function has two components:
 
 1. Base case
 2. Recursive case
@@ -285,7 +288,7 @@ def count_scratchcards(i):
 
 #### Step 2: Memoisation
 
-Or recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of the function.
+Our recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of the function.
 
 Luckily, this is just one line in python.
 
@@ -346,7 +349,7 @@ flowchart LR
   C[Card 3]:::cached  
   D[Card 4]:::cached
   E[Card 5]:::cached
-  F[Card 6]:::cached
+  F[Card 6]
   classDef default fill:#EDECFF
   classDef cached fill:#FFADAD
   classDef space fill:white,color:white,stroke:white
@@ -355,7 +358,9 @@ flowchart LR
 
 <div style="clear: both;"></div> 
 
-So our final answer sums up all of the original cards.
+### Scratchy Solution Summarised
+
+Our final answer sums up all of the original cards.
 
 ```{python}
 import functools
@@ -379,7 +384,11 @@ print(answer2)
     <p class="card-text">
 ```
 
-* [Part 2 key points here]
+* Uses **dynamic programming** via [**recursion with memoisation**]{.underline}
+* `count_scratchcards` naively recursively counts the `i`^th^ card
+  * **Base case:** If `i` exceeds the number of cards then there are `0` cards
+  * **Recursive case:** `1` (for the current card) plus the sum of subsequent cards
+* `@functools.cache` **memoises** the function meaning it executes only a few hundred times instead of millions
 
 ```{=html}
     </p>
