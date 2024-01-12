@@ -28,7 +28,7 @@ with open('input.txt', "r") as f:
     lines = f.read().splitlines()
 ```
 
-## Part 1 <small class="text-body-secondary">[Subtitle]</small>
+## Part 1 <small class="text-body-secondary">Multiplicative Match Mayhem</small>
 
 ::: {.hidden}
 $$
@@ -150,7 +150,7 @@ print(answer1)
 </div>
 ```
 
-## Part 2 <small class="text-body-secondary">[Subtitle here]</small>
+## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Clones</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -243,13 +243,119 @@ flowchart LR
 ```
 ::::
 
-[Part 2 here]
-With our input, we are going to end up with millions of scratch cards so we probably don't want to be counting each of them individually.
-What if we just prepend len(n_wins) to n_wins. Then the answer is just count_scratchcards(0) - 1
+The example can be solved by constructing the graph and counting the number of nodes. However, our full input would have **millions** of nodes - that wouldn't be very efficient.
 
-:::::
+### Identify DP
+
+To tackle this problem, we first need to identify that this is a **dynamic programming** problem. How do we know that?
+
+Well, how many subproblems do we need to solve in the example? Each node is a subproblem so there are `30` **subproblems**.
+
+Now, how many **distinct subproblems** are there? That is, how many distinct nodes are there? Only `6`!
+
+This leads us to conclude that this is a dynamic programming problem as there are [**overlapping subproblems**]{.underline}.
+
+### What is DP
+
+Rather than solving all `30` **subproblems**, we can just solve the `6` **distinct subproblems** and reuse those results. This saves us from repeating work we've already done.
+
+### Easy DP
+
+So now we know we need to use **dynamic programming**, but how do we do that? The thing is, unlike specific algorithms with defined steps, dynamic programming is a broad paradigm. There are multiple different ways to implement it.
+
+I'm going to share the *easiest* and *most intuitive* way to implement dynamic programming: [**recursion with memoisation**]{.underline}
+
+#### Step 1: Recursion
+
+Write the most naive and inefficient recursive solution you can come up with. Remember that a recursive has two components:
+
+1. Base case
+2. Recursive case
+
+```{python}
+#| eval: false
+def count_scratchcards(i):
+  # 1. Base case: If we win a card that doesn't exist
+  if i > len(n_wins):
+    return 0
+  
+  # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+```
+
+#### Step 2: Memoisation
+
+Or recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of the function.
+
+Luckily, this is just one line in python.
+
+```{python}
+#| eval: false
+import functools
+
+
+@functools.cache # Memoisation
+def count_scratchcards(i):
+  # 1. Base case: If we win a card that doesn't exist
+  if i > len(n_wins):
+    return 0
+  
+  # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+  return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+```
+
+
+Here's what this looks like showing <mark class='fw-bold' style='background-color: #EDECFF'>calculated</mark> and <mark class='fw-bold' style='background-color: #FFADAD'>cached</mark> nodes.
+
+:::{.d-flex .justify-content-center}
+```{mermaid}
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#55595c',
+      'primaryTextColor': '#55595c',
+      'primaryBorderColor': '#C2C2C2',
+      'lineColor': '#C2C2C2',
+      'secondaryColor': '#C2C2C2',
+      'tertiaryColor': '#fff',
+      'background': '#FFFFFF',
+      'mainBkg': '#FFFFFF',
+      'clusterBkg': '#ededed',
+      'fontFamily': 'Nunito Sans'
+    },
+    'flowchart': {
+      'nodeSpacing': 15,
+      'rankSpacing': 50
+    }
+  }
+}%%
+flowchart LR
+  A[Card 1] --> A1[Card 2]
+  A[Card 1] --> A2[Card 3]:::cached
+  A[Card 1] --> A3[Card 4]:::cached
+  A[Card 1] --> A4[Card 5]:::cached
+  A1 --> A11[Card 3]
+  A1 --> A12[Card 4]:::cached
+  A11 --> A111[Card 4]
+  A11 --> A112[Card 5]:::cached
+  A111[Card 4] --> A1111[Card 5]
+
+  X:::space
+  B[Card 2]:::cached
+  C[Card 3]:::cached  
+  D[Card 4]:::cached
+  E[Card 5]:::cached
+  F[Card 6]:::cached
+  classDef default fill:#EDECFF
+  classDef cached fill:#FFADAD
+  classDef space fill:white,color:white,stroke:white
+```
+:::
 
 <div style="clear: both;"></div> 
+
+So our final answer sums up all of the original cards.
 
 ```{python}
 import functools
