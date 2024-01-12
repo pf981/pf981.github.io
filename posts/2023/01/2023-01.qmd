@@ -17,6 +17,8 @@ Ho ho ho, fellow adventurers!
 
 [Advent of Code day 1]({{< meta problem_url >}}) has catapulted us into a realm of medieval engineering. Day 1 starts off easy with string manipulation.
 
+I narrowly missed the Part 1 leaderboard, landing at rank `119`. Just 4 seconds faster and I'd have cracked the top 100.
+
 First, we'll read the input.
 ```{python}
 with open('input.txt', "r") as f:
