@@ -246,7 +246,7 @@ flowchart LR
 
 The example can be solved by constructing the graph and counting the number of nodes. However, our full input would have **millions** of nodes - that wouldn't be very efficient.
 
-### Spotting Subproblems Saves Seconds
+### Spotting Superfluous Subproblems Saves Seconds
 
 To tackle this problem, we first need to identify that this is a **dynamic programming** problem. How do we know that?
 
