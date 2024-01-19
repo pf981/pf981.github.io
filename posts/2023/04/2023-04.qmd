@@ -58,6 +58,64 @@ $$
 $$
 \newcommand{\wins}[1]{\phantom{xxx}\llap{\grey{\text{#1}}}}
 $$
+
+<!-- Hidden PNG Mermaid chart for the preview image -->
+```{mermaid}
+%%| mermaid-format: png
+%%{
+  init: {
+    'theme': 'base',
+    'themeVariables': {
+      'primaryColor': '#55595c',
+      'primaryTextColor': '#55595c',
+      'primaryBorderColor': '#C2C2C2',
+      'lineColor': '#C2C2C2',
+      'secondaryColor': '#C2C2C2',
+      'tertiaryColor': '#fff',
+      'background': '#FFFFFF',
+      'mainBkg': '#FFFFFF',
+      'clusterBkg': '#ededed',
+      'fontFamily': 'Nunito Sans'
+    },
+    'flowchart': {
+      'nodeSpacing': 15,
+      'rankSpacing': 50
+    }
+  }
+}%%
+flowchart LR
+  A[Card 1]:::starting --> A1[Card 2]
+  A[Card 1] --> A2[Card 3]
+  A[Card 1] --> A3[Card 4]
+  A[Card 1] --> A4[Card 5]
+  A1 --> A11[Card 3]
+  A1 --> A12[Card 4]
+  A2 --> A21[Card 4]
+  A2 --> A22[Card 5]
+  A3[Card 4] --> A31[Card 5]
+  A11 --> A111[Card 4]
+  A11 --> A112[Card 5]
+  A12[Card 4] --> A121[Card 5]
+  A21[Card 4] --> A211[Card 5]
+  A111[Card 4] --> A1111[Card 5]
+
+  B[Card 2]:::starting --> B1[Card 3]
+  B[Card 2] --> B2[Card 4]
+  B1 --> B11[Card 4]
+  B1 --> B12[Card 5]
+  B11[Card 4] --> B111[Card 5]
+  B2 --> B21[Card 5]
+  
+  C[Card 3]:::starting --> C1[Card 4]
+  C[Card 3] --> C2[Card 5]
+  C1[Card 4] --> C11[Card 5]
+  
+  D[Card 4]:::starting --> D1[Card 5]
+  E[Card 5]:::starting
+  F[Card 6]:::starting
+  classDef default fill:#EDECFF
+  classDef starting fill:#FFF3BF
+```
 :::
 
 ::::: {.p-0 style="min-width: fit-content;"}
@@ -149,6 +207,7 @@ print(answer1)
   </div>
 </div>
 ```
+
 
 ## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small>
 
@@ -396,59 +455,60 @@ print(answer2)
 </div>
 ```
 
-<!-- ## Stocking Stuffers <small class="text-body-secondary">[Subtitle here]</small> -->
+## Stocking Stuffers <small class="text-body-secondary">Dynamic Programming for Dummies</small>
 
-<!-- **Dynamic programming** involves two steps: -->
+**Dynamic programming** involves two steps:
 
-<!--  1. Breaking a problem down into subproblems. -->
-<!--  2. Recognising that many of these subproblems are equivalent. So as you solve each subproblem, you keep track of the answer. When you encounter a subproblem you've seen before, just reuse the answer. -->
+ 1. Breaking a problem down into **subproblems**.
+ 2. Recognising that many of these subproblems are **equivalent**. As we solve each subproblem, we record its answer. When we encounter a subproblem again, we simply retrieve its stored solution, avoiding wasteful recalculations.
 
-<!-- ::: {.callout-note} -->
-<!-- When you have `1` without `2`, you are employing **divide and conquer** and _not_ dynamic programming. E.g. quicksort and binary search. -->
-<!-- ::: -->
+::: {.callout-note}
+When you have `1` without `2`, you are employing **divide and conquer** and _not_ dynamic programming. E.g. quicksort and binary search.
+:::
 
-<!-- Let's use the most common example, the **Fibonacci Numbers**. They're defined as -->
-<!-- $$ -->
-<!-- \begin{equation} -->
-<!-- F_n = -->
-<!--     \begin{cases} -->
-<!--         1 & \text{if } n = 1 \text{ or } n = 2\\ -->
-<!--         F_{n-1} + F_{n-2} & n \gt 2 -->
-<!--     \end{cases} -->
-<!-- \end{equation} -->
-<!-- $$ -->
+This can be implemented in two ways:
 
-<!-- ### Top-Down: Memoisation -->
-<!-- The mathematical definition directly translates to a recursive definition in python. Slap a `@functools.cache` on that bad boy and you're done! -->
-<!-- ```{python} -->
-<!-- @functools.cache -->
-<!-- def fib(n): -->
-<!--   if n in (1, 2): -->
-<!--     return 1 -->
-<!--   return fib(n - 1) + fib(n - 2) -->
-<!-- ``` -->
+ 1. **Top-down**: Starts with the whole problem, breaks it down into smaller subproblems, and recursively solves them, storing solutions to reuse as needed.
+ 2. **Bottom-up**: Starts with the smallest subproblems, solves them, and builds up to the larger problem, iteratively combining solutions until the whole problem is solved.
 
-<!-- ### Bottom-Up: Tabulation -->
-<!-- ```{python} -->
-<!-- def fib(n): -->
-<!--   dp = [0] * (n + 1) -->
-<!--   dp[1] = 1 -->
+Let's use the most common example, the **Fibonacci Numbers**. They're defined as
+$$
+\begin{equation}
+F_n =
+    \begin{cases}
+        1 & \text{if } n = 1 \text{ or } n = 2\\
+        F_{n-1} + F_{n-2} & n \gt 2
+    \end{cases}
+\end{equation}
+$$
 
-<!--   for i in range(2, n + 1): -->
-<!--     dp[i] = dp[i - 1] + dp[i - 2] -->
+### Top-Down
+The easiest way to implement top-down dynamic programming is [**recursion with memoisation**]{.underline}
 
-<!--   return dp[n] -->
-<!-- ``` -->
+Writing the problem recursively starts with the whole problem, breaks it down into smaller subproblems. Memoisation stores the solutions and reuses them as needed.
 
+The mathematical definition directly translates to a recursive definition in python. Slap a `@functools.cache` on that bad boy and you're done!
 
-<!-- [Extras here] -->
-<!-- [Put stuff about top-down vs bottom-up dynamic programming. Use fibonacci as an example. Overlapping subproblems. Recursion with memoisation is by far the easiest] 
+```{python}
+@functools.cache
+def fib(n):
+  if n in (1, 2):
+    return 1
+  return fib(n - 1) + fib(n - 2)
+```
 
-Is it the fastest? Is it the most memory efficient?
-Consider the memory footprint - even though we don't have an array, we have STACK frames
--->
+### Bottom-Up
+With bottom-up, we typically have an array that is conventionally called `dp`. We start with the smallest subproblem and build from there (`fib(1)`, `fib(2)`, `...`, `fib(n)`).
 
-<!-- This grows _way_ faster than you'd expect
-What about 2 dimensional problems? What about 3 or more dimensions-->
+```{python}
+def fib(n):
+  dp = [0] * (n + 1)
+  dp[1] = 1
+
+  for i in range(2, n + 1):
+    dp[i] = dp[i - 1] + dp[i - 2]
+
+  return dp[n]
+```
 
 {{< include ../../_button_footer.qmd >}}
