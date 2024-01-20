@@ -1,0 +1,228 @@
+---
+title: "2023 Day 5"
+subtitle: "If You Give A Seed A Fertilizer"
+date: 2024-01-20
+categories: [python, medium, dynamic programming]
+draft: false
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    collapse: true
+problem_url: "https://adventofcode.com/2023/day/5"
+description: "Medium difficulty intervals puzzle."
+---
+
+Ho ho ho, fellow adventurers!
+
+In [Advent of Code day 5]({{< meta problem_url >}}) [Intro]
+
+First, we'll read the input.
+```{python}
+with open('input.txt', "r") as f:
+    lines = f.read().splitlines()
+```
+
+## Part 1 <small class="text-body-secondary">[Part 1 Title]</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 1</h4>
+```
+
+Calculate the <b class='fw-bold' style='color: #91672C;'>sum</b> of scores of each card as one for the first <b class='fw-bold' style='color: #2F7E4A;'>match</b> and double for each subsequent <b class='fw-bold' style='color: #2F7E4A;'>match</b>.
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+```{r}
+```
+
+```{=html}
+  </div>
+</div>
+```
+
+:::::
+
+<div style="clear: both;"></div> 
+
+Part 1 is straightforward. We need to find the overlap of two sets and do some basic scoring.
+
+We can parse out the left and right numbers into `set`s. Then the number of wins is just the length of the intersection of those sets.
+
+```{python}
+#| eval: false
+import re
+
+
+cards = [[set(re.findall(r'\d+', side)) for side in line.split(':')[1].split('|')] for line in lines]
+n_wins = [len(have.intersection(want)) for have, want in cards]
+```
+
+The score can be calculated as
+$$
+\begin{equation}
+\text{score}(\text{wins})=
+    \begin{cases}
+        2^{\text{wins} - 1} & \text{if wins} \gt 0\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+$$
+
+```{python}
+#| eval: false
+answer1 = sum(2**(n - 1) for n in n_wins if n > 0)
+```
+
+Putting it all together
+```{python}
+#
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Parse the left and right numbers into `set`s
+* Calculate the number of wins as the length of the intersection of those `set`s
+* Calculate the score based off the number of wins
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+:::: {.pe-4}
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 2</h4>
+```
+
+Each <b class='fw-bold' style='color: #2F7E4A;'>match</b> wins copies of subsequent cards. Count all <mark class='fw-bold' style='background-color: #FFF3BF'>original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>won copies</mark> to find the number of <b class='fw-bold' style='color: #91672C;'>total cards</b>.
+
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won copies</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
+
+
+```{r}
+```
+
+```{=html}
+  </div>
+</div>
+```
+::::
+:::::
+
+The example can be solved by constructing the graph and counting the number of nodes. However, our full input would have **millions** of nodes - that wouldn't be very efficient.
+
+### Spotting Superfluous Subproblems Saves Seconds
+
+To tackle this problem, we first need to identify that this is a **dynamic programming** problem. How do we know that?
+
+Well, how many subproblems do we need to solve in the example? Each node is a subproblem so there are `30` **subproblems**.
+
+Now, how many **distinct subproblems** are there? That is, how many distinct nodes are there? Only `6`!
+
+This leads us to conclude that this is a dynamic programming problem as there are [**overlapping subproblems**]{.underline}.
+
+### From Brute Force to Brilliance
+
+So how can dynamic programming help us?
+
+Rather than solving all `30` **subproblems**, we can just solve the `6` **distinct subproblems** and reuse those results. This saves us from repeating work we've already done.
+
+### Effortless Efficiency
+
+So now we know we need to use **dynamic programming**, but how do we do that? The thing is, unlike specific algorithms with defined steps, dynamic programming is a broad paradigm. There are multiple different ways to implement it.
+
+I'm going to share the *easiest* and *most intuitive* way to implement dynamic programming: [**recursion with memoisation**]{.underline}
+
+#### Step 1: Recursion
+
+Write the most naive and inefficient recursive solution you can come up with. Remember that a recursive function has two components:
+
+1. Base case
+2. Recursive case
+
+```{python}
+#| eval: false
+def count_scratchcards(i):
+    # 1. Base case: If we win a card that doesn't exist
+    if i > len(n_wins):
+        return 0
+  
+    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+```
+
+#### Step 2: Memoisation
+
+Our recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of a pure function.
+
+Luckily, this is just one line in python.
+
+```{python}
+#| eval: false
+import functools
+
+
+@functools.cache # Memoisation
+def count_scratchcards(i):
+    # 1. Base case: If we win a card that doesn't exist
+    if i > len(n_wins):
+        return 0
+  
+    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
+    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
+```
+
+
+Here's what this looks like showing <mark class='fw-bold' style='background-color: #EDECFF'>calculated</mark> and <mark class='fw-bold' style='background-color: #FFADAD'>cached</mark> nodes.
+
+<div style="clear: both;"></div> 
+
+### Scratchy Solution Summarised
+
+Our final answer sums up all of the original cards.
+
+```{python}
+#
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Uses **dynamic programming** via [**recursion with memoisation**]{.underline}
+* `count_scratchcards` naively recursively counts the `i`^th^ card
+  * **Base case:** If `i` exceeds the number of cards then there are `0` cards
+  * **Recursive case:** `1` (for the current card) plus the sum of subsequent cards
+* `@functools.cache` **memoises** the function meaning it executes only a few hundred times instead of millions
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+{{< include ../../_button_footer.qmd >}}
