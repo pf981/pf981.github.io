@@ -37,14 +37,14 @@ Calculate the <b class='fw-bold' style='color: #91672C;'>sum</b> of scores of ea
 <h6 class="card-subtitle text-muted">Example</h6>
 
 ```{r dev="svg"}
-#| fig-width: 5
-#| fig-height: 4
 #| dpi: 216
 #| code-fold: true
 #| code-summary: "Figure Source"
 #| warning: false
 library(tidyverse)
 
+#| fig-width: 5
+#| fig-height: 4
 text <- "seeds: 79 14 55 13
 
 seed-to-soil map:
@@ -95,164 +95,86 @@ steps <-
       as_tibble() |>
       set_names(c("dest_start", "source_start", "range_len")) |>
       mutate(across(everything(), as.numeric))
-  }) |>
-  list_rbind(names_to = "step")
+  })
 
-segment_df <-
+get_path <- function(seed) {
+  value <- seed
+  step <- 1
+  path <- list()
+  
+  while (step <= length(steps)) {
+    dest <-
+      steps[[step]] |>
+      mutate(
+        is_valid = value >= source_start & value < source_start + range_len,
+        dest = dest_start + value - source_start
+      ) |>
+      filter(value >= source_start & value < source_start + range_len) |>
+      pull(dest)
+    
+    new_value <- c(dest, value)[1]
+    path <- bind_rows(
+      path,
+      tibble(
+        x = value,
+        xend = new_value,
+        y = 9 - step,
+        yend = y - 1
+      )
+    )
+    value = new_value
+    step <- step + 1
+  }
+  path
+}
+
+paths <-
+  seeds |>
+  map(get_path) |>
+  list_rbind()
+
+plot_df <-
   steps |>
-  pivot_longer(
-    cols = ends_with("start"),
-    names_to = "side",
-    values_to = "start"
+  list_rbind(names_to = "step") |>
+  mutate(
+    y = 9 - step,
+    yend = y - 1,
+    x = map2(source_start, range_len, \(start, range) start + seq_len(range) - 1),
+    xend = map2(dest_start, range_len, \(start, range) start + seq_len(range) - 1)
+  ) |>
+  unnest()
+
+points <-
+  bind_rows(
+    paths |> select(x, y),
+    paths |> select(x = xend, y = yend)
   ) |>
   mutate(
-    end = start + range_len,
-    offset = 0.1 * ifelse(side == "source_start", -1, 1),
-    step =
-      factor(
-        step + (side == "dest_start"),
-        labels  = c("Seed", "Soil", "Fertilizer", "Water", "Light", "Temperature", "Humidity", "Location")
-      ) |>
-      fct_rev()
-  )
-
-arrow_df <-
-  steps |>
-  mutate(
-    x = source_start + range_len / 2,
-    xend = dest_start + range_len / 2,
-    y = 9 - step - 0.15,
-    yend = y - 1 + 0.3,
-    .keep = "none"
+    col = case_when(
+      y == 8 ~ "#2F7E4A",
+      y == 1 & x == 35 ~ "#91672C",
+      TRUE ~ "#1577A0"
+    ),
+    size = ifelse(col == "#1577A0", 1.1, 3)
   )
 
 p <-
-  ggplot(segment_df, aes(start, step, xend = end, yend = step)) +
-  geom_segment(
-    arrow = arrow(ends = "both", angle = 90, length = unit(0.01, "npc")),
-    position = position_nudge(x = 0, y = segment_df$offset)
+  ggplot(plot_df, aes(x, y, xend = xend, yend = yend)) +
+  geom_segment(alpha = 0.5, col = "#969696") +
+  geom_segment(data = paths, col = "#1577A0") +
+  geom_point(
+    data = points,
+    mapping = aes(x, y, col = I(col), size = I(size), xend = NULL, yend = NULL)
   ) +
-  geom_segment(
-    data = arrow_df,
-    mapping = aes(x, y, xend = xend, yend = yend),
-    arrow = arrow(length = unit(0.02, "npc"), type = "closed"),
-    lineend = "round",
-    size = 1,
-    col = "grey70",
-    alpha = 0.8
-  ) +
-  geom_segment(
-    arrow = arrow(ends = "both", angle = 90, length = unit(0.01, "npc")),
-    position = position_nudge(x = 0, y = segment_df$offset)
+  scale_y_continuous(
+    breaks = seq_len(8),
+    labels = rev(c("Seed", "Soil", "Fertilizer", "Water", "Light", "Temperature", "Humidity", "Location"))
   ) +
   theme_void() +
   theme(
     axis.text.y = element_text(margin = margin(r = 0.8 * 11 / 2), hjust = 1)
   )
 
-
-# 
-# |>
-#   str_split("") |>
-#   map(enframe, name = "col") |>
-#   list_rbind(names_to = "row") |>
-#   mutate(
-#     color = case_when(
-#       value %in% c("*", "#", "+", "$") ~ "#BE4844",
-#       row == 1 & col > 5 ~ "#969696",
-#       row == 6 ~ "#969696",
-#       !is.na(as.numeric(value)) ~ "#2F7E4A",
-#       .default = "#969696"
-#     ),
-#     fontface = case_when(
-#       color != "#969696" ~ "bold",
-#       .default = "plain"
-#     )
-#   )
-# 
-# add <- function(row, label, plus = TRUE, is_result = FALSE) {
-#   component <- annotate(
-#     geom = "text",
-#     x = 15,
-#     y = row,
-#     size = 7,
-#     hjust = "right",
-#     vjust = "middle",
-#     color = ifelse(is_result, "#91672C", "#969696"),
-#     fontface = ifelse(is_result, "bold", "plain"),
-#     label = label,
-#     family = "LM Roman 10"
-#   )
-#   if (plus) {
-#     component <- list(
-#       component, 
-#       annotate(
-#         geom = "text",
-#         x = 15,
-#         y = row + 0.5,
-#         size = 6,
-#         hjust = "left",
-#         vjust = "middle",
-#         color = "#969696",
-#         label = "+",
-#         family = "LM Roman 10"
-#       )
-#     )
-#   }
-#   component
-# }
-# 
-# neighbors <- function(row, col, highlight = character()) {
-#   draw_arrow <- function(direction) {
-#     dr <- 0.55 * (str_detect(direction, "S") - str_detect(direction, "N"))
-#     dc <- 0.55 * (str_detect(direction, "E") - str_detect(direction, "W"))
-#     if (dr != 0 && dc != 0) {
-#       dr <- dr * 0.8
-#       dc <- dc * 0.8
-#     }
-#     annotate(
-#       geom = "segment",
-#       x = col + dc,
-#       xend = col + (dc * 1.00001),
-#       y = row + dr,
-#       yend = row + (dr * 1.00001),
-#       #size = 1,
-#       color = ifelse(direction %in% highlight, "#1577A0", "#C2C2C2"),
-#       arrow = arrow(length = unit(0.015, "npc"), type = "closed")
-#     )
-#   }
-#   map(c("N", "NE", "E", "SE", "S", "SW", "W", "NW"), draw_arrow)
-# }
-# 
-# df |>
-#   ggplot(aes(col, row, label = value, fontface = fontface, col = I(color))) +
-#   geom_text(size = 7, family = "LM Roman 10") +
-#   scale_y_reverse(
-#     limits = c(12, 0),
-#     expand = c(0, 0)
-#   ) +
-#   add(1, "467") +
-#   add(3, "35 + 633") +
-#   add(5, "617") +
-#   add(7, "592") +
-#   add(8, "755") +
-#   add(10, "664 + 598", plus = FALSE) +
-#   add(11, "4361", plus = FALSE, is_result = TRUE) +
-#   neighbors(2, 4, c("S", "SW", "NW")) +
-#   neighbors(4, 7, c("N", "NE")) +
-#   neighbors(5, 4, c("W")) +
-#   neighbors(6, 6, c("SW")) +
-#   neighbors(9, 4, c("S", "SW")) +
-#   neighbors(9, 6, c("NE", "SE", "S")) +
-#   annotate(
-#     geom = "segment",
-#     x = 11.5,
-#     xend = 15,
-#     y = 10.5,
-#     yend = 10.5,
-#     color = "#969696"
-#   ) +
-#   theme_void()
 p
 ```
 
