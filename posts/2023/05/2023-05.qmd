@@ -212,7 +212,7 @@ plot_seeds(seeds)
 
 <div style="clear: both;"></div> 
 
-Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category (e.g., soil) based on the formula `dest_start + (seed - source_start)`. If the seed value doesn't fall within any range in a map, it remains unchanged.
+Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category based on the formula `dest_start + (seed - source_start)`. If the seed value doesn't fall within any range in a map, it remains unchanged.
 
 After processing all the maps for a seed, we add its final converted value (which corresponds to the location category in the last map) to a list. Finally, we find the minimum value in the locations list.
 
