@@ -1465,34 +1465,34 @@ Example
 </div>
 <div class="modal-body">
 <div class="cell" data-file="solution.py">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># with open('input.txt', "r") as f:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#     lines = f.readlines()</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>with <span class="fu">open</span>(<span class="st">'input.txt'</span>, <span class="st">"r"</span>) as f<span class="sc">:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>    lines <span class="ot">=</span> <span class="fu">f.readlines</span>()</span>
 <span id="cb5-3"><a href="#cb5-3"></a></span>
 <span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># def first_value(line, m):</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#   for i, _ in enumerate(line):</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#     for text, val in m.items():</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#       if line[i:].startswith(text):</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#         return val</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># </span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># m = {c: int(c) for c in '123456789'}</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># </span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># answer1 = sum(10 * first_value(line, m) + first_value(line[::-1], m) for line in lines)</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># print(answer1)</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co"># </span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co"># </span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># # Part 2</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co"># words = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co"># m.update({text: i for i, text in enumerate(words, 1)})</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co"># rev_m = {text[::-1]: value for text, value in m.items()}</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co"># </span></span>
-<span id="cb5-23"><a href="#cb5-23"></a><span class="co"># answer2 = sum(10 * first_value(line, m) + first_value(line[::-1], rev_m) for line in lines)</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co"># print(answer2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5"></a>def <span class="fu">first_value</span>(line, m)<span class="sc">:</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="cf">for</span> i, _ <span class="cf">in</span> <span class="fu">enumerate</span>(line)<span class="sc">:</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="cf">for</span> text, val <span class="cf">in</span> <span class="fu">m.items</span>()<span class="sc">:</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>      <span class="cf">if</span> line[i<span class="sc">:</span>]<span class="fu">.startswith</span>(text)<span class="sc">:</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>        return val</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a>m <span class="ot">=</span> {c<span class="sc">:</span> <span class="fu">int</span>(c) <span class="cf">for</span> c <span class="cf">in</span> <span class="st">'123456789'</span>}</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a>answer1 <span class="ot">=</span> <span class="fu">sum</span>(<span class="dv">10</span> <span class="sc">*</span> <span class="fu">first_value</span>(line, m) <span class="sc">+</span> <span class="fu">first_value</span>(line[<span class="sc">::-</span><span class="dv">1</span>], m) <span class="cf">for</span> line <span class="cf">in</span> lines)</span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="fu">print</span>(answer1)</span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># Part 2</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>words <span class="ot">=</span> [<span class="st">'one'</span>, <span class="st">'two'</span>, <span class="st">'three'</span>, <span class="st">'four'</span>, <span class="st">'five'</span>, <span class="st">'six'</span>, <span class="st">'seven'</span>, <span class="st">'eight'</span>, <span class="st">'nine'</span>]</span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="fu">m.update</span>({text<span class="sc">:</span> i <span class="cf">for</span> i, text <span class="cf">in</span> <span class="fu">enumerate</span>(words, <span class="dv">1</span>)})</span>
+<span id="cb5-21"><a href="#cb5-21"></a>rev_m <span class="ot">=</span> {text[<span class="sc">::-</span><span class="dv">1</span>]<span class="sc">:</span> value <span class="cf">for</span> text, value <span class="cf">in</span> <span class="fu">m.items</span>()}</span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a>answer2 <span class="ot">=</span> <span class="fu">sum</span>(<span class="dv">10</span> <span class="sc">*</span> <span class="fu">first_value</span>(line, m) <span class="sc">+</span> <span class="fu">first_value</span>(line[<span class="sc">::-</span><span class="dv">1</span>], rev_m) <span class="cf">for</span> line <span class="cf">in</span> lines)</span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="fu">print</span>(answer2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="modal-footer">
-<small><i>Execution took 0.01 seconds</i></small>
+<small><i>Execution took 0.05 seconds</i></small>
 </div>
 </div>
 </div>
