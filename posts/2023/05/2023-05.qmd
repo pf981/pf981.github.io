@@ -336,11 +336,12 @@ print(answer2)
     <p class="card-text">
 ```
 
-* Uses **dynamic programming** via [**recursion with memoisation**]{.underline}
-* `count_scratchcards` naively recursively counts the `i`^th^ card
-  * **Base case:** If `i` exceeds the number of cards then there are `0` cards
-  * **Recursive case:** `1` (for the current card) plus the sum of subsequent cards
-* `@functools.cache` **memoises** the function meaning it executes only a few hundred times instead of millions
+* Don't iterate over all possible seeds as that would take minutes
+* Instead, maintain contiguous ranges at each step
+* `get_smallest_range` will find the smallest location accessible in the `i`th step for the given range at that step
+* If the current range overlaps with a mapping range, map the overlapping portion and check the portion that doesn't overlap
+* `insert_missing_ranges` ensures that the range `0` to `10 billion` is fully covered by filling in missing ranges
+* Guaranteeing no holes makes the overlap detection and splitting simpler
 
 ```{=html}
     </p>
