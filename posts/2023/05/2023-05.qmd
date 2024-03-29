@@ -266,10 +266,13 @@ seeds |>
 :::::
 
 
-
-
 <div style="clear: both;"></div> 
 
+At first, this seems simple. Just update the list of seeds to contain all the seeds in the ranges. Unfortunately, there are billions of seeds so that would take several minutes.
+
+Instead, we can keep everything as ranges and map those ranges through the different steps. When we map a range we need to identify how ranges overlap and, in some cases, split ranges into pieces.
+
+Overlap detection and splitting will be simpler if we don't have any gaps. So let's fill in all the holes for all the maps.
 
 ```{python}
 def insert_missing_ranges(maps):
@@ -289,7 +292,13 @@ def insert_missing_ranges(maps):
 
     maps.sort(key=lambda e: e[1])
 
+for maps in maps_list:
+    insert_missing_ranges(maps)
+```
 
+Now, map each of the ranges through all of the steps. If a range overlaps with a mapping range, map the overlapping portion and continue checkking the unmapped portion if there is any left.
+
+```{python}
 def get_smallest_range(i, in_start, in_range_len):
     if i == len(maps_list):
         return in_start
@@ -318,10 +327,6 @@ def get_smallest_range(i, in_start, in_range_len):
 
     outputs = [get_smallest_range(i + 1, out_start, out_range_len) for out_start, out_range_len in output_ranges]
     return min(outputs) if outputs else float('inf')
-
-
-for maps in maps_list:
-    insert_missing_ranges(maps)
 
 starting_ranges = [seeds[i:i+2] for i in range(0, len(seeds), 2)]
 answer2 = min(get_smallest_range(0, in_start, in_range_len) for in_start, in_range_len in starting_ranges)
