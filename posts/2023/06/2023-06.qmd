@@ -56,14 +56,17 @@ A series of <b class='fw-bold' style='color: #3F3F3F;'>mappings</b> describe how
 <h6 class="card-subtitle text-muted">Example</h6>
 
 ```{r dev="svg"}
-#| dpi: 216
 #| code-fold: true
 #| code-summary: "Figure Source"
 #| warning: false
+#| fig-height: 7
 library(tidyverse)
+# dpi:216
+# | dpi: 10000
+# | fig-dpi: 10000
 
 #| fig-width: 5
-#| fig-height: 4
+#| fig-height: 6
 text <- "Time:      7  15   30
 Distance:  9  40  200"
 
@@ -72,65 +75,64 @@ lines <-
   map(\(line) str_extract_all(line, "\\d+", simplify = TRUE)) |>
   map(as.numeric)
 
+count_ways <- function(t, d) {
+  upper <- (-t - sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  lower <- (-t + sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  ceiling(upper) - floor(lower) - 1
+}
 
-# race_duration <- 7
-# record <- 9
-race_duration <- 30
-record <- 200
-
-df <-
-  tibble(wait_time = seq(from = 0, to = race_duration, by = 1)) |>
-  mutate(
-    distance = wait_time * (race_duration - wait_time),
-    fill = case_when(
-      distance > record ~ "#1577A0",
-      TRUE ~ "#969696"
+create_plot <- function(race_id, race_duration, record) {
+  df <- tibble(wait_time = seq(from = 0, to = race_duration, by = 1)) |>
+    mutate(
+      distance = wait_time * (race_duration - wait_time),
+      fill = case_when(
+        distance > record ~ "#1577A0",
+        TRUE ~ "#969696"
+      )
     )
-  )
+  
+  ggplot(df, aes(wait_time, distance, fill = I(fill))) +
+    geom_col() +
+    geom_hline(
+      aes(yintercept = record),
+      data = NULL,
+      col = "#BE4844",
+      linetype = "longdash",
+      size = 0.8
+    ) +
+    scale_x_continuous(
+      breaks = seq(from = 0, to = race_duration, by = 1),
+      limits = c(0, 30),
+      expand = c(0, 0)
+    ) +
+    scale_y_continuous(
+      # breaks = seq(from = 0, to = 230, by = 1),
+      # breaks = scales::breaks_pretty(df$distance, n = 4),
+      breaks = c(scales::breaks_pretty(n = 4)(df$distance), record),
+      limits = c(0, max(df$distance) * 1.05),
+      expand = c(0, 0)
+    ) +
+    coord_cartesian(clip = "off") +
+    labs(
+      title = glue::glue("Race {race_id}"),
+      subtitle = glue::glue("Race Duration: {race_duration}ms, Record: {record}mm, Ways to Beat Record: {count_ways(race_duration, record)}"),
+      x = "Wait Time (ms)",
+      y = "Distance (mm)"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.grid = element_blank(),
+      axis.line.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.line.y.left = element_line(color  = "#CCCCCC"),
+      axis.ticks.y.left = element_line(color  = "#CCCCCC"),
+      axis.text.x = element_text(angle = 45, hjust = 1, colour = ifelse(df$wait_time == 7, "orange", "black"))
+    )
+}
 
-# I think just color the x tick of 30
-# ggtext element_markdown
-ggplot(df, aes(wait_time, distance, fill = I(fill))) +
-  geom_col() +
-  geom_hline(aes(yintercept = record), data = NULL, col = "#BE4844", linetype = "longdash", size = 0.8) +
-  annotate(
-    "text",
-    x = 30,
-    y = record + 2,
-    label = glue::glue("Record: {record}mm"),
-    hjust = "right",
-    vjust = "bottom"
-  ) +
-  annotation_custom(
-    grid::textGrob(glue::glue("Race Duration: {race_duration}ms"), gp = grid::gpar(fontsize = 12)),
-    xmin = 25,
-    xmax = 25,
-    ymin = -12,
-    ymax= -12
-  ) + 
-  scale_x_continuous(
-    breaks = seq(from = 0, to = 30, by = 1),
-    limits = c(0, 30),
-    expand = c(0, 0)
-  ) +
-  scale_y_continuous(
-    # breaks = seq(from = 0, to = 230, by = 1),
-    limits = c(0, 230),
-    expand = c(0, 0)
-  ) +
-  coord_cartesian(clip = "off") +
-  labs(
-    x = "Wait Time (ms)",
-    y = "Distance (mm)"
-  ) +
-  theme_minimal() +
-  theme(
-    panel.grid = element_blank(),
-    axis.line.x.bottom = element_line(color  = "#CCCCCC"),
-    axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
-    axis.line.y.left = element_line(color  = "#CCCCCC"),
-    axis.ticks.y.left = element_line(color  = "#CCCCCC")
-  )
+plots <- pmap(list(seq_along(lines[[1]]), lines[[1]], lines[[2]]), create_plot)
+
+cowplot::plot_grid(plotlist = plots, ncol=1)
 ```
 
 ```{=html}
