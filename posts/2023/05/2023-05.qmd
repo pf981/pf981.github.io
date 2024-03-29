@@ -12,6 +12,23 @@ problem_url: "https://adventofcode.com/2023/day/5"
 description: "Medium difficulty intervals puzzle."
 ---
 
+```{r}
+#| echo: false
+#| output: false
+# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
+sysfonts::font_paths("../../../fonts")
+
+sysfonts::font_add(
+  "LM Roman 10",
+  regular = "lmroman10-regular-webfont.ttf",
+  bold = "lmroman10-bold-webfont.ttf",
+  italic = "lmroman10-italic-webfont.ttf",
+  bolditalic = "lmroman10-bolditalic-webfont.ttf"
+)
+
+showtext::showtext_auto()
+```
+
 Ho ho ho, fellow adventurers!
 
 In [Advent of Code day 5]({{< meta problem_url >}}) we're tasked with helping the gardener plant seeds and optimise food production.
@@ -174,7 +191,11 @@ plot_seeds <- function(seeds) {
     ) +
     theme_void() +
     theme(
-      axis.text.y = element_text(margin = margin(r = 0.8 * 11 / 2), hjust = 1)
+      axis.text.y = element_text(
+        family = "LM Roman 10",
+        margin = margin(r = 0.8 * 11 / 2),
+        hjust = 1
+      )
     )
 }
 
@@ -257,7 +278,7 @@ Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b
 #| code-summary: "Figure Source"
 #| warning: false
 seeds |>
-  split(ceiling(seq_along(seeds)/2)) |>
+  split(ceiling(seq_along(seeds) / 2)) |>
   map(\(l) seq(l[1], l[1] + l[2])) |>
   unlist() |>
   plot_seeds()
