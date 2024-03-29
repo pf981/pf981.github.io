@@ -32,7 +32,7 @@ with open('input.txt', "r") as f:
     <h4 class="card-title mt-0">Task 1</h4>
 ```
 
-Calculate the <b class='fw-bold' style='color: #91672C;'>sum</b> of scores of each card as one for the first <b class='fw-bold' style='color: #2F7E4A;'>match</b> and double for each subsequent <b class='fw-bold' style='color: #2F7E4A;'>match</b>.
+A series of <b class='fw-bold' style='color: #3F3F3F;'>mappings</b> describe how values transition from `Seed` to `Soil` to `Fertaliser` to ... to `Location`. Find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible from a list of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
