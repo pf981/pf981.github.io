@@ -28,7 +28,7 @@ website:
               file: posts/2023/04/2023-04.qmd
   page-navigation: true
   page-footer:
-    left: '&copy; Paul Foster, 2023'
+    left: '&copy; Paul Foster, 2024'
 
 format:
   html:
