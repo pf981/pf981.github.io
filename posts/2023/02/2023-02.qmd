@@ -10,6 +10,7 @@ knitr:
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/2"
 description: "Easy puzzle with basic regex and arithmetic."
+image: "/images/2023-02.svg"
 ---
 
 Ho ho ho, fellow adventurers!

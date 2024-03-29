@@ -11,6 +11,7 @@ knitr:
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/1"
 description: "Easy string manipulation."
+image: "/images/2023-01.svg"
 ---
 
 Ho ho ho, fellow adventurers!
