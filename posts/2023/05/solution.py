@@ -6,8 +6,8 @@ with open('input.txt', "r") as f:
 
 
 seeds, *maps_list = text.split('\n\n')
-seeds = [int(x) for x in re.findall('\d+', seeds)]
-maps_list = [[[int(x) for x in re.findall('\d+', line)] for line in maps.splitlines()[1:]] for maps in maps_list]
+seeds = [int(x) for x in re.findall(r'\d+', seeds)]
+maps_list = [[[int(x) for x in re.findall(r'\d+', line)] for line in maps.splitlines()[1:]] for maps in maps_list]
 
 locations = []
 for seed in seeds:
