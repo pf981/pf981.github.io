@@ -1,0 +1,255 @@
+---
+title: "2023 Day 6"
+subtitle: "Wait For It"
+date: 2024-03-29
+categories: [python, easy]
+draft: false
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    collapse: true
+problem_url: "https://adventofcode.com/2023/day/6"
+description: "Easy math puzzle."
+---
+
+```{r}
+#| echo: false
+#| output: false
+# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
+sysfonts::font_paths("../../../fonts")
+
+sysfonts::font_add(
+  "LM Roman 10",
+  regular = "lmroman10-regular-webfont.ttf",
+  bold = "lmroman10-bold-webfont.ttf",
+  italic = "lmroman10-italic-webfont.ttf",
+  bolditalic = "lmroman10-bolditalic-webfont.ttf"
+)
+
+showtext::showtext_auto()
+```
+
+Ho ho ho, fellow adventurers!
+
+In [Advent of Code day 6]({{< meta problem_url >}}) we're tasked with helping the gardener plant seeds and optimise food production.
+
+This puzzle introduces us to interval mapping. We're given a series of maps that define how values transition through different categories, like seeds to soil, soil to fertilizer, and so on.  These maps use intervals to describe the conversion process.
+
+First, we'll read the input.
+```{python}
+with open('input.txt', "r") as f:
+    lines = f.readlines()
+```
+
+## Part 1 <small class="text-body-secondary">Marvelous Maps</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 1</h4>
+```
+
+A series of <b class='fw-bold' style='color: #3F3F3F;'>mappings</b> describe how values transition from `Seed` to `Soil` to `Fertaliser` to ... to `Location`. Find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible from a list of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b>.
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+```{r dev="svg"}
+#| dpi: 216
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+library(tidyverse)
+
+#| fig-width: 5
+#| fig-height: 4
+text <- "Time:      7  15   30
+Distance:  9  40  200"
+
+lines <-
+  str_split_1(text, "\n") |>
+  map(\(line) str_extract_all(line, "\\d+", simplify = TRUE)) |>
+  map(as.numeric)
+
+
+# race_duration <- 7
+# record <- 9
+race_duration <- 30
+record <- 200
+
+df <-
+  tibble(wait_time = seq(from = 0, to = race_duration, by = 1)) |>
+  mutate(
+    distance = wait_time * (race_duration - wait_time),
+    fill = case_when(
+      distance > record ~ "#1577A0",
+      TRUE ~ "#969696"
+    )
+  )
+
+# I think just color the x tick of 30
+# ggtext element_markdown
+ggplot(df, aes(wait_time, distance, fill = I(fill))) +
+  geom_col() +
+  geom_hline(aes(yintercept = record), data = NULL, col = "#BE4844", linetype = "longdash", size = 0.8) +
+  annotate(
+    "text",
+    x = 30,
+    y = record + 2,
+    label = glue::glue("Record: {record}mm"),
+    hjust = "right",
+    vjust = "bottom"
+  ) +
+  annotation_custom(
+    grid::textGrob(glue::glue("Race Duration: {race_duration}ms"), gp = grid::gpar(fontsize = 12)),
+    xmin = 25,
+    xmax = 25,
+    ymin = -12,
+    ymax= -12
+  ) + 
+  scale_x_continuous(
+    breaks = seq(from = 0, to = 30, by = 1),
+    limits = c(0, 30),
+    expand = c(0, 0)
+  ) +
+  scale_y_continuous(
+    # breaks = seq(from = 0, to = 230, by = 1),
+    limits = c(0, 230),
+    expand = c(0, 0)
+  ) +
+  coord_cartesian(clip = "off") +
+  labs(
+    x = "Wait Time (ms)",
+    y = "Distance (mm)"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    axis.line.x.bottom = element_line(color  = "#CCCCCC"),
+    axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
+    axis.line.y.left = element_line(color  = "#CCCCCC"),
+    axis.ticks.y.left = element_line(color  = "#CCCCCC")
+  )
+```
+
+```{=html}
+  </div>
+</div>
+```
+
+:::::
+
+<div style="clear: both;"></div> 
+
+Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category based on the formula `dest_start + (seed - source_start)`. If the seed value doesn't fall within any range in a map, it remains unchanged.
+
+After processing all the maps for a seed, we add its final converted value (which corresponds to the location category in the last map) to a list. Finally, we find the minimum value in the locations list.
+
+```{python}
+import math
+import re
+
+
+def count_ways(T, D):
+    #     D = w * (T - w)
+    # =>  0 = -w**2 + T*w - D
+    # =>  zeroes at (-T +- sqrt(T**2 - 4*(-1)*(-D))) / 2*(-1)  (quadratic formula)
+    upper = (-T - math.sqrt(T ** 2 - 4 * (-1) * (-D))) / 2 * (-1)
+    lower = (-T + math.sqrt(T ** 2 - 4 * (-1) * (-D))) / 2 * (-1)
+    return math.ceil(upper) - math.floor(lower) - 1
+
+
+times, distances = [[int(x) for x in re.findall(r'\d+', line)] for line in lines]
+answer1 = math.prod(count_ways(time, distance) for time, distance in zip(times, distances))
+print(answer1)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Map each of the seeds from `Soil` to `Fertaliser` to ... to `Location`
+* At each step find the range which overlaps with the current value and use it to map to the next step
+* If no range matches then the value moves unchanged to the next step
+* Get the smallest `Location`
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+## Part 2 <small class="text-body-secondary">Intersecting Intervals</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+:::: {.pe-4}
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 2</h4>
+```
+
+Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b> find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible.
+
+
+<h6 class="card-subtitle text-muted">Example</h6>
+
+```{r dev="svg"}
+#| dpi: 216
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+# seeds |>
+#   split(ceiling(seq_along(seeds) / 2)) |>
+#   map(\(l) seq(l[1], l[1] + l[2])) |>
+#   unlist() |>
+#   plot_seeds()
+```
+
+```{=html}
+  </div>
+</div>
+```
+::::
+:::::
+
+
+<div style="clear: both;"></div> 
+
+At first, this seems simple. Just update the list of seeds to contain all the seeds in the ranges. Unfortunately, there are billions of seeds so that would take several minutes.
+
+```{python}
+time, distance = [int(''.join(str(x) for x in dim)) for dim in [times, distances]]
+answer2 = count_ways(time, distance)
+print(answer2)
+```
+
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Don't iterate over all possible seeds as that would take minutes
+* Instead, maintain contiguous ranges at each step
+* `get_smallest_range` will find the smallest location accessible in the `i`th step for the given range at that step
+* If the current range overlaps with a mapping range, map the overlapping portion and check the portion that doesn't overlap
+* `insert_missing_ranges` ensures that the range `0` to `10 billion` is fully covered by filling in missing ranges
+* Guaranteeing no holes makes the overlap detection and splitting simpler
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+{{< include ../../_button_footer.qmd >}}
