@@ -19,7 +19,7 @@ In [Advent of Code day 5]({{< meta problem_url >}}) [Intro]
 First, we'll read the input.
 ```{python}
 with open('input.txt', "r") as f:
-    lines = f.read().splitlines()
+    text = f.read()
 ```
 
 ## Part 1 <small class="text-body-secondary">[Part 1 Title]</small>
@@ -187,38 +187,26 @@ p
 
 <div style="clear: both;"></div> 
 
-Part 1 is straightforward. We need to find the overlap of two sets and do some basic scoring.
-
-We can parse out the left and right numbers into `set`s. Then the number of wins is just the length of the intersection of those sets.
 
 ```{python}
-#| eval: false
 import re
 
 
-cards = [[set(re.findall(r'\d+', side)) for side in line.split(':')[1].split('|')] for line in lines]
-n_wins = [len(have.intersection(want)) for have, want in cards]
-```
+seeds, *maps_list = text.split('\n\n')
+seeds = [int(x) for x in re.findall(r'\d+', seeds)]
+maps_list = [[[int(x) for x in re.findall(r'\d+', line)] for line in maps.splitlines()[1:]] for maps in maps_list]
 
-The score can be calculated as
-$$
-\begin{equation}
-\text{score}(\text{wins})=
-    \begin{cases}
-        2^{\text{wins} - 1} & \text{if wins} \gt 0\\
-        0 & \text{otherwise}
-    \end{cases}
-\end{equation}
-$$
+locations = []
+for seed in seeds:
+    for maps in maps_list:
+        for dest_start, source_start, range_len in maps:
+            if source_start <= seed < source_start + range_len:
+                seed = dest_start + (seed - source_start)
+                break
+    locations.append(seed)
 
-```{python}
-#| eval: false
-answer1 = sum(2**(n - 1) for n in n_wins if n > 0)
-```
-
-Putting it all together
-```{python}
-#
+answer1 = min(locations)
+print(answer1)
 ```
 
 ```{=html}
@@ -258,7 +246,11 @@ Each <b class='fw-bold' style='color: #2F7E4A;'>match</b> wins copies of subsequ
 In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won copies</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
 
 
-```{r}
+```{r dev="svg"}
+#| dpi: 216
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
 ```
 
 ```{=html}
@@ -268,81 +260,69 @@ In this example, there are <mark class='fw-bold' style='background-color: #FFF3B
 ::::
 :::::
 
-The example can be solved by constructing the graph and counting the number of nodes. However, our full input would have **millions** of nodes - that wouldn't be very efficient.
-
-### Spotting Superfluous Subproblems Saves Seconds
-
-To tackle this problem, we first need to identify that this is a **dynamic programming** problem. How do we know that?
-
-Well, how many subproblems do we need to solve in the example? Each node is a subproblem so there are `30` **subproblems**.
-
-Now, how many **distinct subproblems** are there? That is, how many distinct nodes are there? Only `6`!
-
-This leads us to conclude that this is a dynamic programming problem as there are [**overlapping subproblems**]{.underline}.
-
-### From Brute Force to Brilliance
-
-So how can dynamic programming help us?
-
-Rather than solving all `30` **subproblems**, we can just solve the `6` **distinct subproblems** and reuse those results. This saves us from repeating work we've already done.
-
-### Effortless Efficiency
-
-So now we know we need to use **dynamic programming**, but how do we do that? The thing is, unlike specific algorithms with defined steps, dynamic programming is a broad paradigm. There are multiple different ways to implement it.
-
-I'm going to share the *easiest* and *most intuitive* way to implement dynamic programming: [**recursion with memoisation**]{.underline}
-
-#### Step 1: Recursion
-
-Write the most naive and inefficient recursive solution you can come up with. Remember that a recursive function has two components:
-
-1. Base case
-2. Recursive case
-
-```{python}
-#| eval: false
-def count_scratchcards(i):
-    # 1. Base case: If we win a card that doesn't exist
-    if i > len(n_wins):
-        return 0
-  
-    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
-    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
-```
-
-#### Step 2: Memoisation
-
-Our recursive function essentially counts every node in the graph. To make it only execute computations for **distinct nodes** we just **memoise** the function! Memoisation is caching the results of a pure function.
-
-Luckily, this is just one line in python.
-
-```{python}
-#| eval: false
-import functools
 
 
-@functools.cache # Memoisation
-def count_scratchcards(i):
-    # 1. Base case: If we win a card that doesn't exist
-    if i > len(n_wins):
-        return 0
-  
-    # 2. Recursive case: The number of cards is this card (1) plus the sum of the next n cards
-    return 1 + sum(count_scratchcards(i + j + 1) for j in range(n_wins[i]))
-```
-
-
-Here's what this looks like showing <mark class='fw-bold' style='background-color: #EDECFF'>calculated</mark> and <mark class='fw-bold' style='background-color: #FFADAD'>cached</mark> nodes.
 
 <div style="clear: both;"></div> 
 
-### Scratchy Solution Summarised
-
-Our final answer sums up all of the original cards.
 
 ```{python}
-#
+def insert_missing_ranges(maps):
+    maps.sort(key=lambda e: e[1])
+    first_val = maps[0][1]
+    if first_val != 0:
+        maps.insert(0, [0, 0, first_val])
+    
+    last_val = maps[-1][1] + maps[-1][2]
+    maps.append([last_val, last_val, 10_000_000_000])
+
+    for i in range(len(maps) - 1):
+        end = maps[i][1] + maps[i][2]
+        start = maps[i+1][1]
+        if end != start:
+            maps.append((end, end, start - end))
+
+    maps.sort(key=lambda e: e[1])
+
+
+def get_smallest_range(i, in_start, in_range_len):
+    if i == len(maps_list):
+        return in_start
+
+    output_ranges = [] # (out_start, out_range_len) pairs
+    for dest_start, source_start, range_len in maps_list[i]:
+        # No overlap
+        if source_start + range_len <= in_start or source_start >= in_start + in_range_len:
+            continue
+        
+        # Assume overlap
+        if source_start == in_start: # Source starts at input start
+            overlap_start = in_start
+            overlap_range_len = min(range_len, in_range_len)
+        elif source_start < in_start: # Source starts to left
+            overlap_start = in_start
+            overlap_end = min(source_start + range_len, in_start + in_range_len)
+            overlap_range_len = overlap_end - in_start
+        else: # Source starts to right of input start
+            overlap_start = source_start
+            overlap_end = min(source_start + range_len, in_start + in_range_len)
+            overlap_range_len = overlap_end - source_start
+
+        overlap_start = overlap_start - source_start +  dest_start
+        output_ranges.append((overlap_start, overlap_range_len))
+
+    outputs = [get_smallest_range(i + 1, out_start, out_range_len) for out_start, out_range_len in output_ranges]
+    return min(outputs) if outputs else float('inf')
+
+
+for maps in maps_list:
+    insert_missing_ranges(maps)
+
+starting_ranges = [seeds[i:i+2] for i in range(0, len(seeds), 2)]
+answer2 = min(get_smallest_range(0, in_start, in_range_len) for in_start, in_range_len in starting_ranges)
+print(answer2)
 ```
+
 
 ```{=html}
 <div class="card border-info mb-3 mx-auto">
