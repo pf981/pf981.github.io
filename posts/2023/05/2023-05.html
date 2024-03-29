@@ -213,8 +213,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#part-1-part-1-title" id="toc-part-1-part-1-title" class="nav-link active" data-scroll-target="#part-1-part-1-title">Part 1 <small class="text-body-secondary">[Part 1 Title]</small></a></li>
-  <li><a href="#part-2-cutting-corners-caching-card-copies" id="toc-part-2-cutting-corners-caching-card-copies" class="nav-link" data-scroll-target="#part-2-cutting-corners-caching-card-copies">Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small></a></li>
+  <li><a href="#part-1-marvelous-maps" id="toc-part-1-marvelous-maps" class="nav-link active" data-scroll-target="#part-1-marvelous-maps">Part 1 <small class="text-body-secondary">Marvelous Maps</small></a></li>
+  <li><a href="#part-2-intersecting-intervals" id="toc-part-2-intersecting-intervals" class="nav-link" data-scroll-target="#part-2-intersecting-intervals">Part 2 <small class="text-body-secondary">Intersecting Intervals</small></a></li>
   </ul>
 </nav>
     </div>
@@ -269,8 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'input.txt'</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
 <span id="cb1-2"><a href="#cb1-2"></a>    text <span class="op">=</span> f.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="part-1-part-1-title" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-part-1-title">Part 1 <small class="text-body-secondary">[Part 1 Title]</small></h2>
+<section id="part-1-marvelous-maps" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-marvelous-maps">Part 1 <small class="text-body-secondary">Marvelous Maps</small></h2>
 <div class="p-0" style="min-width: fit-content;">
 <div class="card border-secondary mb-3 mx-auto">
   <div class="card-body p-3 m-1 pb-0 mb-0">
@@ -471,8 +471,8 @@ Example
   </div>
 </div>
 </section>
-<section id="part-2-cutting-corners-caching-card-copies" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-cutting-corners-caching-card-copies">Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small></h2>
+<section id="part-2-intersecting-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-intersecting-intervals">Part 2 <small class="text-body-secondary">Intersecting Intervals</small></h2>
 <div class="p-0" style="min-width: fit-content;">
 <div class="pe-4">
 <div class="card border-secondary mb-3 mx-auto">
@@ -486,7 +486,7 @@ Example
 <details>
 <summary>Figure Source</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>seeds <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">split</span>(<span class="fu">ceiling</span>(<span class="fu">seq_along</span>(seeds)<span class="sc">/</span><span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">split</span>(<span class="fu">ceiling</span>(<span class="fu">seq_along</span>(seeds) <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">map</span>(\(l) <span class="fu">seq</span>(l[<span class="dv">1</span>], l[<span class="dv">1</span>] <span class="sc">+</span> l[<span class="dv">2</span>])) <span class="sc">|&gt;</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">plot_seeds</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
