@@ -189,6 +189,9 @@ plot_seeds(seeds)
 
 <div style="clear: both;"></div> 
 
+Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category (e.g., soil) based on the formula `dest_start + (seed - source_start)`. If the seed value doesn't fall within any range in a map, it remains unchanged.
+
+After processing all the maps for a seed, we add its final converted value (which corresponds to the location category in the last map) to a list. Finally, we find the minimum value in the locations list.
 
 ```{python}
 import re
@@ -270,7 +273,7 @@ seeds |>
 
 At first, this seems simple. Just update the list of seeds to contain all the seeds in the ranges. Unfortunately, there are billions of seeds so that would take several minutes.
 
-Instead, we can keep everything as ranges and map those ranges through the different steps. When we map a range we need to identify how ranges overlap and, in some cases, split ranges into pieces.
+Instead of processing each individual seed within the initial ranges, we work directly with the ranges themselves. As we map these ranges through the conversion steps, we need to identify how they overlap with the ranges defined in each map. In some cases, this might involve splitting the initial range into smaller pieces
 
 Overlap detection and splitting will be simpler if we don't have any gaps. So let's fill in all the holes for all the maps.
 
