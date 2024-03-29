@@ -2,7 +2,7 @@
 title: "2023 Day 5"
 subtitle: "If You Give A Seed A Fertilizer"
 date: 2024-03-29
-categories: [python, medium, dynamic programming]
+categories: [python, medium, intervals]
 draft: false
 knitr:
   opts_chunk: 
@@ -14,7 +14,9 @@ description: "Medium difficulty intervals puzzle."
 
 Ho ho ho, fellow adventurers!
 
-In [Advent of Code day 5]({{< meta problem_url >}}) [Intro]
+In [Advent of Code day 5]({{< meta problem_url >}}) we're tasked with helping the gardener plant seeds and optimise food production.
+
+This puzzle introduces us to interval mapping. We're given a series of maps that define how values transition through different categories, like seeds to soil, soil to fertilizer, and so on.  These maps use intervals to describe the conversion process.
 
 First, we'll read the input.
 ```{python}
