@@ -41,7 +41,7 @@ with open('input.txt', "r") as f:
     text = f.read()
 ```
 
-## Part 1 <small class="text-body-secondary">[Part 1 Title]</small>
+## Part 1 <small class="text-body-secondary">Marvelous Maps</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -256,7 +256,7 @@ print(answer1)
 ```
 
 
-## Part 2 <small class="text-body-secondary">Cutting Corners Caching Card Copies</small>
+## Part 2 <small class="text-body-secondary">Intersecting Intervals</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
