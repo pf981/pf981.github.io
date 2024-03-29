@@ -1,7 +1,7 @@
 ---
 title: "2023 Day 5"
 subtitle: "If You Give A Seed A Fertilizer"
-date: 2024-01-20
+date: 2024-03-29
 categories: [python, medium, dynamic programming]
 draft: false
 knitr:
@@ -218,9 +218,10 @@ print(answer1)
     <p class="card-text">
 ```
 
-* Parse the left and right numbers into `set`s
-* Calculate the number of wins as the length of the intersection of those `set`s
-* Calculate the score based off the number of wins
+* Map each of the seeds from `Soil` to `Fertaliser` to ... to `Location`
+* At each step find the range which overlaps with the current value and use it to map to the next step
+* If no range matches then the value moves unchanged to the next step
+* Get the smallest `Location`
 
 ```{=html}
     </p>
@@ -240,13 +241,10 @@ print(answer1)
     <h4 class="card-title mt-0">Task 2</h4>
 ```
 
-Each <b class='fw-bold' style='color: #2F7E4A;'>match</b> wins copies of subsequent cards. Count all <mark class='fw-bold' style='background-color: #FFF3BF'>original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>won copies</mark> to find the number of <b class='fw-bold' style='color: #91672C;'>total cards</b>.
+Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b> find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible.
 
 
 <h6 class="card-subtitle text-muted">Example</h6>
-
-In this example, there are <mark class='fw-bold' style='background-color: #FFF3BF'>6 original cards</mark> and <mark class='fw-bold' style='background-color: #EDECFF;'>24 won copies</mark> for a total of <b class='fw-bold' style='color: #91672C;'>30</b> cards.
-
 
 ```{r dev="svg"}
 #| dpi: 216
