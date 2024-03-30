@@ -203,7 +203,7 @@ w_{lower} &= \frac{-T + \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
 \end{aligned}
 $$
 
-To find the number of ways to beat the record, we calculate the range between the ceiling of $w_{upper}$ and the floor of $w_{lower}$, subtracting $1$ to exclude the end point:
+To find the number of ways to beat the record, we calculate the number of integers in the open interval $(w_{lower}, w_{upper})$:
 $$\text{\blue{Number of ways}} = \lceil w_{upper} \rceil - \lfloor w_{lower} \rfloor - 1$$
 
 Then simply plug in the numbers for each race and get the <b class='fw-bold' style='color: #91672C;'>product</b> of the resulting values.
