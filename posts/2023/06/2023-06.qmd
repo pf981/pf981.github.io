@@ -180,7 +180,10 @@ Given:
 - $\red{D}$: Record distance that needs to be beaten, in millimeters.
 - $w$: Time in milliseconds for which the button is held down at the start of the race.
 
-The relationship between the distance a boat travels ($D$), the time the button is held ($w$), and the total race time ($T$) is given by the formula:
+The distance your boat travels when the button is held for $w$ milliseconds with total race time $T$ is:
+$$w \cdot (T - w)$$
+
+This matches the current record $D$, when:
 $$D = w \cdot (T - w)$$
 
 This can be rewritten as a quadratic equation in terms of $w$:
