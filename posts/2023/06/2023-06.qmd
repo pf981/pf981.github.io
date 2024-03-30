@@ -1,15 +1,15 @@
 ---
 title: "2023 Day 6"
 subtitle: "Wait For It"
-date: 2024-03-29
-categories: [python, easy]
+date: 2024-03-30
+categories: [python, easy, mathematics]
 draft: false
 knitr:
   opts_chunk: 
     comment: "#>"
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/6"
-description: "Easy math puzzle."
+description: "Easy mathematics puzzle."
 ---
 
 ```{r}
@@ -207,6 +207,7 @@ Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b
 #| code-fold: true
 #| code-summary: "Figure Source"
 #| warning: false
+#| fig-cap: "Tails zoomed 1000x for readability"
 # https://stackoverflow.com/questions/35511951/r-ggplot2-collapse-or-remove-segment-of-y-axis-from-scatter-plot
 squish_trans <- function(from, to, factor) {
   trans <- function(x) {
