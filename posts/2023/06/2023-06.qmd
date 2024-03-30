@@ -112,6 +112,7 @@ create_plot <- function(race_id, race_duration, record, x_limit = 30) {
       x = "",
       y = ""
     ) +
+    # theme_minimal(base_family = "LM Roman 10") +
     theme_minimal() +
     theme(
       panel.grid = element_blank(),
@@ -297,6 +298,7 @@ ggplot(NULL, aes(wait_time, distance)) +
       x = "Wait Time (ms)",
       y = "Distance (mm)"
     ) +
+    # theme_minimal(base_family = "LM Roman 10") +
     theme_minimal() +
     theme(
       axis.line.x.bottom = element_line(color  = "#CCCCCC"),
