@@ -278,15 +278,15 @@ ggplot(NULL, aes(wait_time, distance)) +
   ) +
   scale_x_continuous(
     minor_breaks = seq(from = 0, to = race_duration, length.out = 100),
-    # breaks = scales::pretty_breaks(20),
-    # labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{break_value}</b>"), as.character(break_value)),
+    labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{scales::label_comma()(break_value)}</b>"), scales::label_comma()(break_value)),
     breaks = c(0, 14, seq(from = 10000, to = 60000, by = 10000), 71516, race_duration),
     expand = c(0, 0),
     transform = squish_trans(lower_win , upper_win + 1, 1000)
   ) +
   scale_y_continuous(
-    breaks = c(0, record, seq(from = 100000000, to = 1500000000, by = 500000000)),
+    breaks = c(0, record, 100000000, 500000000, 1000000000),
     minor_breaks = seq(from = 0, to = 1279135224, length.out = 50),
+      labels = \(break_value) ifelse(break_value == record, glue::glue("<b style = 'color:#BE4844;'>{scales::label_comma()(break_value)}</b>"), scales::label_comma()(break_value)),
     transform = squish_trans(940200, 1279135224, 1000),
     expand = c(0, 0)
   ) +
@@ -298,14 +298,14 @@ ggplot(NULL, aes(wait_time, distance)) +
     ) +
     theme_minimal() +
     theme(
-      # panel.grid.minor = element_line(),
       axis.line.x.bottom = element_line(color  = "#CCCCCC"),
       axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
       axis.line.y.left = element_line(color  = "#CCCCCC"),
       axis.ticks.y.left = element_line(color  = "#CCCCCC"),
       axis.text.x = ggtext::element_markdown(),
       axis.text.y = ggtext::element_markdown(),
-      plot.subtitle = ggtext::element_markdown()
+      plot.subtitle = ggtext::element_markdown(),
+      plot.margin = margin(t = 0, r = 40, b = 0, l = 0, unit = "pt")
     )
 ```
 
