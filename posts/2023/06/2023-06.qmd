@@ -61,12 +61,7 @@ A series of <b class='fw-bold' style='color: #3F3F3F;'>mappings</b> describe how
 #| warning: false
 #| fig-height: 7
 library(tidyverse)
-# dpi:216
-# | dpi: 10000
-# | fig-dpi: 10000
 
-#| fig-width: 5
-#| fig-height: 6
 text <- "Time:      7  15   30
 Distance:  9  40  200"
 
@@ -81,7 +76,7 @@ count_ways <- function(t, d) {
   ceiling(upper) - floor(lower) - 1
 }
 
-create_plot <- function(race_id, race_duration, record) {
+create_plot <- function(race_id, race_duration, record, x_limit = 30) {
   df <- tibble(wait_time = seq(from = 0, to = race_duration, by = 1)) |>
     mutate(
       distance = wait_time * (race_duration - wait_time),
@@ -103,7 +98,7 @@ create_plot <- function(race_id, race_duration, record) {
     scale_x_continuous(
       breaks = seq(from = 0, to = race_duration, by = 1),
       labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{break_value}</b>"), as.character(break_value)),
-      limits = c(-0.5, 30),
+      limits = c(-0.5, x_limit),
       expand = c(0, 0)
     ) +
     scale_y_continuous(
@@ -111,7 +106,6 @@ create_plot <- function(race_id, race_duration, record) {
       labels = \(break_value) ifelse(break_value == record, glue::glue("<b style = 'color:#BE4844;'>{break_value}</b>"), as.character(break_value)),
       expand = c(0, 0)
     ) +
-    coord_cartesian(clip = "off") +
     labs(
       title = glue::glue("Race {race_id}"),
       subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {race_duration}ms</b>, <b style = 'color:#BE4844;'>Record: {record}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {count_ways(race_duration, record)}</b>"),
@@ -211,11 +205,99 @@ Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b
 #| code-fold: true
 #| code-summary: "Figure Source"
 #| warning: false
-# seeds |>
-#   split(ceiling(seq_along(seeds) / 2)) |>
-#   map(\(l) seq(l[1], l[1] + l[2])) |>
-#   unlist() |>
-#   plot_seeds()
+# https://stackoverflow.com/questions/35511951/r-ggplot2-collapse-or-remove-segment-of-y-axis-from-scatter-plot
+squish_trans <- function(from, to, factor) {
+  trans <- function(x) {
+    if (any(is.na(x))) return(x)
+    isq <- x > from & x < to
+    ito <- x >= to
+    
+    x[isq] <- from + (x[isq] - from)/factor
+    x[ito] <- from + (to - from)/factor + (x[ito] - to)
+    
+    x
+  }
+
+  inv <- function(x) {
+    if (any(is.na(x))) return(x)
+
+    isq <- x > from & x < from + (to - from)/factor
+    ito <- x >= from + (to - from)/factor
+
+    x[isq] <- from + (x[isq] - from) * factor
+    x[ito] <- to + (x[ito] - (from + (to - from)/factor))
+    
+    x
+  }
+  
+  scales::trans_new("squished", trans, inv)
+}
+
+time_distance <-
+  lines |>
+  map_chr(str_c, collapse = "") |>
+  map_int(as.integer)
+
+race_duration <- time_distance[[1]]
+record <- time_distance[[2]]
+
+lower_upper <- function(t, d) {
+  upper <- (-t - sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  lower <- (-t + sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  c(floor(lower), ceiling(upper) - 1)
+}
+
+lower_upper_values <- lower_upper(race_duration, record)
+lower_win <- lower_upper_values[[1]]
+upper_win <- lower_upper_values[[2]]
+
+resolution <- 1000
+
+df <- tibble(
+  wait_time = unique(c(
+    seq(from = 0, to = lower_win, length.out = resolution),
+    seq(from = lower_win, to = upper_win, length.out = resolution),
+    seq(from = upper_win, to = race_duration, length.out = resolution)
+  )),
+  distance = wait_time * (race_duration - wait_time),
+  is_win = wait_time > lower_win & wait_time < upper_win
+)
+
+ggplot(NULL, aes(wait_time, distance)) +
+  geom_area(data = filter(df, wait_time <= lower_win), fill = "#969696") +
+  geom_area(data = filter(df, wait_time >= upper_win), fill = "#969696") +
+  geom_area(data = filter(df, wait_time > lower_win & wait_time < upper_win), fill = "#1577A0") +
+  geom_hline(
+    aes(yintercept = record),
+    data = NULL,
+    col = "#BE4844",
+    linetype = "longdash",
+    size = 0.8
+  ) +
+  scale_x_continuous(
+    expand = c(0, 0),
+    transform = squish_trans(lower_win , upper_win + 1, 1000)
+  ) +
+  scale_y_continuous(
+    transform = squish_trans(940200, 1279135224, 1000),
+    expand = c(0, 0)
+  ) +
+    labs(
+      title = "Combined Race",
+      subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {scales::label_comma()(race_duration)}ms</b>, <b style = 'color:#BE4844;'>Record: {scales::label_comma()(record)}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {scales::label_comma()(count_ways(race_duration, record))}</b>"),
+      x = "",
+      y = ""
+    ) +
+    theme_minimal() +
+    theme(
+      axis.line.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.line.y.left = element_line(color  = "#CCCCCC"),
+      axis.ticks.y.left = element_line(color  = "#CCCCCC"),
+      axis.text.x = ggtext::element_markdown(),
+      axis.text.y = ggtext::element_markdown(),
+      plot.subtitle = ggtext::element_markdown()
+    )
 ```
 
 ```{=html}
