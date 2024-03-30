@@ -197,6 +197,8 @@ print(answer1)
 
 Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b> find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible.
 
+(Tails of the plot have been zoomed for readability)
+
 
 <h6 class="card-subtitle text-muted">Example</h6>
 
@@ -275,21 +277,28 @@ ggplot(NULL, aes(wait_time, distance)) +
     size = 0.8
   ) +
   scale_x_continuous(
+    minor_breaks = seq(from = 0, to = race_duration, length.out = 100),
+    # breaks = scales::pretty_breaks(20),
+    # labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{break_value}</b>"), as.character(break_value)),
+    breaks = c(0, 14, seq(from = 10000, to = 60000, by = 10000), 71516, race_duration),
     expand = c(0, 0),
     transform = squish_trans(lower_win , upper_win + 1, 1000)
   ) +
   scale_y_continuous(
+    breaks = c(0, record, seq(from = 100000000, to = 1500000000, by = 500000000)),
+    minor_breaks = seq(from = 0, to = 1279135224, length.out = 50),
     transform = squish_trans(940200, 1279135224, 1000),
     expand = c(0, 0)
   ) +
     labs(
       title = "Combined Race",
       subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {scales::label_comma()(race_duration)}ms</b>, <b style = 'color:#BE4844;'>Record: {scales::label_comma()(record)}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {scales::label_comma()(count_ways(race_duration, record))}</b>"),
-      x = "",
-      y = ""
+      x = "Wait Time (ms)",
+      y = "Distance (mm)"
     ) +
     theme_minimal() +
     theme(
+      # panel.grid.minor = element_line(),
       axis.line.x.bottom = element_line(color  = "#CCCCCC"),
       axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
       axis.line.y.left = element_line(color  = "#CCCCCC"),
