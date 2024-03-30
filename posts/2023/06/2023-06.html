@@ -419,7 +419,7 @@ w_{upper} &amp;= \frac{-T - \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
 w_{lower} &amp;= \frac{-T + \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
 \end{aligned}
 \]</span></p>
-<p>To find the number of ways to beat the record, we calculate the range between the ceiling of <span class="math inline">\(w_{upper}\)</span> and the floor of <span class="math inline">\(w_{lower}\)</span>, subtracting <span class="math inline">\(1\)</span> to exclude the end point: <span class="math display">\[\text{\blue{Number of ways}} = \lceil w_{upper} \rceil - \lfloor w_{lower} \rfloor - 1\]</span></p>
+<p>To find the number of ways to beat the record, we calculate the number of integers in the open interval <span class="math inline">\((w_{lower}, w_{upper})\)</span>: <span class="math display">\[\text{\blue{Number of ways}} = \lceil w_{upper} \rceil - \lfloor w_{lower} \rfloor - 1\]</span></p>
 <p>Then simply plug in the numbers for each race and get the <b class="fw-bold" style="color: #91672C;">product</b> of the resulting values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> math</span>
