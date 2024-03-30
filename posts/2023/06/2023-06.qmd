@@ -102,22 +102,21 @@ create_plot <- function(race_id, race_duration, record) {
     ) +
     scale_x_continuous(
       breaks = seq(from = 0, to = race_duration, by = 1),
-      limits = c(0, 30),
+      labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{break_value}</b>"), as.character(break_value)),
+      limits = c(-0.5, 30),
       expand = c(0, 0)
     ) +
     scale_y_continuous(
-      # breaks = seq(from = 0, to = 230, by = 1),
-      # breaks = scales::breaks_pretty(df$distance, n = 4),
       breaks = c(scales::breaks_pretty(n = 4)(df$distance), record),
-      limits = c(0, max(df$distance) * 1.05),
+      labels = \(break_value) ifelse(break_value == record, glue::glue("<b style = 'color:#BE4844;'>{break_value}</b>"), as.character(break_value)),
       expand = c(0, 0)
     ) +
     coord_cartesian(clip = "off") +
     labs(
       title = glue::glue("Race {race_id}"),
-      subtitle = glue::glue("Race Duration: {race_duration}ms, Record: {record}mm, Ways to Beat Record: {count_ways(race_duration, record)}"),
-      x = "Wait Time (ms)",
-      y = "Distance (mm)"
+      subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {race_duration}ms</b>, <b style = 'color:#BE4844;'>Record: {record}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {count_ways(race_duration, record)}</b>"),
+      x = "",
+      y = ""
     ) +
     theme_minimal() +
     theme(
@@ -126,11 +125,16 @@ create_plot <- function(race_id, race_duration, record) {
       axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
       axis.line.y.left = element_line(color  = "#CCCCCC"),
       axis.ticks.y.left = element_line(color  = "#CCCCCC"),
-      axis.text.x = element_text(angle = 45, hjust = 1, colour = ifelse(df$wait_time == 7, "orange", "black"))
+      axis.text.x = ggtext::element_markdown(),
+      axis.text.y = ggtext::element_markdown(),
+      plot.subtitle = ggtext::element_markdown()
     )
 }
 
-plots <- pmap(list(seq_along(lines[[1]]), lines[[1]], lines[[2]]), create_plot)
+plots <-
+  pmap(list(seq_along(lines[[1]]), lines[[1]], lines[[2]]), create_plot) |>
+  modify_at(2, \(p) p + labs(y = "Distance (mm)")) |>
+  modify_at(3, \(p) p + labs(x = "Wait Time (ms)"))
 
 cowplot::plot_grid(plotlist = plots, ncol=1)
 ```
