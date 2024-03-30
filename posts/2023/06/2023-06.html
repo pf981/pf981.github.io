@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Paul Foster">
+<meta name="dcterms.date" content="2024-03-30">
+<meta name="description" content="Easy mathematics puzzle.">
+
+<title>Paul Foster - Advent of Code - 2023 Day 6</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../posts/2023/05/2023-05.html" rel="prev">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Paul Foster - Advent of Code</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pf981/pf981.github.io" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://stackoverflow.com/users/1751961/paul" rel="" target=""><i class="bi bi-stack-overflow" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/paulfoster01/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../posts/2023/01/2023-01.html">2023</a></li><li class="breadcrumb-item"><a href="../../../posts/2023/06/2023-06.html">6. Wait For It</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">2023</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/01/2023-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. Trebuchet?!</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/02/2023-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Cube Conundrum</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/03/2023-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. Gear Ratios</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/04/2023-04.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Scratchcards</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/05/2023-05.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. If You Give A Seed A Fertilizer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/06/2023-06.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">6. Wait For It</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#part-1-hold-to-gold" id="toc-part-1-hold-to-gold" class="nav-link active" data-scroll-target="#part-1-hold-to-gold">Part 1 <small class="text-body-secondary">Hold to Gold</small></a>
+  <ul class="collapse">
+  <li><a href="#parabolic-pondering" id="toc-parabolic-pondering" class="nav-link" data-scroll-target="#parabolic-pondering">Parabolic Pondering</a></li>
+  <li><a href="#algebraic-adventures" id="toc-algebraic-adventures" class="nav-link" data-scroll-target="#algebraic-adventures">Algebraic Adventures</a></li>
+  </ul></li>
+  <li><a href="#part-2-magnitude-multiplied" id="toc-part-2-magnitude-multiplied" class="nav-link" data-scroll-target="#part-2-magnitude-multiplied">Part 2 <small class="text-body-secondary">Magnitude Multiplied</small></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">2023 Day 6</h1>
+<p class="subtitle lead">Wait For It</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">python</div>
+    <div class="quarto-category">easy</div>
+    <div class="quarto-category">mathematics</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Easy mathematics puzzle.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Paul Foster </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 30, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Ho ho ho, fellow adventurers!</p>
+<p><a href="https://adventofcode.com/2023/day/6">Advent of Code day 6</a> presents a problem involving toy boat races, where participants must find optimal strategies to beat existing distance records.</p>
+<p>This puzzle can be solved with some basic maths involving quadratics.</p>
+<p>First, we’ll read the input.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'input.txt'</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
+<span id="cb1-2"><a href="#cb1-2"></a>    lines <span class="op">=</span> f.readlines()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="part-1-hold-to-gold" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-hold-to-gold">Part 1 <small class="text-body-secondary">Hold to Gold</small></h2>
+<div class="p-0" style="min-width: fit-content;">
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0 anchored">Task 1</h4>
+<p>You’re given a list of races for toy boats. Each race contains a <b class="fw-bold" style="color: #2F7E4A;">race duration (ms)</b> and a <b class="fw-bold" style="color: #BE4844;">current distance record (mm)</b>.</p>
+<p>The distance a toy boat travels in a race is determined by how long you hold the button at the start: each millisecond of holding increases the boat’s speed by 1 mm/ms, but also reduces the remaining time for movement. After releasing the button, the boat travels at its accumulated speed for the rest of the race duration.</p>
+<p>Find the <b class="fw-bold" style="color: #1577A0;">number of ways to beat each race’s record</b> and get the <b class="fw-bold" style="color: #91672C;">product</b> of those numbers.</p>
+<h6 class="card-subtitle text-muted anchored">
+Example
+</h6>
+<p>The diagram below illustrates the calculations for this example of three races.</p>
+<pre><code>Time:      7  15   30
+Distance:  9  40  200</code></pre>
+<div class="cell">
+<details>
+<summary>Figure Source</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>text <span class="ot">&lt;-</span> <span class="st">"Time:      7  15   30</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="st">Distance:  9  40  200"</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>lines <span class="ot">&lt;-</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="fu">str_split_1</span>(text, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">map</span>(\(line) <span class="fu">str_extract_all</span>(line, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="fu">map</span>(as.numeric)</span>
+<span id="cb3-12"><a href="#cb3-12"></a></span>
+<span id="cb3-13"><a href="#cb3-13"></a>count_ways <span class="ot">&lt;-</span> <span class="cf">function</span>(t, d) {</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  upper <span class="ot">&lt;-</span> (<span class="sc">-</span>t <span class="sc">-</span> <span class="fu">sqrt</span>(t <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>d))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>  lower <span class="ot">&lt;-</span> (<span class="sc">-</span>t <span class="sc">+</span> <span class="fu">sqrt</span>(t <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>d))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="fu">ceiling</span>(upper) <span class="sc">-</span> <span class="fu">floor</span>(lower) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>}</span>
+<span id="cb3-18"><a href="#cb3-18"></a></span>
+<span id="cb3-19"><a href="#cb3-19"></a>create_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(race_id, race_duration, record, <span class="at">x_limit =</span> <span class="dv">30</span>) {</span>
+<span id="cb3-20"><a href="#cb3-20"></a>  df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">wait_time =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> race_duration, <span class="at">by =</span> <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb3-22"><a href="#cb3-22"></a>      <span class="at">distance =</span> wait_time <span class="sc">*</span> (race_duration <span class="sc">-</span> wait_time),</span>
+<span id="cb3-23"><a href="#cb3-23"></a>      <span class="at">fill =</span> <span class="fu">case_when</span>(</span>
+<span id="cb3-24"><a href="#cb3-24"></a>        distance <span class="sc">&gt;</span> record <span class="sc">~</span> <span class="st">"#1577A0"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"#969696"</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a>      )</span>
+<span id="cb3-27"><a href="#cb3-27"></a>    )</span>
+<span id="cb3-28"><a href="#cb3-28"></a>  </span>
+<span id="cb3-29"><a href="#cb3-29"></a>  <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(wait_time, distance, <span class="at">fill =</span> <span class="fu">I</span>(fill))) <span class="sc">+</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a>    <span class="fu">geom_hline</span>(</span>
+<span id="cb3-32"><a href="#cb3-32"></a>      <span class="fu">aes</span>(<span class="at">yintercept =</span> record),</span>
+<span id="cb3-33"><a href="#cb3-33"></a>      <span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-34"><a href="#cb3-34"></a>      <span class="at">col =</span> <span class="st">"#BE4844"</span>,</span>
+<span id="cb3-35"><a href="#cb3-35"></a>      <span class="at">linetype =</span> <span class="st">"longdash"</span>,</span>
+<span id="cb3-36"><a href="#cb3-36"></a>      <span class="at">size =</span> <span class="fl">0.8</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-38"><a href="#cb3-38"></a>    <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb3-39"><a href="#cb3-39"></a>      <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> race_duration, <span class="at">by =</span> <span class="dv">1</span>),</span>
+<span id="cb3-40"><a href="#cb3-40"></a>      <span class="at">labels =</span> \(break_value) <span class="fu">ifelse</span>(break_value <span class="sc">==</span> race_duration, glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#2F7E4A;'&gt;{break_value}&lt;/b&gt;"</span>), <span class="fu">as.character</span>(break_value)),</span>
+<span id="cb3-41"><a href="#cb3-41"></a>      <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, x_limit),</span>
+<span id="cb3-42"><a href="#cb3-42"></a>      <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb3-43"><a href="#cb3-43"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-44"><a href="#cb3-44"></a>    <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb3-45"><a href="#cb3-45"></a>      <span class="at">breaks =</span> <span class="fu">c</span>(scales<span class="sc">::</span><span class="fu">breaks_pretty</span>(<span class="at">n =</span> <span class="dv">4</span>)(df<span class="sc">$</span>distance), record),</span>
+<span id="cb3-46"><a href="#cb3-46"></a>      <span class="at">labels =</span> \(break_value) <span class="fu">ifelse</span>(break_value <span class="sc">==</span> record, glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#BE4844;'&gt;{break_value}&lt;/b&gt;"</span>), <span class="fu">as.character</span>(break_value)),</span>
+<span id="cb3-47"><a href="#cb3-47"></a>      <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb3-48"><a href="#cb3-48"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-49"><a href="#cb3-49"></a>    <span class="fu">labs</span>(</span>
+<span id="cb3-50"><a href="#cb3-50"></a>      <span class="at">title =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"Race {race_id}"</span>),</span>
+<span id="cb3-51"><a href="#cb3-51"></a>      <span class="at">subtitle =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#2F7E4A;'&gt;Race Duration: {race_duration}ms&lt;/b&gt;, &lt;b style = 'color:#BE4844;'&gt;Record: {record}mm&lt;/b&gt;, &lt;b style = 'color:#1577A0;'&gt;Ways to Beat Record: {count_ways(race_duration, record)}&lt;/b&gt;"</span>),</span>
+<span id="cb3-52"><a href="#cb3-52"></a>      <span class="at">x =</span> <span class="st">""</span>,</span>
+<span id="cb3-53"><a href="#cb3-53"></a>      <span class="at">y =</span> <span class="st">""</span></span>
+<span id="cb3-54"><a href="#cb3-54"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-55"><a href="#cb3-55"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"LM Roman 10"</span>) <span class="sc">+</span></span>
+<span id="cb3-56"><a href="#cb3-56"></a>    <span class="fu">theme</span>(</span>
+<span id="cb3-57"><a href="#cb3-57"></a>      <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-58"><a href="#cb3-58"></a>      <span class="at">axis.line.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb3-59"><a href="#cb3-59"></a>      <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb3-60"><a href="#cb3-60"></a>      <span class="at">axis.line.y.left =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb3-61"><a href="#cb3-61"></a>      <span class="at">axis.ticks.y.left =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb3-62"><a href="#cb3-62"></a>      <span class="at">axis.text.x =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb3-63"><a href="#cb3-63"></a>      <span class="at">axis.text.y =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb3-64"><a href="#cb3-64"></a>      <span class="at">plot.subtitle =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>()</span>
+<span id="cb3-65"><a href="#cb3-65"></a>    )</span>
+<span id="cb3-66"><a href="#cb3-66"></a>}</span>
+<span id="cb3-67"><a href="#cb3-67"></a></span>
+<span id="cb3-68"><a href="#cb3-68"></a>plots <span class="ot">&lt;-</span></span>
+<span id="cb3-69"><a href="#cb3-69"></a>  <span class="fu">pmap</span>(<span class="fu">list</span>(<span class="fu">seq_along</span>(lines[[<span class="dv">1</span>]]), lines[[<span class="dv">1</span>]], lines[[<span class="dv">2</span>]]), create_plot) <span class="sc">|&gt;</span></span>
+<span id="cb3-70"><a href="#cb3-70"></a>  <span class="fu">modify_at</span>(<span class="dv">2</span>, \(p) p <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Distance (mm)"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-71"><a href="#cb3-71"></a>  <span class="fu">modify_at</span>(<span class="dv">3</span>, \(p) p <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Button Hold Time (ms)"</span>))</span>
+<span id="cb3-72"><a href="#cb3-72"></a></span>
+<span id="cb3-73"><a href="#cb3-73"></a><span class="co"># Using cowplot with custom font and markdown made the subtitle spacing incorrect</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a><span class="co"># Works fine with gridExtra::grid.arrange</span></span>
+<span id="cb3-75"><a href="#cb3-75"></a><span class="co"># cowplot::plot_grid(plotlist = plots, ncol = 1)</span></span>
+<span id="cb3-76"><a href="#cb3-76"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="2023-06_files/figure-html/unnamed-chunk-3-1.svg" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="hidden">
+<p><span class="math display">\[
+\newcommand{\blue}[1]{\color{##1577A0}\textbf{#1}\color{##55595C}}
+\newcommand{\orange}[1]{\color{##91672C}\textbf{#1}\color{##55595C}}
+\newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
+\newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
+\]</span></p>
+</div>
+<p><span class="math display">\[\blue{4} * \blue{8} * \blue{9} = \orange{288}\]</span></p>
+  </div>
+</div>
+</div>
+<div style="clear: both;">
+
+</div>
+<section id="parabolic-pondering" class="level3">
+<h3 class="anchored" data-anchor-id="parabolic-pondering">Parabolic Pondering</h3>
+<p>To calculate the <b class="fw-bold" style="color: #1577A0;">number of ways to beat the record</b>, we can find the difference between the upper and lower <span class="math inline">\(x\)</span> values of the blue bars.</p>
+<p>These bounds can be found as the intersection of the red line and a frowny parabola which is a function of the button hold time and race duration.</p>
+</section>
+<section id="algebraic-adventures" class="level3">
+<h3 class="anchored" data-anchor-id="algebraic-adventures">Algebraic Adventures</h3>
+<p>Given:</p>
+<ul>
+<li><span class="math inline">\(\green{T}\)</span>: Total race time in milliseconds.</li>
+<li><span class="math inline">\(\red{D}\)</span>: Record distance that needs to be beaten, in millimeters.</li>
+<li><span class="math inline">\(w\)</span>: Time in milliseconds for which the button is held down at the start of the race.</li>
+</ul>
+<p>The distance your boat travels when the button is held for <span class="math inline">\(w\)</span> milliseconds with total race time <span class="math inline">\(T\)</span> is: <span class="math display">\[w \cdot (T - w)\]</span></p>
+<p>This matches the current record <span class="math inline">\(D\)</span>, when: <span class="math display">\[D = w \cdot (T - w)\]</span></p>
+<p>This can be rewritten as a quadratic equation in terms of <span class="math inline">\(w\)</span>: <span class="math display">\[0 = -w^2 + T \cdot w - D\]</span></p>
+<p>To solve for <span class="math inline">\(w\)</span>, we use the quadratic formula: <span class="math display">\[w = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\]</span></p>
+<p>In our equation, <span class="math inline">\(a = -1\)</span>, <span class="math inline">\(b = T\)</span>, and <span class="math inline">\(c = -D\)</span>. Thus, substituting these values into the quadratic formula yields: <span class="math display">\[w = \frac{-T \pm \sqrt{T^2 - 4 \cdot (-1) \cdot (-D)}}{2 \cdot (-1)}\]</span></p>
+<p>Simplifying, we get two values for (w), which represent the upper and lower bounds of the button holding time that allows the boat to exceed the record distance: <span class="math display">\[
+\begin{aligned}
+w_{upper} &amp;= \frac{-T - \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
+w_{lower} &amp;= \frac{-T + \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
+\end{aligned}
+\]</span></p>
+<p>To find the number of ways to beat the record, we calculate the range between the ceiling of <span class="math inline">\(w_{upper}\)</span> and the floor of <span class="math inline">\(w_{lower}\)</span>, subtracting <span class="math inline">\(1\)</span> to exclude the end point: <span class="math display">\[\text{\blue{Number of ways}} = \lceil w_{upper} \rceil - \lfloor w_{lower} \rfloor - 1\]</span></p>
+<p>Then simply plug in the numbers for each race and get the <b class="fw-bold" style="color: #91672C;">product</b> of the resulting values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> math</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> re</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">def</span> count_ways(T, D):</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    upper <span class="op">=</span> (<span class="op">-</span>T <span class="op">-</span> math.sqrt(T <span class="op">**</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">4</span> <span class="op">*</span> (<span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>D))) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>    lower <span class="op">=</span> (<span class="op">-</span>T <span class="op">+</span> math.sqrt(T <span class="op">**</span> <span class="dv">2</span> <span class="op">-</span> <span class="dv">4</span> <span class="op">*</span> (<span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>D))) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="cf">return</span> math.ceil(upper) <span class="op">-</span> math.floor(lower) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a>times, distances <span class="op">=</span> [[<span class="bu">int</span>(x) <span class="cf">for</span> x <span class="kw">in</span> re.findall(<span class="vs">r'\d+'</span>, line)] <span class="cf">for</span> line <span class="kw">in</span> lines]</span>
+<span id="cb4-12"><a href="#cb4-12"></a>answer1 <span class="op">=</span> math.prod(count_ways(time, distance) <span class="cf">for</span> time, distance <span class="kw">in</span> <span class="bu">zip</span>(times, distances))</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="bu">print</span>(answer1)</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 500346</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+</p><ul>
+<li>Find the upper and lower button hold times which beat the record</li>
+<li>This can be expressed as the intersection between <span class="math inline">\(f(x) = D\)</span> and <span class="math inline">\(f(x) = w \cdot (T - w)\)</span></li>
+<li>Compute the product of the differences between the upper and lower bounds</li>
+</ul>
+    <p></p>
+  </div>
+</div>
+</section>
+</section>
+<section id="part-2-magnitude-multiplied" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-magnitude-multiplied">Part 2 <small class="text-body-secondary">Magnitude Multiplied</small></h2>
+<div class="p-0" style="min-width: fit-content;">
+<div class="pe-4">
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0 anchored">Task 2</h4>
+<p>Rather than multiple races, the <b class="fw-bold" style="color: #2F7E4A;">race durations</b> and <b class="fw-bold" style="color: #BE4844;">distance records</b> are each concatenated to form one giant race.</p>
+<p>Find the <b class="fw-bold" style="color: #1577A0;">number of ways to beat this race’s record</b>.</p>
+<h6 class="card-subtitle text-muted anchored">
+Example
+</h6>
+<pre><code>Time:      71530
+Distance:  940200</code></pre>
+<div class="cell">
+<details>
+<summary>Figure Source</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># https://stackoverflow.com/questions/35511951/r-ggplot2-collapse-or-remove-segment-of-y-axis-from-scatter-plot</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>squish_trans <span class="ot">&lt;-</span> <span class="cf">function</span>(from, to, factor) {</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  trans <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">is.na</span>(x))) <span class="fu">return</span>(x)</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    isq <span class="ot">&lt;-</span> x <span class="sc">&gt;</span> from <span class="sc">&amp;</span> x <span class="sc">&lt;</span> to</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    ito <span class="ot">&lt;-</span> x <span class="sc">&gt;=</span> to</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8"></a>    x[isq] <span class="ot">&lt;-</span> from <span class="sc">+</span> (x[isq] <span class="sc">-</span> from)<span class="sc">/</span>factor</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    x[ito] <span class="ot">&lt;-</span> from <span class="sc">+</span> (to <span class="sc">-</span> from)<span class="sc">/</span>factor <span class="sc">+</span> (x[ito] <span class="sc">-</span> to)</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    </span>
+<span id="cb6-11"><a href="#cb6-11"></a>    x</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  }</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  inv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="cf">if</span> (<span class="fu">any</span>(<span class="fu">is.na</span>(x))) <span class="fu">return</span>(x)</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a>    isq <span class="ot">&lt;-</span> x <span class="sc">&gt;</span> from <span class="sc">&amp;</span> x <span class="sc">&lt;</span> from <span class="sc">+</span> (to <span class="sc">-</span> from)<span class="sc">/</span>factor</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    ito <span class="ot">&lt;-</span> x <span class="sc">&gt;=</span> from <span class="sc">+</span> (to <span class="sc">-</span> from)<span class="sc">/</span>factor</span>
+<span id="cb6-19"><a href="#cb6-19"></a></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    x[isq] <span class="ot">&lt;-</span> from <span class="sc">+</span> (x[isq] <span class="sc">-</span> from) <span class="sc">*</span> factor</span>
+<span id="cb6-21"><a href="#cb6-21"></a>    x[ito] <span class="ot">&lt;-</span> to <span class="sc">+</span> (x[ito] <span class="sc">-</span> (from <span class="sc">+</span> (to <span class="sc">-</span> from)<span class="sc">/</span>factor))</span>
+<span id="cb6-22"><a href="#cb6-22"></a>    </span>
+<span id="cb6-23"><a href="#cb6-23"></a>    x</span>
+<span id="cb6-24"><a href="#cb6-24"></a>  }</span>
+<span id="cb6-25"><a href="#cb6-25"></a>  </span>
+<span id="cb6-26"><a href="#cb6-26"></a>  scales<span class="sc">::</span><span class="fu">trans_new</span>(<span class="st">"squished"</span>, trans, inv)</span>
+<span id="cb6-27"><a href="#cb6-27"></a>}</span>
+<span id="cb6-28"><a href="#cb6-28"></a></span>
+<span id="cb6-29"><a href="#cb6-29"></a>time_distance <span class="ot">&lt;-</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a>  lines <span class="sc">|&gt;</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>  <span class="fu">map_chr</span>(str_c, <span class="at">collapse =</span> <span class="st">""</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a>  <span class="fu">map_int</span>(as.integer)</span>
+<span id="cb6-33"><a href="#cb6-33"></a></span>
+<span id="cb6-34"><a href="#cb6-34"></a>race_duration <span class="ot">&lt;-</span> time_distance[[<span class="dv">1</span>]]</span>
+<span id="cb6-35"><a href="#cb6-35"></a>record <span class="ot">&lt;-</span> time_distance[[<span class="dv">2</span>]]</span>
+<span id="cb6-36"><a href="#cb6-36"></a></span>
+<span id="cb6-37"><a href="#cb6-37"></a>lower_upper <span class="ot">&lt;-</span> <span class="cf">function</span>(t, d) {</span>
+<span id="cb6-38"><a href="#cb6-38"></a>  upper <span class="ot">&lt;-</span> (<span class="sc">-</span>t <span class="sc">-</span> <span class="fu">sqrt</span>(t <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>d))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb6-39"><a href="#cb6-39"></a>  lower <span class="ot">&lt;-</span> (<span class="sc">-</span>t <span class="sc">+</span> <span class="fu">sqrt</span>(t <span class="sc">^</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>d))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb6-40"><a href="#cb6-40"></a>  <span class="fu">c</span>(<span class="fu">floor</span>(lower), <span class="fu">ceiling</span>(upper) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-41"><a href="#cb6-41"></a>}</span>
+<span id="cb6-42"><a href="#cb6-42"></a></span>
+<span id="cb6-43"><a href="#cb6-43"></a>lower_upper_values <span class="ot">&lt;-</span> <span class="fu">lower_upper</span>(race_duration, record)</span>
+<span id="cb6-44"><a href="#cb6-44"></a>lower_win <span class="ot">&lt;-</span> lower_upper_values[[<span class="dv">1</span>]]</span>
+<span id="cb6-45"><a href="#cb6-45"></a>upper_win <span class="ot">&lt;-</span> lower_upper_values[[<span class="dv">2</span>]]</span>
+<span id="cb6-46"><a href="#cb6-46"></a></span>
+<span id="cb6-47"><a href="#cb6-47"></a>resolution <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-48"><a href="#cb6-48"></a></span>
+<span id="cb6-49"><a href="#cb6-49"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-50"><a href="#cb6-50"></a>  <span class="at">wait_time =</span> <span class="fu">unique</span>(<span class="fu">c</span>(</span>
+<span id="cb6-51"><a href="#cb6-51"></a>    <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> lower_win, <span class="at">length.out =</span> resolution),</span>
+<span id="cb6-52"><a href="#cb6-52"></a>    <span class="fu">seq</span>(<span class="at">from =</span> lower_win, <span class="at">to =</span> upper_win, <span class="at">length.out =</span> resolution),</span>
+<span id="cb6-53"><a href="#cb6-53"></a>    <span class="fu">seq</span>(<span class="at">from =</span> upper_win, <span class="at">to =</span> race_duration, <span class="at">length.out =</span> resolution)</span>
+<span id="cb6-54"><a href="#cb6-54"></a>  )),</span>
+<span id="cb6-55"><a href="#cb6-55"></a>  <span class="at">distance =</span> wait_time <span class="sc">*</span> (race_duration <span class="sc">-</span> wait_time),</span>
+<span id="cb6-56"><a href="#cb6-56"></a>  <span class="at">is_win =</span> wait_time <span class="sc">&gt;</span> lower_win <span class="sc">&amp;</span> wait_time <span class="sc">&lt;</span> upper_win</span>
+<span id="cb6-57"><a href="#cb6-57"></a>)</span>
+<span id="cb6-58"><a href="#cb6-58"></a></span>
+<span id="cb6-59"><a href="#cb6-59"></a><span class="fu">ggplot</span>(<span class="cn">NULL</span>, <span class="fu">aes</span>(wait_time, distance)) <span class="sc">+</span></span>
+<span id="cb6-60"><a href="#cb6-60"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, wait_time <span class="sc">&lt;=</span> lower_win), <span class="at">fill =</span> <span class="st">"#969696"</span>) <span class="sc">+</span></span>
+<span id="cb6-61"><a href="#cb6-61"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, wait_time <span class="sc">&gt;=</span> upper_win), <span class="at">fill =</span> <span class="st">"#969696"</span>) <span class="sc">+</span></span>
+<span id="cb6-62"><a href="#cb6-62"></a>  <span class="fu">geom_area</span>(<span class="at">data =</span> <span class="fu">filter</span>(df, wait_time <span class="sc">&gt;</span> lower_win <span class="sc">&amp;</span> wait_time <span class="sc">&lt;</span> upper_win), <span class="at">fill =</span> <span class="st">"#1577A0"</span>) <span class="sc">+</span></span>
+<span id="cb6-63"><a href="#cb6-63"></a>  <span class="fu">geom_hline</span>(</span>
+<span id="cb6-64"><a href="#cb6-64"></a>    <span class="fu">aes</span>(<span class="at">yintercept =</span> record),</span>
+<span id="cb6-65"><a href="#cb6-65"></a>    <span class="at">data =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-66"><a href="#cb6-66"></a>    <span class="at">col =</span> <span class="st">"#BE4844"</span>,</span>
+<span id="cb6-67"><a href="#cb6-67"></a>    <span class="at">linetype =</span> <span class="st">"longdash"</span>,</span>
+<span id="cb6-68"><a href="#cb6-68"></a>    <span class="at">size =</span> <span class="fl">0.8</span></span>
+<span id="cb6-69"><a href="#cb6-69"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-70"><a href="#cb6-70"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb6-71"><a href="#cb6-71"></a>    <span class="at">minor_breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> race_duration, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb6-72"><a href="#cb6-72"></a>    <span class="at">labels =</span> \(break_value) <span class="fu">ifelse</span>(break_value <span class="sc">==</span> race_duration, glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#2F7E4A;'&gt;{scales::label_comma()(break_value)}&lt;/b&gt;"</span>), scales<span class="sc">::</span><span class="fu">label_comma</span>()(break_value)),</span>
+<span id="cb6-73"><a href="#cb6-73"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">14</span>, <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">10000</span>, <span class="at">to =</span> <span class="dv">60000</span>, <span class="at">by =</span> <span class="dv">10000</span>), <span class="dv">71516</span>, race_duration),</span>
+<span id="cb6-74"><a href="#cb6-74"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb6-75"><a href="#cb6-75"></a>    <span class="at">transform =</span> <span class="fu">squish_trans</span>(lower_win , upper_win <span class="sc">+</span> <span class="dv">1</span>, <span class="dv">1000</span>)</span>
+<span id="cb6-76"><a href="#cb6-76"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-77"><a href="#cb6-77"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb6-78"><a href="#cb6-78"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, record, <span class="dv">100000000</span>, <span class="dv">500000000</span>, <span class="dv">1000000000</span>),</span>
+<span id="cb6-79"><a href="#cb6-79"></a>    <span class="at">minor_breaks =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1279135224</span>, <span class="at">length.out =</span> <span class="dv">50</span>),</span>
+<span id="cb6-80"><a href="#cb6-80"></a>      <span class="at">labels =</span> \(break_value) <span class="fu">ifelse</span>(break_value <span class="sc">==</span> record, glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#BE4844;'&gt;{scales::label_comma()(break_value)}&lt;/b&gt;"</span>), scales<span class="sc">::</span><span class="fu">label_comma</span>()(break_value)),</span>
+<span id="cb6-81"><a href="#cb6-81"></a>    <span class="at">transform =</span> <span class="fu">squish_trans</span>(<span class="dv">940200</span>, <span class="dv">1279135224</span>, <span class="dv">1000</span>),</span>
+<span id="cb6-82"><a href="#cb6-82"></a>    <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb6-83"><a href="#cb6-83"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-84"><a href="#cb6-84"></a>    <span class="fu">labs</span>(</span>
+<span id="cb6-85"><a href="#cb6-85"></a>      <span class="at">title =</span> <span class="st">"Combined Race"</span>,</span>
+<span id="cb6-86"><a href="#cb6-86"></a>      <span class="at">subtitle =</span> glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"&lt;b style = 'color:#2F7E4A;'&gt;Race Duration: {scales::label_comma()(race_duration)}ms&lt;/b&gt;, &lt;b style = 'color:#BE4844;'&gt;Record: {scales::label_comma()(record)}mm&lt;/b&gt;, &lt;b style = 'color:#1577A0;'&gt;Ways to Beat Record: {scales::label_comma()(count_ways(race_duration, record))}&lt;/b&gt;"</span>),</span>
+<span id="cb6-87"><a href="#cb6-87"></a>      <span class="at">x =</span> <span class="st">"Button Hold Time (ms)"</span>,</span>
+<span id="cb6-88"><a href="#cb6-88"></a>      <span class="at">y =</span> <span class="st">"Distance (mm)"</span></span>
+<span id="cb6-89"><a href="#cb6-89"></a>    ) <span class="sc">+</span></span>
+<span id="cb6-90"><a href="#cb6-90"></a>    <span class="fu">theme_minimal</span>(<span class="at">base_family =</span> <span class="st">"LM Roman 10"</span>) <span class="sc">+</span></span>
+<span id="cb6-91"><a href="#cb6-91"></a>    <span class="fu">theme</span>(</span>
+<span id="cb6-92"><a href="#cb6-92"></a>      <span class="at">axis.line.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb6-93"><a href="#cb6-93"></a>      <span class="at">axis.ticks.x.bottom =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb6-94"><a href="#cb6-94"></a>      <span class="at">axis.line.y.left =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb6-95"><a href="#cb6-95"></a>      <span class="at">axis.ticks.y.left =</span> <span class="fu">element_line</span>(<span class="at">color  =</span> <span class="st">"#CCCCCC"</span>),</span>
+<span id="cb6-96"><a href="#cb6-96"></a>      <span class="at">axis.text.x =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb6-97"><a href="#cb6-97"></a>      <span class="at">axis.text.y =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb6-98"><a href="#cb6-98"></a>      <span class="at">plot.subtitle =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb6-99"><a href="#cb6-99"></a>      <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">40</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">"pt"</span>)</span>
+<span id="cb6-100"><a href="#cb6-100"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="2023-06_files/figure-html/unnamed-chunk-5-1.svg" class="img-fluid figure-img" width="1512"></p>
+<figcaption class="figure-caption">Tails zoomed 1000x for readability</figcaption>
+</figure>
+</div>
+</div>
+</div>
+  </div>
+</div>
+</div>
+</div>
+<div style="clear: both;">
+
+</div>
+<p>Just plug the new numbers into the same formula.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>time, distance <span class="op">=</span> [<span class="bu">int</span>(<span class="st">''</span>.join(<span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> dim)) <span class="cf">for</span> dim <span class="kw">in</span> [times, distances]]</span>
+<span id="cb7-2"><a href="#cb7-2"></a>answer2 <span class="op">=</span> count_ways(time, distance)</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="bu">print</span>(answer2)</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; 42515755</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+</p><ul>
+<li>Concatenate the <b class="fw-bold" style="color: #2F7E4A;">race durations</b> and <b class="fw-bold" style="color: #BE4844;">distance records</b></li>
+<li>Compute the <b class="fw-bold" style="color: #1577A0;">number of ways to beat this race’s record</b> using the same formula as part 1</li>
+</ul>
+    <p></p>
+  </div>
+</div>
+<!-- Buttons -->
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+  <!-- Problem Button -->
+  <a type="button" class="btn btn-secondary" href="https://adventofcode.com/2023/day/6" role="button">
+    <i class="bi bi-box-arrow-up-right"></i> Problem
+  </a>
+
+  <!-- Input Button -->
+  <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#inputModal">
+    <i class="bi bi-file-earmark-text"></i> Input
+  </button>
+
+  <!-- Solution Modal Button -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#solutionModal">
+    <i class="bi bi-code-slash"></i> Full Solution
+  </button>
+
+</div>
+
+
+<!-- Input Modal -->
+<div class="modal fade" id="inputModal" tabindex="-1" aria-labelledby="inputModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable modal-xl">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title anchored" id="inputModalLabel">2023 Day 6 Input</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="cell" data-file="input.txt">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>Time<span class="sc">:</span>        <span class="dv">51</span>     <span class="dv">92</span>     <span class="dv">68</span>     <span class="dv">90</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>Distance<span class="sc">:</span>   <span class="dv">222</span>   <span class="dv">2031</span>   <span class="dv">1126</span>   <span class="dv">1225</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Solution Modal -->
+<div class="modal fade" id="solutionModal" tabindex="-1" aria-labelledby="solutionModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-scrollable modal-xl">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title anchored" id="solutionModalLabel">2023 Day 6 Full Solution</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div class="cell" data-file="solution.py">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>import math</span>
+<span id="cb9-2"><a href="#cb9-2"></a>import re</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>with <span class="fu">open</span>(<span class="st">'input.txt'</span>, <span class="st">"r"</span>) as f<span class="sc">:</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>    lines <span class="ot">=</span> <span class="fu">f.readlines</span>()</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a>def <span class="fu">count_ways</span>(T, D)<span class="sc">:</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>    <span class="co">#     D = w * (T - w)</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>    <span class="co"># =&gt;  0 = -w**2 + T*w - D</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a>    <span class="co"># =&gt;  zeroes at (-T +- sqrt(T**2 - 4*(-1)*(-D))) / 2*(-1)  (quadratic formula)</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a>    upper <span class="ot">=</span> (<span class="sc">-</span>T <span class="sc">-</span> <span class="fu">math.sqrt</span>(T <span class="sc">**</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>D))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb9-14"><a href="#cb9-14"></a>    lower <span class="ot">=</span> (<span class="sc">-</span>T <span class="sc">+</span> <span class="fu">math.sqrt</span>(T <span class="sc">**</span> <span class="dv">2</span> <span class="sc">-</span> <span class="dv">4</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>) <span class="sc">*</span> (<span class="sc">-</span>D))) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    return <span class="fu">math.ceil</span>(upper) <span class="sc">-</span> <span class="fu">math.floor</span>(lower) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a></span>
+<span id="cb9-17"><a href="#cb9-17"></a></span>
+<span id="cb9-18"><a href="#cb9-18"></a>times, distances <span class="ot">=</span> [[<span class="fu">int</span>(x) <span class="cf">for</span> x <span class="cf">in</span> <span class="fu">re.findall</span>(r<span class="st">'\d+'</span>, line)] <span class="cf">for</span> line <span class="cf">in</span> lines]</span>
+<span id="cb9-19"><a href="#cb9-19"></a>answer1 <span class="ot">=</span> <span class="fu">math.prod</span>(<span class="fu">count_ways</span>(time, distance) <span class="cf">for</span> time, distance <span class="cf">in</span> <span class="fu">zip</span>(times, distances))</span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="fu">print</span>(answer1)</span>
+<span id="cb9-21"><a href="#cb9-21"></a></span>
+<span id="cb9-22"><a href="#cb9-22"></a></span>
+<span id="cb9-23"><a href="#cb9-23"></a><span class="co"># Part 2</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a>time, distance <span class="ot">=</span> [<span class="fu">int</span>(<span class="st">''</span><span class="fu">.join</span>(<span class="fu">str</span>(x) <span class="cf">for</span> x <span class="cf">in</span> dim)) <span class="cf">for</span> dim <span class="cf">in</span> [times, distances]]</span>
+<span id="cb9-25"><a href="#cb9-25"></a>answer2 <span class="ot">=</span> <span class="fu">count_ways</span>(time, distance)</span>
+<span id="cb9-26"><a href="#cb9-26"></a><span class="fu">print</span>(answer2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="modal-footer">
+<small><i>Execution took 0.01 seconds</i></small>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../posts/2023/05/2023-05.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5. If You Give A Seed A Fertilizer</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© Paul Foster, 2024</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
