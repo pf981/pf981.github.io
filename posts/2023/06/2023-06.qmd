@@ -141,10 +141,17 @@ plots <-
   modify_at(2, \(p) p + labs(y = "Distance (mm)")) |>
   modify_at(3, \(p) p + labs(x = "Button Hold Time (ms)"))
 
-# Using cowplot with custom font and markdown made the subtitle spacing incorrect
-# Works fine with gridExtra::grid.arrange
+# Using cowplot or egg with custom font and markdown made the subtitle spacing incorrect
+# Works fine with gridExtra::grid.arrange but the axes aren't aligned
 # cowplot::plot_grid(plotlist = plots, ncol = 1)
-gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
+# gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
+# egg::ggarrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
+
+# This was the best way to get the font rendering correctly and the axes aligned
+plots |>
+  map(ggplotGrob) %>%
+  do.call(gridExtra::gtable_rbind, .) |>
+  grid::grid.draw()
 ```
 ::: {.hidden}
 $$
