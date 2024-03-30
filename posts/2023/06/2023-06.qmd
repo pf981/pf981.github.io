@@ -31,9 +31,9 @@ showtext::showtext_auto()
 
 Ho ho ho, fellow adventurers!
 
-In [Advent of Code day 6]({{< meta problem_url >}}) we're tasked with helping the gardener plant seeds and optimise food production.
+[Advent of Code day 6]({{< meta problem_url >}}) presents a problem involving toy boat races, where participants must find optimal strategies to beat existing distance records. 
 
-This puzzle introduces us to interval mapping. We're given a series of maps that define how values transition through different categories, like seeds to soil, soil to fertilizer, and so on.  These maps use intervals to describe the conversion process.
+This puzzle can be solved with some basic maths involving quadratics.
 
 First, we'll read the input.
 ```{python}
@@ -41,7 +41,7 @@ with open('input.txt', "r") as f:
     lines = f.readlines()
 ```
 
-## Part 1 <small class="text-body-secondary">Marvelous Maps</small>
+## Part 1 <small class="text-body-secondary">Hold to Gold</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -51,9 +51,18 @@ with open('input.txt', "r") as f:
     <h4 class="card-title mt-0">Task 1</h4>
 ```
 
-A series of <b class='fw-bold' style='color: #3F3F3F;'>mappings</b> describe how values transition from `Seed` to `Soil` to `Fertaliser` to ... to `Location`. Find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible from a list of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b>.
+You're given a list of races for toy boats. Each race contains a <b class='fw-bold' style='color: #2F7E4A;'>race duration (ms)</b> and a <b class='fw-bold' style='color: #BE4844;'>current distance record (mm)</b>.
+
+The distance a toy boat travels in a race is determined by how long you hold the button at the start: each millisecond of holding increases the boat's speed by 1 mm/ms, but also reduces the remaining time for movement. After releasing the button, the boat travels at its accumulated speed for the rest of the race duration.
+
+Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each race's record</b> and get the <b class='fw-bold' style='color: #91672C;'>product</b> of those numbers.
 
 <h6 class="card-subtitle text-muted">Example</h6>
+The diagram below illustrates the calculations for this example of three races.
+```
+Time:      7  15   30
+Distance:  9  40  200
+```
 
 ```{r dev="svg"}
 #| code-fold: true
@@ -130,13 +139,22 @@ create_plot <- function(race_id, race_duration, record, x_limit = 30) {
 plots <-
   pmap(list(seq_along(lines[[1]]), lines[[1]], lines[[2]]), create_plot) |>
   modify_at(2, \(p) p + labs(y = "Distance (mm)")) |>
-  modify_at(3, \(p) p + labs(x = "Wait Time (ms)"))
+  modify_at(3, \(p) p + labs(x = "Button Hold Time (ms)"))
 
 # Using cowplot with custom font and markdown made the subtitle spacing incorrect
 # Works fine with gridExtra::grid.arrange
 # cowplot::plot_grid(plotlist = plots, ncol = 1)
 gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
 ```
+::: {.hidden}
+$$
+\newcommand{\blue}[1]{\color{##1577A0}\textbf{#1}\color{##55595C}}
+\newcommand{\orange}[1]{\color{##91672C}\textbf{#1}\color{##55595C}}
+\newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
+\newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
+$$
+:::
+$$\blue{4} * \blue{8} * \blue{9} = \orange{288}$$
 
 ```{=html}
   </div>
@@ -147,9 +165,45 @@ gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
 
 <div style="clear: both;"></div> 
 
-Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category based on the formula `dest_start + (seed - source_start)`. If the seed value doesn't fall within any range in a map, it remains unchanged.
 
-After processing all the maps for a seed, we add its final converted value (which corresponds to the location category in the last map) to a list. Finally, we find the minimum value in the locations list.
+### Parabolic Pondering
+
+To calculate the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat the record</b>, we can find the difference between the upper and lower $x$ values of the blue bars.
+
+These bounds can be found as the intersection of the red line and a frowny parabola which is a function of the button hold time and race duration.
+
+### Algebraic Adventures
+
+Given:
+
+- $\green{T}$: Total race time in milliseconds.
+- $\red{D}$: Record distance that needs to be beaten, in millimeters.
+- $w$: Time in milliseconds for which the button is held down at the start of the race.
+
+The relationship between the distance a boat travels ($D$), the time the button is held ($w$), and the total race time ($T$) is given by the formula:
+$$D = w \cdot (T - w)$$
+
+This can be rewritten as a quadratic equation in terms of $w$:
+$$0 = -w^2 + T \cdot w - D$$
+
+To solve for $w$, we use the quadratic formula:
+$$w = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+In our equation, $a = -1$, $b = T$, and $c = -D$. Thus, substituting these values into the quadratic formula yields:
+$$w = \frac{-T \pm \sqrt{T^2 - 4 \cdot (-1) \cdot (-D)}}{2 \cdot (-1)}$$
+
+Simplifying, we get two values for \(w\), which represent the upper and lower bounds of the button holding time that allows the boat to exceed the record distance:
+$$
+\begin{aligned}
+w_{upper} &= \frac{-T - \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
+w_{lower} &= \frac{-T + \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
+\end{aligned}
+$$
+
+To find the number of ways to beat the record, we calculate the range between the ceiling of $w_{upper}$ and the floor of $w_{lower}$, subtracting $1$ to exclude the end point:
+$$\text{\blue{Number of ways}} = \lceil w_{upper} \rceil - \lfloor w_{lower} \rfloor - 1$$
+
+Then simply plug in the numbers for each race and get the <b class='fw-bold' style='color: #91672C;'>product</b> of the resulting values.
 
 ```{python}
 import math
@@ -157,9 +211,6 @@ import re
 
 
 def count_ways(T, D):
-    #     D = w * (T - w)
-    # =>  0 = -w**2 + T*w - D
-    # =>  zeroes at (-T +- sqrt(T**2 - 4*(-1)*(-D))) / 2*(-1)  (quadratic formula)
     upper = (-T - math.sqrt(T ** 2 - 4 * (-1) * (-D))) / 2 * (-1)
     lower = (-T + math.sqrt(T ** 2 - 4 * (-1) * (-D))) / 2 * (-1)
     return math.ceil(upper) - math.floor(lower) - 1
@@ -177,10 +228,9 @@ print(answer1)
     <p class="card-text">
 ```
 
-* Map each of the seeds from `Soil` to `Fertaliser` to ... to `Location`
-* At each step find the range which overlaps with the current value and use it to map to the next step
-* If no range matches then the value moves unchanged to the next step
-* Get the smallest `Location`
+* Find the upper and lower button hold times which beat the record
+* This can be expressed as the intersection between $f(x) = D$ and $f(x) = w \cdot (T - w)$
+* Compute the product of the differences between the upper and lower bounds
 
 ```{=html}
     </p>
@@ -189,7 +239,7 @@ print(answer1)
 ```
 
 
-## Part 2 <small class="text-body-secondary">Intersecting Intervals</small>
+## Part 2 <small class="text-body-secondary">Magnitude Multiplied</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -200,12 +250,15 @@ print(answer1)
     <h4 class="card-title mt-0">Task 2</h4>
 ```
 
-Given <b>ranges</b> of <b class='fw-bold' style='color: #2F7E4A;'>seed values</b> find the <b class='fw-bold' style='color: #91672C;'>minimum location</b> possible.
+Rather than multiple races, the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b> are each concatenated to form one giant race.
 
-(Tails of the plot have been zoomed for readability)
-
+Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
+```
+Time:      71530
+Distance:  940200
+```
 
 ```{r dev="svg"}
 #| dpi: 216
@@ -299,7 +352,7 @@ ggplot(NULL, aes(wait_time, distance)) +
     labs(
       title = "Combined Race",
       subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {scales::label_comma()(race_duration)}ms</b>, <b style = 'color:#BE4844;'>Record: {scales::label_comma()(record)}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {scales::label_comma()(count_ways(race_duration, record))}</b>"),
-      x = "Wait Time (ms)",
+      x = "Button Hold Time (ms)",
       y = "Distance (mm)"
     ) +
     theme_minimal(base_family = "LM Roman 10") +
@@ -325,7 +378,7 @@ ggplot(NULL, aes(wait_time, distance)) +
 
 <div style="clear: both;"></div> 
 
-At first, this seems simple. Just update the list of seeds to contain all the seeds in the ranges. Unfortunately, there are billions of seeds so that would take several minutes.
+Just plug the new numbers into the same formula.
 
 ```{python}
 time, distance = [int(''.join(str(x) for x in dim)) for dim in [times, distances]]
@@ -341,13 +394,8 @@ print(answer2)
     <p class="card-text">
 ```
 
-* Don't iterate over all possible seeds as that would take minutes
-* Instead, maintain contiguous ranges at each step
-* `get_smallest_range` will find the smallest location accessible in the `i`th step for the given range at that step
-* If the current range overlaps with a mapping range, map the overlapping portion and check the portion that doesn't overlap
-* `insert_missing_ranges` ensures that the range `0` to `10 billion` is fully covered by filling in missing ranges
-* Guaranteeing no holes makes the overlap detection and splitting simpler
-
+* Concatenate the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b>
+* Compute the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b> using the same formula as part 1
 ```{=html}
     </p>
   </div>

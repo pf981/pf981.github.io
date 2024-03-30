@@ -28,6 +28,8 @@ website:
               file: posts/2023/04/2023-04.qmd
             - text: "5. If You Give A Seed A Fertilizer"
               file: posts/2023/05/2023-05.qmd
+            - text: "6. Wait For It"
+              file: posts/2023/06/2023-06.qmd
   page-navigation: true
   page-footer:
     left: '&copy; Paul Foster, 2024'
