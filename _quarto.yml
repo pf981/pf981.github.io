@@ -30,6 +30,8 @@ website:
               file: posts/2023/05/2023-05.qmd
             - text: "6. Wait For It"
               file: posts/2023/06/2023-06.qmd
+            - text: "7. Camel Cards"
+              file: posts/2023/07/2023-07.qmd
   page-navigation: true
   page-footer:
     left: '&copy; Paul Foster, 2024'

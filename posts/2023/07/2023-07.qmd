@@ -30,7 +30,7 @@ $$
 
 Ho ho ho, fellow adventurers!
 
-[Advent of Code day 7]({{< meta problem_url >}}) is an easy puzzle evaluating simplified poker hands.
+[Advent of Code day 7]({{< meta problem_url >}}) invites us to play a game of Camel Cards. In this simplified version of poker, we must evaluate and rank hands.
 
 First, we'll read the input.
 ```{python}
@@ -38,7 +38,7 @@ with open('input.txt', "r") as f:
     lines = f.readlines()
 ```
 
-## Part 1 <small class="text-body-secondary">Hold to Gold</small>
+## Part 1 <small class="text-body-secondary">Hand Hierarchy</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -90,9 +90,7 @@ $\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's secon
 <div style="clear: both;"></div> 
 
 
-We'll need a mechanism to rank hands. We'll define a `primary_order` which is the rank of the hand type, and a `secondary_order` which is the rank of each card.
-
-First, we define a function, `primary_order`, which ranks the hand's type. This is accomplished by analysing the frequency of each card in the hand, allowing us to classify the hand based on predefined patterns.
+We'll need a mechanism to rank hands. First, we define a function, `primary_order`, which ranks the hand's type. This is accomplished by analysing the frequency of each card in the hand, allowing us to classify the hand based on predefined patterns.
 
 ```{python}
 import collections
@@ -123,7 +121,7 @@ def secondary_order(hand):
 
 Finally, define `hand_bid_order` as the combination of the primary and secondary orderings.  Python makes it easy to combine and apply our primary and secondary orderings. We can provide `sort` a `key` function which takes an element and returns a `tuple` of the primary and secondary orderings.
 
-Sorting the hands according to their combined <b class='fw-bold' style='color: #1577A0;'>rankings</b>, we can determine each hand's bid multiplier. Calculate the <b class='fw-bold' style='color: #91672C;'>total winnings</b> as the sum of bids multiplied by the <b class='fw-bold' style='color: #1577A0;'>rank</b>.
+Calculate the <b class='fw-bold' style='color: #91672C;'>total winnings</b> as the sum of bids multiplied by the <b class='fw-bold' style='color: #1577A0;'>rank</b>.
 
 ```{python}
 def hand_bid_order(hand_bid):
@@ -155,7 +153,7 @@ print(answer1)
 ```
 
 
-## Part 2 <small class="text-body-secondary">Magnitude Multiplied</small>
+## Part 2 <small class="text-body-secondary">Jokers Wild</small>
 
 ::::: {.p-0 style="min-width: fit-content;"}
 
@@ -198,7 +196,7 @@ $\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's secon
 
 <div style="clear: both;"></div> 
 
-Create a new ordering function, `hand_bid_order_wild`. Compute the max `primary_order` when replacing <b class='fw-bold' style='color: #BE4844;'>J</b>s with every other card.
+Create a new function, `hand_bid_order_wild`, which evaluates the maximum potential strength of a hand by considering all possible substitutions of <b class='fw-bold' style='color: #BE4844;'>J</b> with other cards.
 
 ```{python}
 def hand_bid_order_wild(hand_bid):
