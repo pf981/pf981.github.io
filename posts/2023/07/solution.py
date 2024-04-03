@@ -40,7 +40,7 @@ print(answer1)
 def hand_bid_order_wild(hand_bid):
     hand, bid = hand_bid
     return (
-        max(primary_order(hand.replace("J", c)) for c in "23456789TJQKA"),
+        max(primary_order(hand.replace("J", c)) for c in "23456789TQKA"),
         secondary_order(hand),
     )
 

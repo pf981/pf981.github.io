@@ -77,7 +77,7 @@ $$
 \end{aligned}
 $$
 
-$\grey{\scriptsize{^{*}\text{Stronger second card than other two pair}}}$
+$\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's second card}}}$
 
 
 ```{=html}
@@ -144,10 +144,10 @@ print(answer1)
     <p class="card-text">
 ```
 
-* Find the upper and lower button hold times which beat the record
-* This can be expressed as the intersection between $f(x) = D$ and $f(x) = w \cdot (T - w)$
-* Compute the product of the differences between the upper and lower bounds
-
+* Ranking Camel Cards hands involves two levels of ordering:
+    1. **Primary ordering** is based on the type of hand, determined by the pattern of card frequencies
+    2. **Secondary ordering** evaluates the specific values of the cards within a hand
+* * A combined key function, `hand_bid_order`, uses both the primary and secondary orderings to sort the hands from weakest to strongest
 ```{=html}
     </p>
   </div>
@@ -166,15 +166,26 @@ print(answer1)
     <h4 class="card-title mt-0">Task 2</h4>
 ```
 
-Rather than multiple races, the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b> are each concatenated to form one giant race.
+<b class='fw-bold' style='color: #BE4844;'>J</b>s are now wild <b class='fw-bold' style='color: #BE4844;'>Jokers</b> and act as whatever card results in the **strongest type**.
 
-Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b>.
+Determine the new hand <b class='fw-bold' style='color: #1577A0;'>ranks</b> and compute the <b class='fw-bold' style='color: #91672C;'>total winnings</b>.
 
 <h6 class="card-subtitle text-muted">Example</h6>
-```
-Time:      71530
-Distance:  940200
-```
+$$
+\begin{aligned}
+&{\text{Hand}}      &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{g}}&{\text{\grey{Winnings}}} &\\
+&\text{32T3K}       &&\green{765} &&\greyblue{1} &&\text{\grey{One pair}}          &\greygreen{765} \,\grey{\times}\, \greyblue{1}                                                        &\plus\\
+&\text{T55\red{J}5} &&\green{684} &&\greyblue{3} &&\text{\grey{Four of a kind}}        &\greygreen{684} \,\grey{\times}\, \greyblue{3}                                                        &\plus\\
+&\text{KK677}       &&\green{28}  &&\greyblue{2} &&\text{\grey{Two pair}} & \greygreen{28} \,\grey{\times}\, \greyblue{2}                                                        &\plus\\
+&\text{KT\red{JJ}T} &&\green{220} &&\greyblue{5} &&\text{\grey{Four of a kind}}          &\greygreen{220} \,\grey{\times}\, \greyblue{5}                                                        &\plus\\
+&\text{QQQ\red{J}A} &&\green{483} &&\greyblue{4} &&\text{\grey{Four of a kind}}   &\greygreen{483} \,\grey{\times}\, \greyblue{4} \llap{\lower{0.4pc}\underline{\phantom{483 \times 4}}} &\\
+&                   &&            &&             &&                                &\orange{5905}                                                                                         &\\
+\end{aligned}
+$$
+
+$\grey{\scriptsize{^{*}\text{Stronger second card than other two pair}}}$
+\grey{^*}
+$\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's second card}}}$
 
 
 ```{=html}
@@ -187,13 +198,13 @@ Distance:  940200
 
 <div style="clear: both;"></div> 
 
-Just plug the new numbers into the same formula.
+Create a new ordering function, `hand_bid_order_wild`. Compute the max `primary_order` when replacing <b class='fw-bold' style='color: #BE4844;'>J</b>s with every other card.
 
 ```{python}
 def hand_bid_order_wild(hand_bid):
     hand, bid = hand_bid
     return (
-        max(primary_order(hand.replace("J", c)) for c in "23456789TJQKA"),
+        max(primary_order(hand.replace("J", c)) for c in "23456789TQKA"),
         secondary_order(hand),
     )
 
@@ -211,8 +222,8 @@ print(answer2)
     <p class="card-text">
 ```
 
-* Concatenate the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b>
-* Compute the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b> using the same formula as part 1
+* Compute the max `primary_order` when replacing <b class='fw-bold' style='color: #BE4844;'>J</b>s with every other card
+* <b class='fw-bold' style='color: #BE4844;'>Jokers</b> only affect the `primary_order` - the `secondary_order` is calculated the same way
 ```{=html}
     </p>
   </div>
