@@ -36,6 +36,9 @@ $$
 \newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
 \newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
 \newcommand{\grey}[1]{\color{##969696}{#1}\color{##55595C}}
+\newcommand{\greyred}[1]{\color{##f27d79}{#1}\color{##55595C}}
+\newcommand{\greygreen}[1]{\color{##7ec295}{#1}\color{##55595C}}
+\newcommand{\plus}{\smash{\lower{0.5pc}\grey{+}}}
 $$
 :::
 
@@ -76,12 +79,12 @@ Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each 
 $$
 \begin{aligned}
 &{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{g}}&{\text{\grey{Winnings}}} &\\
-&\text{32T3K}            &&\green{765}            &&\grey{1}                       &&\text{\grey{One pair}}         &765 \times 1                &\\
-&\text{T55J5}            &&\green{684}            &&\grey{4}                       &&\text{\grey{Full house}}       &684 \times 4                &\\
-&\text{KK677}            &&\green{28}             &&\grey{3}                       &&\text{\grey{Two pair}}\grey{^*}       & 28 \times 3                &\\
-&\text{KTJJT}            &&\green{220}            &&\grey{2}                       &&\text{\grey{Two pair}}         &220 \times 2                &\\
-&\text{QQQJA}            &&\green{483}            &&\grey{5}                       &&\text{\grey{Three of a kind}}  &483 \times 5                &\\
-&                        &&                       &&                        &&                        &6440                        &\\
+&\text{32T3K}            &&\green{765}            &&\greyred{1}                       &&\text{\grey{One pair}}         &\greygreen{765} \,\grey{\times}\, \greyred{1}                &\plus\\
+&\text{T55J5}            &&\green{684}            &&\greyred{4}                       &&\text{\grey{Full house}}       &\greygreen{684} \,\grey{\times}\, \greyred{4}                &\plus\\
+&\text{KK677}            &&\green{28}             &&\greyred{3}                       &&\text{\grey{Two pair}}\grey{^*}       & \greygreen{28} \,\grey{\times}\, \greyred{3}                &\plus\\
+&\text{KTJJT}            &&\green{220}            &&\greyred{2}                       &&\text{\grey{Two pair}}         &\greygreen{220} \,\grey{\times}\, \greyred{2}                &\plus\\
+&\text{QQQJA}            &&\green{483}            &&\greyred{5}                       &&\text{\grey{Three of a kind}}  &\greygreen{483} \,\grey{\times}\, \greyred{5} \llap{\lower{0.4pc}\underline{\phantom{483 \times 5}}}               &\\
+&                        &&                       &&                        &&                        &\orange{6440}                        &\\
 \end{aligned}
 $$
 
