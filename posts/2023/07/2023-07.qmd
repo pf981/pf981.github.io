@@ -2,7 +2,7 @@
 title: "2023 Day 7"
 subtitle: "Camel Cards"
 date: 2024-04-03
-categories: [python, easy, mathematics]
+categories: [python, easy]
 draft: false
 knitr:
   opts_chunk: 
@@ -10,6 +10,7 @@ knitr:
     collapse: true
 problem_url: "https://adventofcode.com/2023/day/7"
 description: "Easy puzzle evaluating simplified poker hands."
+image: "/images/2023-07.svg"
 ---
 
 ```{r}
@@ -66,13 +67,17 @@ with open('input.txt', "r") as f:
 
 You are given a list of 5 card hands and their corresponding <b class='fw-bold' style='color: #2F7E4A;'>bids</b>. <b class='fw-bold' style='color: #1577A0;'>Rank</b> each hand and calculate the winnings as the product of the <b class='fw-bold' style='color: #1577A0;'>rank</b> and <b class='fw-bold' style='color: #2F7E4A;'>bid</b>. Compute the <b class='fw-bold' style='color: #91672C;'>total winnings</b>.
 
-Ranks... Todo...
+Hands are <b class='fw-bold' style='color: #1577A0;'>ranked</b> by their type. If two hands are of the same type, their ordering is then determined by comparing the strength of the individual cards, starting from the first card to the fifth, as needed.
 
-You're given a list of races for toy boats. Each race contains a <b class='fw-bold' style='color: #2F7E4A;'>race duration (ms)</b> and a <b class='fw-bold' style='color: #BE4844;'>current distance record (mm)</b>.
+Hand types are ranked as follows:
 
-The distance a toy boat travels in a race is determined by how long you hold the button at the start: each millisecond of holding increases the boat's speed by 1 mm/ms, but also reduces the remaining time for movement. After releasing the button, the boat travels at its accumulated speed for the rest of the race duration.
-
-Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each race's record</b> and get the <b class='fw-bold' style='color: #91672C;'>product</b> of those numbers.
+1. High card
+2. One pair
+3. Two pair
+4. Three of a kind
+5. Full house
+6. Four of a kind
+7. Five of a kind
 
 <h6 class="card-subtitle text-muted">Example</h6>
 <!-- &{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{G}}&{\text{\grey{Winnings}}} &\\ -->
@@ -88,18 +93,6 @@ $$
 &                        &&                       &&                        &&                        &\orange{6440}                        &\\
 \end{aligned}
 $$
-
-<!-- $$ -->
-<!-- \begin{aligned} -->
-<!-- &\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{\grey{Rank}}} &&\underline{\text{\grey{Type}}} &\underline{\text{\grey{Winnings}}} &\\ -->
-<!-- &\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &765 \times 1                &\\ -->
-<!-- &\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &684 \times 4                &\\ -->
-<!-- &\text{KK677}            &&\green{28}             &&3                       &&\text{Two pair}^*       & 28 \times 3                &\\ -->
-<!-- &\text{KTJJT}            &&\green{220}            &&2                       &&\text{Two pair}         &220 \times 2                &\\ -->
-<!-- &\text{QQQJA}            &&\green{483}            &&5                       &&\text{Three of a kind}  &483 \times 5                &\\ -->
-<!-- &                        &&                       &&                        &&                        &6440                        &\\ -->
-<!-- \end{aligned} -->
-<!-- $$ -->
 
 $\grey{\scriptsize{^{*}\text{Stronger second card than other two pair}}}$
 
@@ -134,12 +127,16 @@ def primary_order(hand):
     ]
 
     return possible_counts.index(counts)
+```
 
 
+```{python}
 def secondary_order(hand):
     return tuple("23456789TJQKA".index(card) for card in hand)
+```
 
-
+Finally, define `hand_bid_order` as the combination of the primary and second order. Sort the bids by their corresponding hand rank and calculate the winnings.
+```{python}
 def hand_bid_order(hand_bid):
     hand, bid = hand_bid
     return primary_order(hand), secondary_order(hand)
@@ -190,14 +187,6 @@ Time:      71530
 Distance:  940200
 ```
 
-```{r dev="svg"}
-#| dpi: 216
-#| code-fold: true
-#| code-summary: "Figure Source"
-#| warning: false
-#| fig-cap: "Tails zoomed 1000x for readability"
-
-```
 
 ```{=html}
   </div>
