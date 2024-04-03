@@ -67,6 +67,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<link href="../../../posts/2023/07/2023-07.html" rel="next">
 <link href="../../../posts/2023/05/2023-05.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
@@ -207,6 +208,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../../../posts/2023/06/2023-06.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">6. Wait For It</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../posts/2023/07/2023-07.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Camel Cards</span></a>
   </div>
 </li>
       </ul>
@@ -371,10 +378,17 @@ Distance:  9  40  200</code></pre>
 <span id="cb3-70"><a href="#cb3-70"></a>  <span class="fu">modify_at</span>(<span class="dv">2</span>, \(p) p <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Distance (mm)"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb3-71"><a href="#cb3-71"></a>  <span class="fu">modify_at</span>(<span class="dv">3</span>, \(p) p <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Button Hold Time (ms)"</span>))</span>
 <span id="cb3-72"><a href="#cb3-72"></a></span>
-<span id="cb3-73"><a href="#cb3-73"></a><span class="co"># Using cowplot with custom font and markdown made the subtitle spacing incorrect</span></span>
-<span id="cb3-74"><a href="#cb3-74"></a><span class="co"># Works fine with gridExtra::grid.arrange</span></span>
+<span id="cb3-73"><a href="#cb3-73"></a><span class="co"># Using cowplot or egg with custom font and markdown made the subtitle spacing incorrect</span></span>
+<span id="cb3-74"><a href="#cb3-74"></a><span class="co"># Works fine with gridExtra::grid.arrange but the axes aren't aligned</span></span>
 <span id="cb3-75"><a href="#cb3-75"></a><span class="co"># cowplot::plot_grid(plotlist = plots, ncol = 1)</span></span>
-<span id="cb3-76"><a href="#cb3-76"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(plots[[<span class="dv">1</span>]], plots[[<span class="dv">2</span>]], plots[[<span class="dv">3</span>]], <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-76"><a href="#cb3-76"></a><span class="co"># gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)</span></span>
+<span id="cb3-77"><a href="#cb3-77"></a><span class="co"># egg::ggarrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)</span></span>
+<span id="cb3-78"><a href="#cb3-78"></a></span>
+<span id="cb3-79"><a href="#cb3-79"></a><span class="co"># This was the best way to get the font rendering correctly and the axes aligned</span></span>
+<span id="cb3-80"><a href="#cb3-80"></a>plots <span class="sc">|&gt;</span></span>
+<span id="cb3-81"><a href="#cb3-81"></a>  <span class="fu">map</span>(ggplotGrob) <span class="sc">%&gt;%</span></span>
+<span id="cb3-82"><a href="#cb3-82"></a>  <span class="fu">do.call</span>(gridExtra<span class="sc">::</span>gtable_rbind, .) <span class="sc">|&gt;</span></span>
+<span id="cb3-83"><a href="#cb3-83"></a>  grid<span class="sc">::</span><span class="fu">grid.draw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="2023-06_files/figure-html/unnamed-chunk-3-1.svg" class="img-fluid" width="672"></p>
@@ -934,6 +948,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../../posts/2023/07/2023-07.html" class="pagination-link">
+        <span class="nav-page-text">7. Camel Cards</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
