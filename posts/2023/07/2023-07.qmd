@@ -181,11 +181,6 @@ $$
 \end{aligned}
 $$
 
-$\grey{\scriptsize{^{*}\text{Stronger second card than other two pair}}}$
-\grey{^*}
-$\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's second card}}}$
-
-
 ```{=html}
   </div>
 </div>
