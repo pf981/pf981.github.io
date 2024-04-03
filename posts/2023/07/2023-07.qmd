@@ -71,20 +71,33 @@ The distance a toy boat travels in a race is determined by how long you hold the
 Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each race's record</b> and get the <b class='fw-bold' style='color: #91672C;'>product</b> of those numbers.
 
 <h6 class="card-subtitle text-muted">Example</h6>
+<!-- &{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{G}}&{\text{\grey{Winnings}}} &\\ -->
 
 $$
 \begin{aligned}
-&\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{\grey{Rank}}} &&\underline{\text{\grey{Type}}} &\underline{\text{\grey{Winnings}}} &\\
-&\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &765 \times 1                &\\
-&\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &684 \times 4                &\\
-&\text{KK677}            &&\green{28}             &&3                       &&\text{Two pair}^*       & 28 \times 3                &\\
-&\text{KTJJT}            &&\green{220}            &&2                       &&\text{Two pair}         &220 \times 2                &\\
-&\text{QQQJA}            &&\green{483}            &&5                       &&\text{Three of a kind}  &483 \times 5                &\\
+&{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{g}}&{\text{\grey{Winnings}}} &\\
+&\text{32T3K}            &&\green{765}            &&\grey{1}                       &&\text{\grey{One pair}}         &765 \times 1                &\\
+&\text{T55J5}            &&\green{684}            &&\grey{4}                       &&\text{\grey{Full house}}       &684 \times 4                &\\
+&\text{KK677}            &&\green{28}             &&\grey{3}                       &&\text{\grey{Two pair}}\grey{^*}       & 28 \times 3                &\\
+&\text{KTJJT}            &&\green{220}            &&\grey{2}                       &&\text{\grey{Two pair}}         &220 \times 2                &\\
+&\text{QQQJA}            &&\green{483}            &&\grey{5}                       &&\text{\grey{Three of a kind}}  &483 \times 5                &\\
 &                        &&                       &&                        &&                        &6440                        &\\
 \end{aligned}
 $$
 
-$\tiny{^{*}\text{Stronger second card than other two pair}}$
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- &\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{\grey{Rank}}} &&\underline{\text{\grey{Type}}} &\underline{\text{\grey{Winnings}}} &\\ -->
+<!-- &\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &765 \times 1                &\\ -->
+<!-- &\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &684 \times 4                &\\ -->
+<!-- &\text{KK677}            &&\green{28}             &&3                       &&\text{Two pair}^*       & 28 \times 3                &\\ -->
+<!-- &\text{KTJJT}            &&\green{220}            &&2                       &&\text{Two pair}         &220 \times 2                &\\ -->
+<!-- &\text{QQQJA}            &&\green{483}            &&5                       &&\text{Three of a kind}  &483 \times 5                &\\ -->
+<!-- &                        &&                       &&                        &&                        &6440                        &\\ -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+
+$\grey{\scriptsize{^{*}\text{Stronger second card than other two pair}}}$
 
 
 ```{=html}
