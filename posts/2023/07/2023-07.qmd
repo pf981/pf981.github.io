@@ -35,6 +35,7 @@ $$
 \newcommand{\orange}[1]{\color{##91672C}\textbf{#1}\color{##55595C}}
 \newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
 \newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
+\newcommand{\grey}[1]{\color{##969696}{#1}\color{##55595C}}
 $$
 :::
 
@@ -73,7 +74,7 @@ Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each 
 
 $$
 \begin{aligned}
-&\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{Rank}} &&\underline{\text{Type}} &\underline{\text{Winnings}} &\\
+&\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{\grey{Rank}}} &&\underline{\text{\grey{Type}}} &\underline{\text{\grey{Winnings}}} &\\
 &\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &765 \times 1                &\\
 &\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &684 \times 4                &\\
 &\text{KK677}            &&\green{28}             &&3                       &&\text{Two pair}^*       & 28 \times 3                &\\
@@ -84,49 +85,6 @@ $$
 $$
 
 $\tiny{^{*}\text{Stronger second card than other two pair}}$
-
-$$
-\begin{aligned}
-&&\tiny{^{*}\text{Stronger second card than other two pair}} &&
-\end{aligned}
-$$
-
-$$
-\hspace*{\fill}\tiny{^{*}\text{Stronger second card than other two pair}}
-$$
-
-$$
-\tiny{^{*}\text{Stronger second card than other two pair}}
-$$
-$$
-\small{\text{\textsuperscript{*} Stronger second card than other two pair}}
-$$
-$$
-\hspace*{\fill}\small\text{\textsuperscript{*} Stronger second card than other two pair}
-$$
-
-::: {layout-ncol=2}
-| Hand | Bid |
-|------|-----|
-|32T3K |765  |
-|T55J5 |684  |
-|KK677 |28   |
-|KTJJT |220  |
-|QQQJA |483  |
-
-
-: Input
-
-| Type          | Rank | Winnings |
-|---------------|------|----------|
-|One pair       |1     |765 × 1   |
-|Full house     |4     |684 × 4   |
-|Two pair       |3     |28 × 3    |
-|Two pair       |2     |220 × 2   |
-|Three of a kind|5     |483 × 5   |
-
-: Second Table
-:::
 
 
 ```{=html}
