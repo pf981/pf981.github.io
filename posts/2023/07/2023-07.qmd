@@ -73,13 +73,36 @@ Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each 
 
 $$
 \begin{aligned}
-&\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{Rank}} &&\underline{\text{Type}} &&\underline{\text{Winnings}} &&\\
-&\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &&765 \times 1                &&\\
-&\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &&684 \times 4                &&\\
-&\text{KK677}            &&\green{28}             &&3                       &&\text{One pair}         && 28 \times 3                &&\\
-&\text{KTJJT}            &&\green{220}            &&2                       &&\text{Two pair}         &&220 \times 2                &&\\
-&\text{QQQJA}            &&\green{483}            &&5                       &&\text{Three of a kind}  &&483 \times 5                &&\\
+&\underline{\text{Hand}} &&\underline{\text{Bid}} &&\underline{\text{Rank}} &&\underline{\text{Type}} &\underline{\text{Winnings}} &\\
+&\text{32T3K}            &&\green{765}            &&1                       &&\text{One pair}         &765 \times 1                &\\
+&\text{T55J5}            &&\green{684}            &&4                       &&\text{Full house}       &684 \times 4                &\\
+&\text{KK677}            &&\green{28}             &&3                       &&\text{Two pair}^*       & 28 \times 3                &\\
+&\text{KTJJT}            &&\green{220}            &&2                       &&\text{Two pair}         &220 \times 2                &\\
+&\text{QQQJA}            &&\green{483}            &&5                       &&\text{Three of a kind}  &483 \times 5                &\\
+&                        &&                       &&                        &&                        &6440                        &\\
 \end{aligned}
+$$
+
+$\tiny{^{*}\text{Stronger second card than other two pair}}$
+
+$$
+\begin{aligned}
+&&\tiny{^{*}\text{Stronger second card than other two pair}} &&
+\end{aligned}
+$$
+
+$$
+\hspace*{\fill}\tiny{^{*}\text{Stronger second card than other two pair}}
+$$
+
+$$
+\tiny{^{*}\text{Stronger second card than other two pair}}
+$$
+$$
+\small{\text{\textsuperscript{*} Stronger second card than other two pair}}
+$$
+$$
+\hspace*{\fill}\small\text{\textsuperscript{*} Stronger second card than other two pair}
 $$
 
 ::: {layout-ncol=2}
