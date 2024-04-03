@@ -1,0 +1,302 @@
+---
+title: "2023 Day 7"
+subtitle: "Camel Cards"
+date: 2024-04-03
+categories: [python, easy, mathematics]
+draft: false
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    collapse: true
+problem_url: "https://adventofcode.com/2023/day/7"
+description: "Easy puzzle evaluating simplified poker hands."
+---
+
+```{r}
+#| echo: false
+#| output: false
+# www.fontsquirrel.com/fonts/latin-modern-roman -> Webfont Kit -> TTF -> Download
+sysfonts::font_paths("../../../fonts")
+
+sysfonts::font_add(
+  "LM Roman 10",
+  regular = "lmroman10-regular-webfont.ttf",
+  bold = "lmroman10-bold-webfont.ttf",
+  italic = "lmroman10-italic-webfont.ttf",
+  bolditalic = "lmroman10-bolditalic-webfont.ttf"
+)
+
+showtext::showtext_auto()
+```
+
+Ho ho ho, fellow adventurers!
+
+[Advent of Code day 6]({{< meta problem_url >}}) is an easy puzzle evaluating simplified poker hands.
+
+First, we'll read the input.
+```{python}
+with open('input.txt', "r") as f:
+    lines = f.readlines()
+```
+
+## Part 1 <small class="text-body-secondary">Hold to Gold</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 1</h4>
+```
+
+You're given a list of races for toy boats. Each race contains a <b class='fw-bold' style='color: #2F7E4A;'>race duration (ms)</b> and a <b class='fw-bold' style='color: #BE4844;'>current distance record (mm)</b>.
+
+The distance a toy boat travels in a race is determined by how long you hold the button at the start: each millisecond of holding increases the boat's speed by 1 mm/ms, but also reduces the remaining time for movement. After releasing the button, the boat travels at its accumulated speed for the rest of the race duration.
+
+Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat each race's record</b> and get the <b class='fw-bold' style='color: #91672C;'>product</b> of those numbers.
+
+<h6 class="card-subtitle text-muted">Example</h6>
+The diagram below illustrates the calculations for this example of three races.
+```
+Time:      7  15   30
+Distance:  9  40  200
+```
+
+```{r dev="svg"}
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+#| fig-height: 7
+library(tidyverse)
+
+
+
+text <- "Time:      7  15   30
+Distance:  9  40  200"
+
+lines <-
+  str_split_1(text, "\n") |>
+  map(\(line) str_extract_all(line, "\\d+", simplify = TRUE)) |>
+  map(as.numeric)
+
+count_ways <- function(t, d) {
+  upper <- (-t - sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  lower <- (-t + sqrt(t ^ 2 - 4 * (-1) * (-d))) / 2 * (-1)
+  ceiling(upper) - floor(lower) - 1
+}
+
+create_plot <- function(race_id, race_duration, record, x_limit = 30) {
+  df <- tibble(wait_time = seq(from = 0, to = race_duration, by = 1)) |>
+    mutate(
+      distance = wait_time * (race_duration - wait_time),
+      fill = case_when(
+        distance > record ~ "#1577A0",
+        TRUE ~ "#969696"
+      )
+    )
+  
+  ggplot(df, aes(wait_time, distance, fill = I(fill))) +
+    geom_col() +
+    geom_hline(
+      aes(yintercept = record),
+      data = NULL,
+      col = "#BE4844",
+      linetype = "longdash",
+      size = 0.8
+    ) +
+    scale_x_continuous(
+      breaks = seq(from = 0, to = race_duration, by = 1),
+      labels = \(break_value) ifelse(break_value == race_duration, glue::glue("<b style = 'color:#2F7E4A;'>{break_value}</b>"), as.character(break_value)),
+      limits = c(-0.5, x_limit),
+      expand = c(0, 0)
+    ) +
+    scale_y_continuous(
+      breaks = c(scales::breaks_pretty(n = 4)(df$distance), record),
+      labels = \(break_value) ifelse(break_value == record, glue::glue("<b style = 'color:#BE4844;'>{break_value}</b>"), as.character(break_value)),
+      expand = c(0, 0)
+    ) +
+    labs(
+      title = glue::glue("Race {race_id}"),
+      subtitle = glue::glue("<b style = 'color:#2F7E4A;'>Race Duration: {race_duration}ms</b>, <b style = 'color:#BE4844;'>Record: {record}mm</b>, <b style = 'color:#1577A0;'>Ways to Beat Record: {count_ways(race_duration, record)}</b>"),
+      x = "",
+      y = ""
+    ) +
+    theme_minimal(base_family = "LM Roman 10") +
+    theme(
+      panel.grid = element_blank(),
+      axis.line.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.ticks.x.bottom = element_line(color  = "#CCCCCC"),
+      axis.line.y.left = element_line(color  = "#CCCCCC"),
+      axis.ticks.y.left = element_line(color  = "#CCCCCC"),
+      axis.text.x = ggtext::element_markdown(),
+      axis.text.y = ggtext::element_markdown(),
+      plot.subtitle = ggtext::element_markdown()
+    )
+}
+
+plots <-
+  pmap(list(seq_along(lines[[1]]), lines[[1]], lines[[2]]), create_plot) |>
+  modify_at(2, \(p) p + labs(y = "Distance (mm)")) |>
+  modify_at(3, \(p) p + labs(x = "Button Hold Time (ms)"))
+
+# Using cowplot or egg with custom font and markdown made the subtitle spacing incorrect
+# Works fine with gridExtra::grid.arrange but the axes aren't aligned
+# cowplot::plot_grid(plotlist = plots, ncol = 1)
+# gridExtra::grid.arrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
+# egg::ggarrange(plots[[1]], plots[[2]], plots[[3]], ncol = 1)
+
+# This was the best way to get the font rendering correctly and the axes aligned
+plots |>
+  map(ggplotGrob) %>%
+  do.call(gridExtra::gtable_rbind, .) |>
+  grid::grid.draw()
+```
+::: {.hidden}
+$$
+\newcommand{\blue}[1]{\color{##1577A0}\textbf{#1}\color{##55595C}}
+\newcommand{\orange}[1]{\color{##91672C}\textbf{#1}\color{##55595C}}
+\newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
+\newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
+$$
+:::
+$$\blue{4} * \blue{8} * \blue{9} = \orange{288}$$
+
+```{=html}
+  </div>
+</div>
+```
+
+:::::
+
+<div style="clear: both;"></div> 
+
+
+Then simply plug in the numbers for each race and get the <b class='fw-bold' style='color: #91672C;'>product</b> of the resulting values.
+
+```{python}
+import collections
+
+
+def primary_order(hand):
+    counts = [count for card, count in collections.Counter(hand).most_common()]
+
+    possible_counts = [
+        [1, 1, 1, 1, 1],  # High card
+        [2, 1, 1, 1],  # One pair
+        [2, 2, 1],  # Two pair
+        [3, 1, 1],  # Three of a kind
+        [3, 2],  # Full house
+        [4, 1],  # Four of a kind
+        [5],  # Five of a kind
+    ]
+
+    return possible_counts.index(counts)
+
+
+def secondary_order(hand):
+    return tuple("23456789TJQKA".index(card) for card in hand)
+
+
+def hand_bid_order(hand_bid):
+    hand, bid = hand_bid
+    return primary_order(hand), secondary_order(hand)
+
+
+hands_bids = [line.split(" ") for line in lines]
+hands_bids.sort(key=hand_bid_order)
+answer1 = sum(i * int(bid) for i, (_, bid) in enumerate(hands_bids, 1))
+print(answer1)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Find the upper and lower button hold times which beat the record
+* This can be expressed as the intersection between $f(x) = D$ and $f(x) = w \cdot (T - w)$
+* Compute the product of the differences between the upper and lower bounds
+
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+## Part 2 <small class="text-body-secondary">Magnitude Multiplied</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+:::: {.pe-4}
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 2</h4>
+```
+
+Rather than multiple races, the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b> are each concatenated to form one giant race.
+
+Find the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b>.
+
+<h6 class="card-subtitle text-muted">Example</h6>
+```
+Time:      71530
+Distance:  940200
+```
+
+```{r dev="svg"}
+#| dpi: 216
+#| code-fold: true
+#| code-summary: "Figure Source"
+#| warning: false
+#| fig-cap: "Tails zoomed 1000x for readability"
+
+```
+
+```{=html}
+  </div>
+</div>
+```
+::::
+:::::
+
+
+<div style="clear: both;"></div> 
+
+Just plug the new numbers into the same formula.
+
+```{python}
+def hand_bid_order_wild(hand_bid):
+    hand, bid = hand_bid
+    return (
+        max(primary_order(hand.replace("J", c)) for c in "23456789TJQKA"),
+        secondary_order(hand),
+    )
+
+
+hands_bids.sort(key=hand_bid_order_wild)
+answer2 = sum(i * int(bid) for i, (_, bid) in enumerate(hands_bids, 1))
+print(answer2)
+```
+
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Concatenate the <b class='fw-bold' style='color: #2F7E4A;'>race durations</b> and <b class='fw-bold' style='color: #BE4844;'>distance records</b>
+* Compute the <b class='fw-bold' style='color: #1577A0;'>number of ways to beat this race's record</b> using the same formula as part 1
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+{{< include ../../_button_footer.qmd >}}
