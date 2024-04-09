@@ -70,8 +70,8 @@ $$
 &{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{g}}&{\text{\grey{Winnings}}} &\\
 &\text{32T3K} &&\green{765} &&\greyblue{1} &&\text{\grey{One pair}}          &\greygreen{765} \,\grey{\times}\, \greyblue{1}                                                        &\plus\\
 &\text{T55J5} &&\green{684} &&\greyblue{4} &&\text{\grey{Full house}}        &\greygreen{684} \,\grey{\times}\, \greyblue{4}                                                        &\plus\\
-&\text{KK677} &&\green{28}  &&\greyblue{3} &&\text{\grey{Two pair}}\grey{^*} & \greygreen{28} \,\grey{\times}\, \greyblue{3}                                                        &\plus\\
-&\text{KTJJT} &&\green{220} &&\greyblue{2} &&\text{\grey{Two pair}}          &\greygreen{220} \,\grey{\times}\, \greyblue{2}                                                        &\plus\\
+&\text{KK677} &&\green{28}  &&\greyblue{3} &&\text{\grey{Two pair}} & \greygreen{28} \,\grey{\times}\, \greyblue{3}                                                        &\plus\\
+&\text{KTJJT} &&\green{220} &&\greyblue{2} &&\text{\grey{Two pair}}\grey{^*}          &\greygreen{220} \,\grey{\times}\, \greyblue{2}                                                        &\plus\\
 &\text{QQQJA} &&\green{483} &&\greyblue{5} &&\text{\grey{Three of a kind}}   &\greygreen{483} \,\grey{\times}\, \greyblue{5} \llap{\lower{0.4pc}\underline{\phantom{483 \times 5}}} &\\
 &             &&            &&             &&                                &\orange{6440}                                                                                         &\\
 \end{aligned}
