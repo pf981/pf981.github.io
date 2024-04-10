@@ -145,7 +145,7 @@ print(answer1)
 * Ranking Camel Cards hands involves two levels of ordering:
     1. **Primary ordering** is based on the type of hand, determined by the pattern of card frequencies
     2. **Secondary ordering** evaluates the specific values of the cards within a hand
-* * A combined key function, `hand_bid_order`, uses both the primary and secondary orderings to sort the hands from weakest to strongest
+* A combined key function, `hand_bid_order`, uses both the primary and secondary orderings to sort the hands from weakest to strongest
 ```{=html}
     </p>
   </div>
