@@ -448,7 +448,7 @@ Example
 <div style="clear: both;">
 
 </div>
-<p>Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category (e.g., soil) based on the formula <code>dest_start + (seed - source_start)</code>. If the seed value doesn’t fall within any range in a map, it remains unchanged.</p>
+<p>Part 1 is straightforward. Iterate through each initial seed. For each seed, go through all the conversion maps (soil, fertilizer, etc.). If the seed value falls within a defined range in a map, we convert it to the corresponding value in the destination category based on the formula <code>dest_start + (seed - source_start)</code>. If the seed value doesn’t fall within any range in a map, it remains unchanged.</p>
 <p>After processing all the maps for a seed, we add its final converted value (which corresponds to the location category in the last map) to a list. Finally, we find the minimum value in the locations list.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> re</span>
@@ -469,7 +469,7 @@ Example
 <span id="cb3-16"><a href="#cb3-16"></a></span>
 <span id="cb3-17"><a href="#cb3-17"></a>answer1 <span class="op">=</span> <span class="bu">min</span>(locations)</span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="bu">print</span>(answer1)</span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; 993500720</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co">#&gt; 35</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -574,7 +574,7 @@ Example
 <span id="cb6-30"><a href="#cb6-30"></a>starting_ranges <span class="op">=</span> [seeds[i:i<span class="op">+</span><span class="dv">2</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(seeds), <span class="dv">2</span>)]</span>
 <span id="cb6-31"><a href="#cb6-31"></a>answer2 <span class="op">=</span> <span class="bu">min</span>(get_smallest_range(<span class="dv">0</span>, in_start, in_range_len) <span class="cf">for</span> in_start, in_range_len <span class="kw">in</span> starting_ranges)</span>
 <span id="cb6-32"><a href="#cb6-32"></a><span class="bu">print</span>(answer2)</span>
-<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt; 4917124</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="co">#&gt; 46</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -622,211 +622,39 @@ Example
 </div>
 <div class="modal-body">
 <div class="cell" data-file="input.txt">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>seeds<span class="sc">:</span> <span class="dv">304740406</span> <span class="dv">53203352</span> <span class="dv">1080760686</span> <span class="dv">52608146</span> <span class="dv">1670978447</span> <span class="dv">367043978</span> <span class="dv">1445830299</span> <span class="dv">58442414</span> <span class="dv">4012995194</span> <span class="dv">104364808</span> <span class="dv">4123691336</span> <span class="dv">167638723</span> <span class="dv">2284615844</span> <span class="dv">178205532</span> <span class="dv">3164519436</span> <span class="dv">564398605</span> <span class="dv">90744016</span> <span class="dv">147784453</span> <span class="dv">577905361</span> <span class="dv">122056749</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>seeds<span class="sc">:</span> <span class="dv">79</span> <span class="dv">14</span> <span class="dv">55</span> <span class="dv">13</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a>seed<span class="sc">-</span>to<span class="sc">-</span>soil map<span class="sc">:</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="dv">0</span> <span class="dv">699677807</span> <span class="dv">922644641</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="dv">4174180469</span> <span class="dv">3833727510</span> <span class="dv">120786827</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="dv">1525682201</span> <span class="dv">2566557266</span> <span class="dv">229511566</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="dv">3280624601</span> <span class="dv">3954514337</span> <span class="dv">340452959</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="dv">2228029508</span> <span class="dv">2796068832</span> <span class="dv">310221139</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="dv">3621077560</span> <span class="dv">3280624601</span> <span class="dv">553102909</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="dv">2120836342</span> <span class="dv">592484641</span> <span class="dv">107193166</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="dv">1982514669</span> <span class="dv">227320902</span> <span class="dv">138321673</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="dv">1755193767</span> <span class="dv">0</span> <span class="dv">227320902</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="dv">922644641</span> <span class="dv">1622322448</span> <span class="dv">603037560</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="dv">2538250647</span> <span class="dv">365642575</span> <span class="dv">226842066</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="dv">2765092713</span> <span class="dv">2225360008</span> <span class="dv">341197258</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a></span>
-<span id="cb7-17"><a href="#cb7-17"></a>soil<span class="sc">-</span>to<span class="sc">-</span>fertilizer map<span class="sc">:</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a><span class="dv">1916776044</span> <span class="dv">145070025</span> <span class="dv">3464138</span></span>
-<span id="cb7-19"><a href="#cb7-19"></a><span class="dv">1920240182</span> <span class="dv">0</span> <span class="dv">145070025</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="dv">706160141</span> <span class="dv">2208005933</span> <span class="dv">115191764</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a><span class="dv">2898492924</span> <span class="dv">830275742</span> <span class="dv">87027483</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a><span class="dv">3489083348</span> <span class="dv">3344594558</span> <span class="dv">103871907</span></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="dv">2985520407</span> <span class="dv">148534163</span> <span class="dv">415139950</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a><span class="dv">821351905</span> <span class="dv">917303225</span> <span class="dv">327392865</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="dv">1148744770</span> <span class="dv">1517236949</span> <span class="dv">182706102</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a><span class="dv">295069722</span> <span class="dv">3448466465</span> <span class="dv">411090419</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a><span class="dv">1816984891</span> <span class="dv">3244803405</span> <span class="dv">99791153</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a><span class="dv">4282585972</span> <span class="dv">4292886644</span> <span class="dv">2080652</span></span>
-<span id="cb7-29"><a href="#cb7-29"></a><span class="dv">3592955255</span> <span class="dv">563674113</span> <span class="dv">266601629</span></span>
-<span id="cb7-30"><a href="#cb7-30"></a><span class="dv">4266462972</span> <span class="dv">4158154511</span> <span class="dv">16123000</span></span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="dv">1331450872</span> <span class="dv">1244696090</span> <span class="dv">272540859</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a><span class="dv">2715943131</span> <span class="dv">3062253612</span> <span class="dv">182549793</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a><span class="dv">4284666624</span> <span class="dv">4174277511</span> <span class="dv">10300672</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="dv">4158154511</span> <span class="dv">4184578183</span> <span class="dv">108308461</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a><span class="dv">1603991731</span> <span class="dv">1995012773</span> <span class="dv">212993160</span></span>
-<span id="cb7-36"><a href="#cb7-36"></a><span class="dv">2065310207</span> <span class="dv">2411620688</span> <span class="dv">650632924</span></span>
-<span id="cb7-37"><a href="#cb7-37"></a><span class="dv">0</span> <span class="dv">1699943051</span> <span class="dv">295069722</span></span>
-<span id="cb7-38"><a href="#cb7-38"></a><span class="dv">3400660357</span> <span class="dv">2323197697</span> <span class="dv">88422991</span></span>
-<span id="cb7-39"><a href="#cb7-39"></a></span>
-<span id="cb7-40"><a href="#cb7-40"></a>fertilizer<span class="sc">-</span>to<span class="sc">-</span>water map<span class="sc">:</span></span>
-<span id="cb7-41"><a href="#cb7-41"></a><span class="dv">3585244197</span> <span class="dv">3493316345</span> <span class="dv">482900943</span></span>
-<span id="cb7-42"><a href="#cb7-42"></a><span class="dv">2871272496</span> <span class="dv">878061687</span> <span class="dv">456215665</span></span>
-<span id="cb7-43"><a href="#cb7-43"></a><span class="dv">3477664135</span> <span class="dv">4187387234</span> <span class="dv">107580062</span></span>
-<span id="cb7-44"><a href="#cb7-44"></a><span class="dv">845559238</span> <span class="dv">15587711</span> <span class="dv">56716031</span></span>
-<span id="cb7-45"><a href="#cb7-45"></a><span class="dv">121711204</span> <span class="dv">2918313406</span> <span class="dv">409174755</span></span>
-<span id="cb7-46"><a href="#cb7-46"></a><span class="dv">1639718746</span> <span class="dv">0</span> <span class="dv">15587711</span></span>
-<span id="cb7-47"><a href="#cb7-47"></a><span class="dv">530885959</span> <span class="dv">2603640127</span> <span class="dv">314673279</span></span>
-<span id="cb7-48"><a href="#cb7-48"></a><span class="dv">902275269</span> <span class="dv">2435903232</span> <span class="dv">167736895</span></span>
-<span id="cb7-49"><a href="#cb7-49"></a><span class="dv">2635221133</span> <span class="dv">72303742</span> <span class="dv">236051363</span></span>
-<span id="cb7-50"><a href="#cb7-50"></a><span class="dv">1070012164</span> <span class="dv">308355105</span> <span class="dv">569706582</span></span>
-<span id="cb7-51"><a href="#cb7-51"></a><span class="dv">1699846244</span> <span class="dv">1334277352</span> <span class="dv">935374889</span></span>
-<span id="cb7-52"><a href="#cb7-52"></a><span class="dv">4279315086</span> <span class="dv">3477664135</span> <span class="dv">15652210</span></span>
-<span id="cb7-53"><a href="#cb7-53"></a><span class="dv">1655306457</span> <span class="dv">2269652241</span> <span class="dv">44539787</span></span>
-<span id="cb7-54"><a href="#cb7-54"></a><span class="dv">109056711</span> <span class="dv">2423248739</span> <span class="dv">12654493</span></span>
-<span id="cb7-55"><a href="#cb7-55"></a><span class="dv">0</span> <span class="dv">2314192028</span> <span class="dv">109056711</span></span>
-<span id="cb7-56"><a href="#cb7-56"></a><span class="dv">4068145140</span> <span class="dv">3976217288</span> <span class="dv">211169946</span></span>
-<span id="cb7-57"><a href="#cb7-57"></a></span>
-<span id="cb7-58"><a href="#cb7-58"></a>water<span class="sc">-</span>to<span class="sc">-</span>light map<span class="sc">:</span></span>
-<span id="cb7-59"><a href="#cb7-59"></a><span class="dv">3841742547</span> <span class="dv">3016842841</span> <span class="dv">17384315</span></span>
-<span id="cb7-60"><a href="#cb7-60"></a><span class="dv">2875021919</span> <span class="dv">2637593760</span> <span class="dv">185450069</span></span>
-<span id="cb7-61"><a href="#cb7-61"></a><span class="dv">3413635232</span> <span class="dv">3588265685</span> <span class="dv">87508205</span></span>
-<span id="cb7-62"><a href="#cb7-62"></a><span class="dv">1311241677</span> <span class="dv">236307150</span> <span class="dv">54007684</span></span>
-<span id="cb7-63"><a href="#cb7-63"></a><span class="dv">3349161906</span> <span class="dv">4276682782</span> <span class="dv">18284514</span></span>
-<span id="cb7-64"><a href="#cb7-64"></a><span class="dv">896790030</span> <span class="dv">1355845673</span> <span class="dv">34430118</span></span>
-<span id="cb7-65"><a href="#cb7-65"></a><span class="dv">3060471988</span> <span class="dv">3835573209</span> <span class="dv">145836645</span></span>
-<span id="cb7-66"><a href="#cb7-66"></a><span class="dv">2741184131</span> <span class="dv">3675773890</span> <span class="dv">133837788</span></span>
-<span id="cb7-67"><a href="#cb7-67"></a><span class="dv">1387754847</span> <span class="dv">947687177</span> <span class="dv">15489861</span></span>
-<span id="cb7-68"><a href="#cb7-68"></a><span class="dv">3785944618</span> <span class="dv">2057196631</span> <span class="dv">55797929</span></span>
-<span id="cb7-69"><a href="#cb7-69"></a><span class="dv">2006585491</span> <span class="dv">2931426646</span> <span class="dv">85416195</span></span>
-<span id="cb7-70"><a href="#cb7-70"></a><span class="dv">3873217816</span> <span class="dv">3809611678</span> <span class="dv">25961531</span></span>
-<span id="cb7-71"><a href="#cb7-71"></a><span class="dv">1667765627</span> <span class="dv">643929130</span> <span class="dv">34884144</span></span>
-<span id="cb7-72"><a href="#cb7-72"></a><span class="dv">2092001686</span> <span class="dv">2434956599</span> <span class="dv">202637161</span></span>
-<span id="cb7-73"><a href="#cb7-73"></a><span class="dv">1001898651</span> <span class="dv">158618769</span> <span class="dv">77688381</span></span>
-<span id="cb7-74"><a href="#cb7-74"></a><span class="dv">3899179347</span> <span class="dv">2253048950</span> <span class="dv">181907649</span></span>
-<span id="cb7-75"><a href="#cb7-75"></a><span class="dv">1786416461</span> <span class="dv">377140410</span> <span class="dv">101956748</span></span>
-<span id="cb7-76"><a href="#cb7-76"></a><span class="dv">0</span> <span class="dv">833901414</span> <span class="dv">113785763</span></span>
-<span id="cb7-77"><a href="#cb7-77"></a><span class="dv">1403244708</span> <span class="dv">479097158</span> <span class="dv">56815029</span></span>
-<span id="cb7-78"><a href="#cb7-78"></a><span class="dv">3859126862</span> <span class="dv">3034227156</span> <span class="dv">14090954</span></span>
-<span id="cb7-79"><a href="#cb7-79"></a><span class="dv">747996464</span> <span class="dv">678813274</span> <span class="dv">31450438</span></span>
-<span id="cb7-80"><a href="#cb7-80"></a><span class="dv">869173795</span> <span class="dv">963177038</span> <span class="dv">27616235</span></span>
-<span id="cb7-81"><a href="#cb7-81"></a><span class="dv">3268502638</span> <span class="dv">2006585491</span> <span class="dv">50611140</span></span>
-<span id="cb7-82"><a href="#cb7-82"></a><span class="dv">113785763</span> <span class="dv">0</span> <span class="dv">148879571</span></span>
-<span id="cb7-83"><a href="#cb7-83"></a><span class="dv">262665334</span> <span class="dv">1511505797</span> <span class="dv">386606610</span></span>
-<span id="cb7-84"><a href="#cb7-84"></a><span class="dv">1187603975</span> <span class="dv">710263712</span> <span class="dv">123637702</span></span>
-<span id="cb7-85"><a href="#cb7-85"></a><span class="dv">3319113778</span> <span class="dv">3987361499</span> <span class="dv">30048128</span></span>
-<span id="cb7-86"><a href="#cb7-86"></a><span class="dv">3367446420</span> <span class="dv">2885237834</span> <span class="dv">46188812</span></span>
-<span id="cb7-87"><a href="#cb7-87"></a><span class="dv">931220148</span> <span class="dv">990793273</span> <span class="dv">15913032</span></span>
-<span id="cb7-88"><a href="#cb7-88"></a><span class="dv">1460059737</span> <span class="dv">1006706305</span> <span class="dv">120880314</span></span>
-<span id="cb7-89"><a href="#cb7-89"></a><span class="dv">1079587032</span> <span class="dv">535912187</span> <span class="dv">108016943</span></span>
-<span id="cb7-90"><a href="#cb7-90"></a><span class="dv">3645890228</span> <span class="dv">2112994560</span> <span class="dv">140054390</span></span>
-<span id="cb7-91"><a href="#cb7-91"></a><span class="dv">3206308633</span> <span class="dv">2823043829</span> <span class="dv">62194005</span></span>
-<span id="cb7-92"><a href="#cb7-92"></a><span class="dv">1888373209</span> <span class="dv">148879571</span> <span class="dv">9739198</span></span>
-<span id="cb7-93"><a href="#cb7-93"></a><span class="dv">3501143437</span> <span class="dv">3443518894</span> <span class="dv">144746791</span></span>
-<span id="cb7-94"><a href="#cb7-94"></a><span class="dv">779446902</span> <span class="dv">1127586619</span> <span class="dv">89726893</span></span>
-<span id="cb7-95"><a href="#cb7-95"></a><span class="dv">947133180</span> <span class="dv">1217313512</span> <span class="dv">54765471</span></span>
-<span id="cb7-96"><a href="#cb7-96"></a><span class="dv">2481910976</span> <span class="dv">4017409627</span> <span class="dv">259273155</span></span>
-<span id="cb7-97"><a href="#cb7-97"></a><span class="dv">1365249361</span> <span class="dv">1390275791</span> <span class="dv">22505486</span></span>
-<span id="cb7-98"><a href="#cb7-98"></a><span class="dv">4087038641</span> <span class="dv">3048318110</span> <span class="dv">207928655</span></span>
-<span id="cb7-99"><a href="#cb7-99"></a><span class="dv">1702649771</span> <span class="dv">1272078983</span> <span class="dv">83766690</span></span>
-<span id="cb7-100"><a href="#cb7-100"></a><span class="dv">649271944</span> <span class="dv">1412781277</span> <span class="dv">98724520</span></span>
-<span id="cb7-101"><a href="#cb7-101"></a><span class="dv">2294638847</span> <span class="dv">3256246765</span> <span class="dv">187272129</span></span>
-<span id="cb7-102"><a href="#cb7-102"></a><span class="dv">4081086996</span> <span class="dv">3981409854</span> <span class="dv">5951645</span></span>
-<span id="cb7-103"><a href="#cb7-103"></a><span class="dv">1580940051</span> <span class="dv">290314834</span> <span class="dv">86825576</span></span>
-<span id="cb7-104"><a href="#cb7-104"></a></span>
-<span id="cb7-105"><a href="#cb7-105"></a>light<span class="sc">-</span>to<span class="sc">-</span>temperature map<span class="sc">:</span></span>
-<span id="cb7-106"><a href="#cb7-106"></a><span class="dv">2659452899</span> <span class="dv">3773423191</span> <span class="dv">23529065</span></span>
-<span id="cb7-107"><a href="#cb7-107"></a><span class="dv">1010417677</span> <span class="dv">1830019321</span> <span class="dv">229964714</span></span>
-<span id="cb7-108"><a href="#cb7-108"></a><span class="dv">1506263997</span> <span class="dv">1764304095</span> <span class="dv">65715226</span></span>
-<span id="cb7-109"><a href="#cb7-109"></a><span class="dv">3017023682</span> <span class="dv">3993999178</span> <span class="dv">103632805</span></span>
-<span id="cb7-110"><a href="#cb7-110"></a><span class="dv">3758361154</span> <span class="dv">3931294907</span> <span class="dv">62704271</span></span>
-<span id="cb7-111"><a href="#cb7-111"></a><span class="dv">2513441862</span> <span class="dv">2529586713</span> <span class="dv">106552791</span></span>
-<span id="cb7-112"><a href="#cb7-112"></a><span class="dv">3821065425</span> <span class="dv">3163657189</span> <span class="dv">7959671</span></span>
-<span id="cb7-113"><a href="#cb7-113"></a><span class="dv">3410504451</span> <span class="dv">3191697730</span> <span class="dv">271334719</span></span>
-<span id="cb7-114"><a href="#cb7-114"></a><span class="dv">2500616406</span> <span class="dv">3150831733</span> <span class="dv">12825456</span></span>
-<span id="cb7-115"><a href="#cb7-115"></a><span class="dv">2065874786</span> <span class="dv">2636139504</span> <span class="dv">257698620</span></span>
-<span id="cb7-116"><a href="#cb7-116"></a><span class="dv">4142272690</span> <span class="dv">2382216135</span> <span class="dv">108163002</span></span>
-<span id="cb7-117"><a href="#cb7-117"></a><span class="dv">1377732678</span> <span class="dv">1378901025</span> <span class="dv">61208694</span></span>
-<span id="cb7-118"><a href="#cb7-118"></a><span class="dv">91217027</span> <span class="dv">248578952</span> <span class="dv">8927711</span></span>
-<span id="cb7-119"><a href="#cb7-119"></a><span class="dv">2463617376</span> <span class="dv">3879075083</span> <span class="dv">36999030</span></span>
-<span id="cb7-120"><a href="#cb7-120"></a><span class="dv">3982807123</span> <span class="dv">2315058258</span> <span class="dv">67157877</span></span>
-<span id="cb7-121"><a href="#cb7-121"></a><span class="dv">2323573406</span> <span class="dv">2065874786</span> <span class="dv">97274446</span></span>
-<span id="cb7-122"><a href="#cb7-122"></a><span class="dv">958870382</span> <span class="dv">916323074</span> <span class="dv">51547295</span></span>
-<span id="cb7-123"><a href="#cb7-123"></a><span class="dv">3868386197</span> <span class="dv">3579887474</span> <span class="dv">114420926</span></span>
-<span id="cb7-124"><a href="#cb7-124"></a><span class="dv">931392999</span> <span class="dv">1351423642</span> <span class="dv">27477383</span></span>
-<span id="cb7-125"><a href="#cb7-125"></a><span class="dv">2942753127</span> <span class="dv">3694308400</span> <span class="dv">74270555</span></span>
-<span id="cb7-126"><a href="#cb7-126"></a><span class="dv">1812734437</span> <span class="dv">168620508</span> <span class="dv">79958444</span></span>
-<span id="cb7-127"><a href="#cb7-127"></a><span class="dv">3301364949</span> <span class="dv">2163149232</span> <span class="dv">3197696</span></span>
-<span id="cb7-128"><a href="#cb7-128"></a><span class="dv">2420847852</span> <span class="dv">2166346928</span> <span class="dv">42769524</span></span>
-<span id="cb7-129"><a href="#cb7-129"></a><span class="dv">3829025096</span> <span class="dv">3111470632</span> <span class="dv">39361101</span></span>
-<span id="cb7-130"><a href="#cb7-130"></a><span class="dv">2619994653</span> <span class="dv">2490379137</span> <span class="dv">39207576</span></span>
-<span id="cb7-131"><a href="#cb7-131"></a><span class="dv">1571979223</span> <span class="dv">1523548881</span> <span class="dv">240755214</span></span>
-<span id="cb7-132"><a href="#cb7-132"></a><span class="dv">2927532333</span> <span class="dv">3916074113</span> <span class="dv">15220794</span></span>
-<span id="cb7-133"><a href="#cb7-133"></a><span class="dv">3125500723</span> <span class="dv">4097631983</span> <span class="dv">175864226</span></span>
-<span id="cb7-134"><a href="#cb7-134"></a><span class="dv">1438941372</span> <span class="dv">10080856</span> <span class="dv">67322625</span></span>
-<span id="cb7-135"><a href="#cb7-135"></a><span class="dv">2049903179</span> <span class="dv">0</span> <span class="dv">10080856</span></span>
-<span id="cb7-136"><a href="#cb7-136"></a><span class="dv">3304562645</span> <span class="dv">2209116452</span> <span class="dv">105941806</span></span>
-<span id="cb7-137"><a href="#cb7-137"></a><span class="dv">1976132043</span> <span class="dv">1277652506</span> <span class="dv">73771136</span></span>
-<span id="cb7-138"><a href="#cb7-138"></a><span class="dv">2659202229</span> <span class="dv">3171616860</span> <span class="dv">250670</span></span>
-<span id="cb7-139"><a href="#cb7-139"></a><span class="dv">4256036535</span> <span class="dv">3463032449</span> <span class="dv">38930761</span></span>
-<span id="cb7-140"><a href="#cb7-140"></a><span class="dv">1240382391</span> <span class="dv">257506663</span> <span class="dv">137350287</span></span>
-<span id="cb7-141"><a href="#cb7-141"></a><span class="dv">0</span> <span class="dv">77403481</span> <span class="dv">91217027</span></span>
-<span id="cb7-142"><a href="#cb7-142"></a><span class="dv">3120656487</span> <span class="dv">3768578955</span> <span class="dv">4844236</span></span>
-<span id="cb7-143"><a href="#cb7-143"></a><span class="dv">100144738</span> <span class="dv">967870369</span> <span class="dv">309782137</span></span>
-<span id="cb7-144"><a href="#cb7-144"></a><span class="dv">409926875</span> <span class="dv">394856950</span> <span class="dv">521466124</span></span>
-<span id="cb7-145"><a href="#cb7-145"></a><span class="dv">2682981964</span> <span class="dv">4273496209</span> <span class="dv">21471087</span></span>
-<span id="cb7-146"><a href="#cb7-146"></a><span class="dv">2704453051</span> <span class="dv">3501963210</span> <span class="dv">77924264</span></span>
-<span id="cb7-147"><a href="#cb7-147"></a><span class="dv">2802207515</span> <span class="dv">2893838124</span> <span class="dv">125324818</span></span>
-<span id="cb7-148"><a href="#cb7-148"></a><span class="dv">3681839170</span> <span class="dv">3796952256</span> <span class="dv">76521984</span></span>
-<span id="cb7-149"><a href="#cb7-149"></a><span class="dv">4250435692</span> <span class="dv">3873474240</span> <span class="dv">5600843</span></span>
-<span id="cb7-150"><a href="#cb7-150"></a><span class="dv">1892692881</span> <span class="dv">1440109719</span> <span class="dv">83439162</span></span>
-<span id="cb7-151"><a href="#cb7-151"></a><span class="dv">4049965000</span> <span class="dv">3019162942</span> <span class="dv">92307690</span></span>
-<span id="cb7-152"><a href="#cb7-152"></a><span class="dv">2782377315</span> <span class="dv">3171867530</span> <span class="dv">19830200</span></span>
-<span id="cb7-153"><a href="#cb7-153"></a></span>
-<span id="cb7-154"><a href="#cb7-154"></a>temperature<span class="sc">-</span>to<span class="sc">-</span>humidity map<span class="sc">:</span></span>
-<span id="cb7-155"><a href="#cb7-155"></a><span class="dv">1281293605</span> <span class="dv">2434144353</span> <span class="dv">57731817</span></span>
-<span id="cb7-156"><a href="#cb7-156"></a><span class="dv">3534843655</span> <span class="dv">3623804479</span> <span class="dv">36539813</span></span>
-<span id="cb7-157"><a href="#cb7-157"></a><span class="dv">1516028925</span> <span class="dv">367078655</span> <span class="dv">499627624</span></span>
-<span id="cb7-158"><a href="#cb7-158"></a><span class="dv">3340374639</span> <span class="dv">3427302148</span> <span class="dv">25514722</span></span>
-<span id="cb7-159"><a href="#cb7-159"></a><span class="dv">1176213912</span> <span class="dv">2491876170</span> <span class="dv">105079693</span></span>
-<span id="cb7-160"><a href="#cb7-160"></a><span class="dv">3872645852</span> <span class="dv">3827818849</span> <span class="dv">188531931</span></span>
-<span id="cb7-161"><a href="#cb7-161"></a><span class="dv">508302359</span> <span class="dv">1375008638</span> <span class="dv">300832898</span></span>
-<span id="cb7-162"><a href="#cb7-162"></a><span class="dv">0</span> <span class="dv">866706279</span> <span class="dv">508302359</span></span>
-<span id="cb7-163"><a href="#cb7-163"></a><span class="dv">4146417618</span> <span class="dv">3475254801</span> <span class="dv">148549678</span></span>
-<span id="cb7-164"><a href="#cb7-164"></a><span class="dv">4083438506</span> <span class="dv">3660344292</span> <span class="dv">62979112</span></span>
-<span id="cb7-165"><a href="#cb7-165"></a><span class="dv">3365889361</span> <span class="dv">3745584127</span> <span class="dv">82234722</span></span>
-<span id="cb7-166"><a href="#cb7-166"></a><span class="dv">4061177783</span> <span class="dv">3723323404</span> <span class="dv">22260723</span></span>
-<span id="cb7-167"><a href="#cb7-167"></a><span class="dv">2015656549</span> <span class="dv">1675841536</span> <span class="dv">348405327</span></span>
-<span id="cb7-168"><a href="#cb7-168"></a><span class="dv">1056134836</span> <span class="dv">246999579</span> <span class="dv">120079076</span></span>
-<span id="cb7-169"><a href="#cb7-169"></a><span class="dv">3448124083</span> <span class="dv">3452816870</span> <span class="dv">22437931</span></span>
-<span id="cb7-170"><a href="#cb7-170"></a><span class="dv">3321587434</span> <span class="dv">3408514943</span> <span class="dv">18787205</span></span>
-<span id="cb7-171"><a href="#cb7-171"></a><span class="dv">3470562014</span> <span class="dv">4016350780</span> <span class="dv">64281641</span></span>
-<span id="cb7-172"><a href="#cb7-172"></a><span class="dv">3571383468</span> <span class="dv">3321587434</span> <span class="dv">86927509</span></span>
-<span id="cb7-173"><a href="#cb7-173"></a><span class="dv">1339025422</span> <span class="dv">2024246863</span> <span class="dv">177003503</span></span>
-<span id="cb7-174"><a href="#cb7-174"></a><span class="dv">809135257</span> <span class="dv">0</span> <span class="dv">246999579</span></span>
-<span id="cb7-175"><a href="#cb7-175"></a><span class="dv">2364061876</span> <span class="dv">2596955863</span> <span class="dv">115651453</span></span>
-<span id="cb7-176"><a href="#cb7-176"></a><span class="dv">3658310977</span> <span class="dv">4080632421</span> <span class="dv">214334875</span></span>
-<span id="cb7-177"><a href="#cb7-177"></a><span class="dv">2479713329</span> <span class="dv">2201250366</span> <span class="dv">232893987</span></span>
-<span id="cb7-178"><a href="#cb7-178"></a></span>
-<span id="cb7-179"><a href="#cb7-179"></a>humidity<span class="sc">-</span>to<span class="sc">-</span>location map<span class="sc">:</span></span>
-<span id="cb7-180"><a href="#cb7-180"></a><span class="dv">2408792839</span> <span class="dv">708984436</span> <span class="dv">12070437</span></span>
-<span id="cb7-181"><a href="#cb7-181"></a><span class="dv">3916327360</span> <span class="dv">4103567762</span> <span class="dv">90492800</span></span>
-<span id="cb7-182"><a href="#cb7-182"></a><span class="dv">2136669394</span> <span class="dv">2902458135</span> <span class="dv">226099404</span></span>
-<span id="cb7-183"><a href="#cb7-183"></a><span class="dv">1414655297</span> <span class="dv">721054873</span> <span class="dv">722014097</span></span>
-<span id="cb7-184"><a href="#cb7-184"></a><span class="dv">2462136308</span> <span class="dv">3514619416</span> <span class="dv">2467233</span></span>
-<span id="cb7-185"><a href="#cb7-185"></a><span class="dv">1254861475</span> <span class="dv">3327498132</span> <span class="dv">98562162</span></span>
-<span id="cb7-186"><a href="#cb7-186"></a><span class="dv">2362768798</span> <span class="dv">569836962</span> <span class="dv">46024041</span></span>
-<span id="cb7-187"><a href="#cb7-187"></a><span class="dv">4185175199</span> <span class="dv">3916327360</span> <span class="dv">8885363</span></span>
-<span id="cb7-188"><a href="#cb7-188"></a><span class="dv">421054090</span> <span class="dv">234463197</span> <span class="dv">201173738</span></span>
-<span id="cb7-189"><a href="#cb7-189"></a><span class="dv">2497827912</span> <span class="dv">1550759989</span> <span class="dv">35404865</span></span>
-<span id="cb7-190"><a href="#cb7-190"></a><span class="dv">849065671</span> <span class="dv">0</span> <span class="dv">224309687</span></span>
-<span id="cb7-191"><a href="#cb7-191"></a><span class="dv">37059832</span> <span class="dv">615861003</span> <span class="dv">93123433</span></span>
-<span id="cb7-192"><a href="#cb7-192"></a><span class="dv">4006820160</span> <span class="dv">3925212723</span> <span class="dv">178355039</span></span>
-<span id="cb7-193"><a href="#cb7-193"></a><span class="dv">2863253575</span> <span class="dv">1705311678</span> <span class="dv">653833074</span></span>
-<span id="cb7-194"><a href="#cb7-194"></a><span class="dv">622227828</span> <span class="dv">1443068970</span> <span class="dv">107691019</span></span>
-<span id="cb7-195"><a href="#cb7-195"></a><span class="dv">2464603541</span> <span class="dv">2869233764</span> <span class="dv">33224371</span></span>
-<span id="cb7-196"><a href="#cb7-196"></a><span class="dv">1353423637</span> <span class="dv">3128557539</span> <span class="dv">61231660</span></span>
-<span id="cb7-197"><a href="#cb7-197"></a><span class="dv">1073375358</span> <span class="dv">3426060294</span> <span class="dv">47286090</span></span>
-<span id="cb7-198"><a href="#cb7-198"></a><span class="dv">2725544642</span> <span class="dv">3189789199</span> <span class="dv">137708933</span></span>
-<span id="cb7-199"><a href="#cb7-199"></a><span class="dv">26906322</span> <span class="dv">224309687</span> <span class="dv">10153510</span></span>
-<span id="cb7-200"><a href="#cb7-200"></a><span class="dv">2420863276</span> <span class="dv">3473346384</span> <span class="dv">41273032</span></span>
-<span id="cb7-201"><a href="#cb7-201"></a><span class="dv">729918847</span> <span class="dv">1586164854</span> <span class="dv">119146824</span></span>
-<span id="cb7-202"><a href="#cb7-202"></a><span class="dv">2533232777</span> <span class="dv">2676921899</span> <span class="dv">192311865</span></span>
-<span id="cb7-203"><a href="#cb7-203"></a><span class="dv">0</span> <span class="dv">2359144752</span> <span class="dv">26906322</span></span>
-<span id="cb7-204"><a href="#cb7-204"></a><span class="dv">1120661448</span> <span class="dv">435636935</span> <span class="dv">134200027</span></span>
-<span id="cb7-205"><a href="#cb7-205"></a><span class="dv">130183265</span> <span class="dv">2386051074</span> <span class="dv">290870825</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="dv">50</span> <span class="dv">98</span> <span class="dv">2</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="dv">52</span> <span class="dv">50</span> <span class="dv">48</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>soil<span class="sc">-</span>to<span class="sc">-</span>fertilizer map<span class="sc">:</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="dv">0</span> <span class="dv">15</span> <span class="dv">37</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="dv">37</span> <span class="dv">52</span> <span class="dv">2</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="dv">39</span> <span class="dv">0</span> <span class="dv">15</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a>fertilizer<span class="sc">-</span>to<span class="sc">-</span>water map<span class="sc">:</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="dv">49</span> <span class="dv">53</span> <span class="dv">8</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="dv">0</span> <span class="dv">11</span> <span class="dv">42</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="dv">42</span> <span class="dv">0</span> <span class="dv">7</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="dv">57</span> <span class="dv">7</span> <span class="dv">4</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18"></a>water<span class="sc">-</span>to<span class="sc">-</span>light map<span class="sc">:</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="dv">88</span> <span class="dv">18</span> <span class="dv">7</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="dv">18</span> <span class="dv">25</span> <span class="dv">70</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>light<span class="sc">-</span>to<span class="sc">-</span>temperature map<span class="sc">:</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="dv">45</span> <span class="dv">77</span> <span class="dv">23</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a><span class="dv">81</span> <span class="dv">45</span> <span class="dv">19</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="dv">68</span> <span class="dv">64</span> <span class="dv">13</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a></span>
+<span id="cb7-27"><a href="#cb7-27"></a>temperature<span class="sc">-</span>to<span class="sc">-</span>humidity map<span class="sc">:</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="dv">0</span> <span class="dv">69</span> <span class="dv">1</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="dv">1</span> <span class="dv">0</span> <span class="dv">69</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a></span>
+<span id="cb7-31"><a href="#cb7-31"></a>humidity<span class="sc">-</span>to<span class="sc">-</span>location map<span class="sc">:</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="dv">60</span> <span class="dv">56</span> <span class="dv">37</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="dv">56</span> <span class="dv">93</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="modal-footer">

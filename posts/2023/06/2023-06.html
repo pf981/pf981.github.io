@@ -450,7 +450,7 @@ w_{lower} &amp;= \frac{-T + \sqrt{T^2 - 4D}}{2 \cdot (-1)} \\
 <span id="cb4-11"><a href="#cb4-11"></a>times, distances <span class="op">=</span> [[<span class="bu">int</span>(x) <span class="cf">for</span> x <span class="kw">in</span> re.findall(<span class="vs">r'\d+'</span>, line)] <span class="cf">for</span> line <span class="kw">in</span> lines]</span>
 <span id="cb4-12"><a href="#cb4-12"></a>answer1 <span class="op">=</span> math.prod(count_ways(time, distance) <span class="cf">for</span> time, distance <span class="kw">in</span> <span class="bu">zip</span>(times, distances))</span>
 <span id="cb4-13"><a href="#cb4-13"></a><span class="bu">print</span>(answer1)</span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 500346</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt; 288</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -605,7 +605,7 @@ Distance:  940200</code></pre>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a>time, distance <span class="op">=</span> [<span class="bu">int</span>(<span class="st">''</span>.join(<span class="bu">str</span>(x) <span class="cf">for</span> x <span class="kw">in</span> dim)) <span class="cf">for</span> dim <span class="kw">in</span> [times, distances]]</span>
 <span id="cb7-2"><a href="#cb7-2"></a>answer2 <span class="op">=</span> count_ways(time, distance)</span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="bu">print</span>(answer2)</span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; 42515755</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; 71503</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -649,8 +649,8 @@ Distance:  940200</code></pre>
 </div>
 <div class="modal-body">
 <div class="cell" data-file="input.txt">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>Time<span class="sc">:</span>        <span class="dv">51</span>     <span class="dv">92</span>     <span class="dv">68</span>     <span class="dv">90</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>Distance<span class="sc">:</span>   <span class="dv">222</span>   <span class="dv">2031</span>   <span class="dv">1126</span>   <span class="dv">1225</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>Time<span class="sc">:</span>      <span class="dv">7</span>  <span class="dv">15</span>   <span class="dv">30</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>Distance<span class="sc">:</span>  <span class="dv">9</span>  <span class="dv">40</span>  <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="modal-footer">
