@@ -1,0 +1,153 @@
+---
+title: "2023 Day 8"
+subtitle: "Haunted Wasteland"
+date: 2024-04-13
+categories: [python, medium, graph, cycles, input-specific]
+draft: false
+knitr:
+  opts_chunk: 
+    comment: "#>"
+    collapse: true
+problem_url: "https://adventofcode.com/2023/day/8"
+description: "Medium graph puzzle involving cycles."
+---
+
+Ho ho ho, fellow adventurers!
+
+[Advent of Code day 8]({{< meta problem_url >}}) invites us to solve cycles
+
+First, we'll read the input.
+```{python}
+with open("input.txt", "r") as f:
+    text = f.read()
+```
+
+## Part 1 <small class="text-body-secondary">Hand Hierarchy</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 1</h4>
+```
+
+You are given a list of 5 card hands and their corresponding <b class='fw-bold' style='color: #2F7E4A;'>bids</b>. <b class='fw-bold' style='color: #1577A0;'>Rank</b> each hand and calculate the winnings as the product of the <b class='fw-bold' style='color: #1577A0;'>rank</b> and <b class='fw-bold' style='color: #2F7E4A;'>bid</b>. Compute the <b class='fw-bold' style='color: #91672C;'>total winnings</b>.
+
+Hands are <b class='fw-bold' style='color: #1577A0;'>ranked</b> by their type. If two hands are of the same type, their ordering is then determined by comparing the strength of the individual cards, starting from the first card to the fifth, as needed.
+
+
+<h6 class="card-subtitle text-muted">Example</h6>
+TODO
+
+```{=html}
+  </div>
+</div>
+```
+
+:::::
+
+<div style="clear: both;"></div> 
+
+```{python}
+import collections
+import itertools
+import re
+
+
+def get_steps(pos):
+    it = itertools.cycle(instructions)
+    steps = 0
+    while pos[-1] != "Z":
+        pos = m[pos][next(it) == "R"]
+        steps += 1
+
+    return steps
+
+
+instructions, m = text.split("\n\n")
+m = {
+    pos: (left, right)
+    for pos, left, right in [
+        re.findall(r"[A-Z0-9]{3}", line) for line in m.splitlines()
+    ]
+}
+answer1 = get_steps("AAA")
+print(answer1)
+```
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Ranking Camel Cards hands involves two levels of ordering:
+    1. **Primary ordering** is based on the type of hand, determined by the pattern of card frequencies
+    2. **Secondary ordering** evaluates the specific values of the cards within a hand
+* A combined key function, `hand_bid_order`, uses both the primary and secondary orderings to sort the hands from weakest to strongest
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+## Part 2 <small class="text-body-secondary">Jokers Wild</small>
+
+::::: {.p-0 style="min-width: fit-content;"}
+
+:::: {.pe-4}
+```{=html}
+<div class="card border-secondary mb-3 mx-auto">
+  <div class="card-body p-3 m-1 pb-0 mb-0">
+    <h4 class="card-title mt-0">Task 2</h4>
+```
+
+<b class='fw-bold' style='color: #BE4844;'>J</b>s are now wild <b class='fw-bold' style='color: #BE4844;'>Jokers</b> and act as whatever card results in the **strongest type**.
+
+Determine the new hand <b class='fw-bold' style='color: #1577A0;'>ranks</b> and compute the <b class='fw-bold' style='color: #91672C;'>total winnings</b>.
+
+<h6 class="card-subtitle text-muted">Example</h6>
+Todo
+
+```{=html}
+  </div>
+</div>
+```
+::::
+:::::
+
+
+<div style="clear: both;"></div> 
+
+Create a new function, `hand_bid_order_wild`, which evaluates the maximum potential strength of a hand by considering all possible substitutions of <b class='fw-bold' style='color: #BE4844;'>J</b> with other cards.
+
+```{python}
+import math
+
+
+steps = [get_steps(start_pos) for start_pos in m if start_pos[-1] == "A"]
+answer2 = math.lcm(*steps)
+print(answer2)
+```
+
+
+```{=html}
+<div class="card border-info mb-3 mx-auto">
+  <div class="card-header text-white bg-info">Key Points</div>
+  <div class="card-body p-1">
+    <p class="card-text">
+```
+
+* Compute the max `primary_order` when replacing <b class='fw-bold' style='color: #BE4844;'>J</b>s with every other card
+* <b class='fw-bold' style='color: #BE4844;'>Jokers</b> only affect the `primary_order` - the `secondary_order` is calculated the same way
+```{=html}
+    </p>
+  </div>
+</div>
+```
+
+
+{{< include ../../_button_footer.qmd >}}
