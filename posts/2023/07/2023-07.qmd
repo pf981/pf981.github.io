@@ -115,8 +115,8 @@ def primary_order(hand):
 Next, we define a function, `secondary_order`, which ranks hands based on the individual card values.
 
 ```{python}
-def secondary_order(hand):
-    return tuple("23456789TJQKA".index(card) for card in hand)
+def secondary_order(hand, card_order="23456789TJQKA"):
+    return tuple(card_order.index(card) for card in hand)
 ```
 
 Finally, define `hand_bid_order` as the combination of the primary and secondary orderings.  Python makes it easy to combine and apply our primary and secondary orderings. We can provide `sort` a `key` function which takes an element and returns a `tuple` of the primary and secondary orderings.
@@ -164,7 +164,7 @@ print(answer1)
     <h4 class="card-title mt-0">Task 2</h4>
 ```
 
-<b class='fw-bold' style='color: #BE4844;'>J</b>s are now wild <b class='fw-bold' style='color: #BE4844;'>Jokers</b> and act as whatever card results in the **strongest type**.
+<b class='fw-bold' style='color: #BE4844;'>J</b>s are now wild <b class='fw-bold' style='color: #BE4844;'>Jokers</b> and act as whatever card results in the **strongest type**. Additionally, <b class='fw-bold' style='color: #BE4844;'>Jokers</b> are now the **weakest** individual card.
 
 Determine the new hand <b class='fw-bold' style='color: #1577A0;'>ranks</b> and compute the <b class='fw-bold' style='color: #91672C;'>total winnings</b>.
 
@@ -193,12 +193,14 @@ $$
 
 Create a new function, `hand_bid_order_wild`, which evaluates the maximum potential strength of a hand by considering all possible substitutions of <b class='fw-bold' style='color: #BE4844;'>J</b> with other cards.
 
+Update the card order for `secondary_order` such that <b class='fw-bold' style='color: #BE4844;'>Jokers</b> are the weakest.
+
 ```{python}
 def hand_bid_order_wild(hand_bid):
     hand, bid = hand_bid
     return (
         max(primary_order(hand.replace("J", c)) for c in "23456789TQKA"),
-        secondary_order(hand),
+        secondary_order(hand, "J23456789TQKA"),
     )
 
 
@@ -216,7 +218,7 @@ print(answer2)
 ```
 
 * Compute the max `primary_order` when replacing <b class='fw-bold' style='color: #BE4844;'>J</b>s with every other card
-* <b class='fw-bold' style='color: #BE4844;'>Jokers</b> only affect the `primary_order` - the `secondary_order` is calculated the same way
+* Update the card order for `secondary_order` such that <b class='fw-bold' style='color: #BE4844;'>Jokers</b> are the weakest
 ```{=html}
     </p>
   </div>
