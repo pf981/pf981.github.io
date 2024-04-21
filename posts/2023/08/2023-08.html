@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Foster">
-<meta name="dcterms.date" content="2024-04-03">
-<meta name="description" content="Easy puzzle evaluating simplified poker hands.">
+<meta name="dcterms.date" content="2024-04-13">
+<meta name="description" content="Medium graph puzzle involving cycles.">
 
-<title>Paul Foster - Advent of Code - 2023 Day 7</title>
+<title>Paul Foster - Advent of Code - 2023 Day 8</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,7 +67,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../posts/2023/06/2023-06.html" rel="prev">
 <script src="../../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -98,8 +97,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -153,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../posts/2023/01/2023-01.html">2023</a></li><li class="breadcrumb-item"><a href="../../../posts/2023/07/2023-07.html">7. Camel Cards</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">2023 Day 8</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -212,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../posts/2023/07/2023-07.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../posts/2023/07/2023-07.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">7. Camel Cards</span></a>
   </div>
 </li>
@@ -238,17 +235,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">2023 Day 7</h1>
-<p class="subtitle lead">Camel Cards</p>
+<h1 class="title">2023 Day 8</h1>
+<p class="subtitle lead">Haunted Wasteland</p>
   <div class="quarto-categories">
     <div class="quarto-category">python</div>
-    <div class="quarto-category">easy</div>
+    <div class="quarto-category">medium</div>
+    <div class="quarto-category">graph</div>
+    <div class="quarto-category">cycles</div>
+    <div class="quarto-category">input-specific</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    Easy puzzle evaluating simplified poker hands.
+    Medium graph puzzle involving cycles.
   </div>
 </div>
 
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 3, 2024</p>
+      <p class="date">April 13, 2024</p>
     </div>
   </div>
   
@@ -275,25 +275,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="hidden">
-<p><span class="math display">\[
-\newcommand{\blue}[1]{\color{##1577A0}\textbf{#1}\color{##55595C}}
-\newcommand{\orange}[1]{\color{##91672C}\textbf{#1}\color{##55595C}}
-\newcommand{\red}[1]{\color{##BE4844}\textbf{#1}\color{##55595C}}
-\newcommand{\green}[1]{\color{##2F7E4A}\textbf{#1}\color{##55595C}}
-\newcommand{\grey}[1]{\color{##969696}{#1}\color{##55595C}}
-\newcommand{\greyred}[1]{\color{##f27d79}{#1}\color{##55595C}}
-\newcommand{\greygreen}[1]{\color{##7ec295}{#1}\color{##55595C}}
-\newcommand{\greyblue}[1]{\color{##76acc2}{#1}\color{##55595C}}
-\newcommand{\plus}{\smash{\lower{0.5pc}\grey{+}}}
-\]</span></p>
-</div>
 <p>Ho ho ho, fellow adventurers!</p>
-<p><a href="https://adventofcode.com/2023/day/7">Advent of Code day 7</a> invites us to play a game of Camel Cards. In this simplified version of poker, we must evaluate and rank hands.</p>
+<p><a href="https://adventofcode.com/2023/day/8">Advent of Code day 8</a> invites us to solve cycles</p>
 <p>First, we’ll read the input.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"input.txt"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb1-2"><a href="#cb1-2"></a>    lines <span class="op">=</span> f.readlines()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a>    text <span class="op">=</span> f.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="part-1-hand-hierarchy" class="level2">
 <h2 class="anchored" data-anchor-id="part-1-hand-hierarchy">Part 1 <small class="text-body-secondary">Hand Hierarchy</small></h2>
@@ -303,76 +290,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h4 class="card-title mt-0 anchored">Task 1</h4>
 <p>You are given a list of 5 card hands and their corresponding <b class="fw-bold" style="color: #2F7E4A;">bids</b>. <b class="fw-bold" style="color: #1577A0;">Rank</b> each hand and calculate the winnings as the product of the <b class="fw-bold" style="color: #1577A0;">rank</b> and <b class="fw-bold" style="color: #2F7E4A;">bid</b>. Compute the <b class="fw-bold" style="color: #91672C;">total winnings</b>.</p>
 <p>Hands are <b class="fw-bold" style="color: #1577A0;">ranked</b> by their type. If two hands are of the same type, their ordering is then determined by comparing the strength of the individual cards, starting from the first card to the fifth, as needed.</p>
-<p>Hand types are ranked as follows:</p>
-<ol type="1">
-<li>High card</li>
-<li>One pair</li>
-<li>Two pair</li>
-<li>Three of a kind</li>
-<li>Full house</li>
-<li>Four of a kind</li>
-<li>Five of a kind</li>
-</ol>
 <h6 class="card-subtitle text-muted anchored">
 Example
 </h6>
-<!-- &{\text{Hand}} &&{\text{Bid}} &&{\text{\grey{Rank}}} &&{\text{\grey{Type}}}\phantom{\Huge{G}}&{\text{\grey{Winnings}}} &\\ -->
-<p><span class="math display">\[
-\begin{aligned}
-&amp;{\text{Hand}} &amp;&amp;{\text{Bid}} &amp;&amp;{\text{\grey{Rank}}} &amp;&amp;{\text{\grey{Type}}}\phantom{\Huge{g}}&amp;{\text{\grey{Winnings}}} &amp;\\
-&amp;\text{32T3K} &amp;&amp;\green{765} &amp;&amp;\greyblue{1} &amp;&amp;\text{\grey{One pair}}          &amp;\greygreen{765} \,\grey{\times}\, \greyblue{1}                                                        &amp;\plus\\
-&amp;\text{T55J5} &amp;&amp;\green{684} &amp;&amp;\greyblue{4} &amp;&amp;\text{\grey{Full house}}        &amp;\greygreen{684} \,\grey{\times}\, \greyblue{4}                                                        &amp;\plus\\
-&amp;\text{KK677} &amp;&amp;\green{28}  &amp;&amp;\greyblue{3} &amp;&amp;\text{\grey{Two pair}} &amp; \greygreen{28} \,\grey{\times}\, \greyblue{3}                                                        &amp;\plus\\
-&amp;\text{KTJJT} &amp;&amp;\green{220} &amp;&amp;\greyblue{2} &amp;&amp;\text{\grey{Two pair}}\grey{^*}          &amp;\greygreen{220} \,\grey{\times}\, \greyblue{2}                                                        &amp;\plus\\
-&amp;\text{QQQJA} &amp;&amp;\green{483} &amp;&amp;\greyblue{5} &amp;&amp;\text{\grey{Three of a kind}}   &amp;\greygreen{483} \,\grey{\times}\, \greyblue{5} \llap{\lower{0.4pc}\underline{\phantom{483 \times 5}}} &amp;\\
-&amp;             &amp;&amp;            &amp;&amp;             &amp;&amp;                                &amp;\orange{6440}                                                                                         &amp;\\
-\end{aligned}
-\]</span></p>
-<p><span class="math inline">\(\grey{\scriptsize{^{*}\text{Second card ranks lower than other two pair's second card}}}\)</span></p>
+<p>TODO</p>
   </div>
 </div>
 </div>
 <div style="clear: both;">
 
 </div>
-<p>We’ll need a mechanism to rank hands. First, we define a function, <code>primary_order</code>, which ranks the hand’s type. This is accomplished by analysing the frequency of each card in the hand, allowing us to classify the hand based on predefined patterns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> collections</span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">def</span> primary_order(hand):</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    counts <span class="op">=</span> [count <span class="cf">for</span> card, count <span class="kw">in</span> collections.Counter(hand).most_common()]</span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a>    possible_counts <span class="op">=</span> [</span>
-<span id="cb2-8"><a href="#cb2-8"></a>        [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># High card</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>        [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># One pair</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>        [<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>],  <span class="co"># Two pair</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>        [<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># Three of a kind</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>        [<span class="dv">3</span>, <span class="dv">2</span>],  <span class="co"># Full house</span></span>
-<span id="cb2-13"><a href="#cb2-13"></a>        [<span class="dv">4</span>, <span class="dv">1</span>],  <span class="co"># Four of a kind</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>        [<span class="dv">5</span>],  <span class="co"># Five of a kind</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a>    ]</span>
-<span id="cb2-16"><a href="#cb2-16"></a></span>
-<span id="cb2-17"><a href="#cb2-17"></a>    <span class="cf">return</span> possible_counts.index(counts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Next, we define a function, <code>secondary_order</code>, which ranks hands based on the individual card values.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">def</span> secondary_order(hand, card_order<span class="op">=</span><span class="st">"23456789TJQKA"</span>):</span>
-<span id="cb3-2"><a href="#cb3-2"></a>    <span class="cf">return</span> <span class="bu">tuple</span>(card_order.index(card) <span class="cf">for</span> card <span class="kw">in</span> hand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Finally, define <code>hand_bid_order</code> as the combination of the primary and secondary orderings. Python makes it easy to combine and apply our primary and secondary orderings. We can provide <code>sort</code> a <code>key</code> function which takes an element and returns a <code>tuple</code> of the primary and secondary orderings.</p>
-<p>Calculate the <b class="fw-bold" style="color: #91672C;">total winnings</b> as the sum of bids multiplied by the <b class="fw-bold" style="color: #1577A0;">rank</b>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> hand_bid_order(hand_bid):</span>
-<span id="cb4-2"><a href="#cb4-2"></a>    hand, bid <span class="op">=</span> hand_bid</span>
-<span id="cb4-3"><a href="#cb4-3"></a>    <span class="cf">return</span> primary_order(hand), secondary_order(hand)</span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>hands_bids <span class="op">=</span> [line.split(<span class="st">" "</span>) <span class="cf">for</span> line <span class="kw">in</span> lines]</span>
-<span id="cb4-7"><a href="#cb4-7"></a>hands_bids.sort(key<span class="op">=</span>hand_bid_order)</span>
-<span id="cb4-8"><a href="#cb4-8"></a>answer1 <span class="op">=</span> <span class="bu">sum</span>(i <span class="op">*</span> <span class="bu">int</span>(bid) <span class="cf">for</span> i, (_, bid) <span class="kw">in</span> <span class="bu">enumerate</span>(hands_bids, <span class="dv">1</span>))</span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="bu">print</span>(answer1)</span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; 6440</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="im">import</span> itertools</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">import</span> re</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">def</span> get_steps(pos):</span>
+<span id="cb2-7"><a href="#cb2-7"></a>    it <span class="op">=</span> itertools.cycle(instructions)</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    steps <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="cf">while</span> pos[<span class="op">-</span><span class="dv">1</span>] <span class="op">!=</span> <span class="st">"Z"</span>:</span>
+<span id="cb2-10"><a href="#cb2-10"></a>        pos <span class="op">=</span> m[pos][<span class="bu">next</span>(it) <span class="op">==</span> <span class="st">"R"</span>]</span>
+<span id="cb2-11"><a href="#cb2-11"></a>        steps <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a>    <span class="cf">return</span> steps</span>
+<span id="cb2-14"><a href="#cb2-14"></a></span>
+<span id="cb2-15"><a href="#cb2-15"></a></span>
+<span id="cb2-16"><a href="#cb2-16"></a>instructions, m <span class="op">=</span> text.split(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span>
+<span id="cb2-17"><a href="#cb2-17"></a>m <span class="op">=</span> {</span>
+<span id="cb2-18"><a href="#cb2-18"></a>    pos: (left, right)</span>
+<span id="cb2-19"><a href="#cb2-19"></a>    <span class="cf">for</span> pos, left, right <span class="kw">in</span> [</span>
+<span id="cb2-20"><a href="#cb2-20"></a>        re.findall(<span class="vs">r"[A-Z0-9]</span><span class="sc">{3}</span><span class="vs">"</span>, line) <span class="cf">for</span> line <span class="kw">in</span> m.splitlines()</span>
+<span id="cb2-21"><a href="#cb2-21"></a>    ]</span>
+<span id="cb2-22"><a href="#cb2-22"></a>}</span>
+<span id="cb2-23"><a href="#cb2-23"></a>answer1 <span class="op">=</span> get_steps(<span class="st">"AAA"</span>)</span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="bu">print</span>(answer1)</span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -397,22 +350,12 @@ Example
 <div class="card border-secondary mb-3 mx-auto">
   <div class="card-body p-3 m-1 pb-0 mb-0">
     <h4 class="card-title mt-0 anchored">Task 2</h4>
-<p><b class="fw-bold" style="color: #BE4844;">J</b>s are now wild <b class="fw-bold" style="color: #BE4844;">Jokers</b> and act as whatever card results in the <strong>strongest type</strong>. Additionally, <b class="fw-bold" style="color: #BE4844;">Jokers</b> are now the <strong>weakest</strong> individual card.</p>
+<p><b class="fw-bold" style="color: #BE4844;">J</b>s are now wild <b class="fw-bold" style="color: #BE4844;">Jokers</b> and act as whatever card results in the <strong>strongest type</strong>.</p>
 <p>Determine the new hand <b class="fw-bold" style="color: #1577A0;">ranks</b> and compute the <b class="fw-bold" style="color: #91672C;">total winnings</b>.</p>
 <h6 class="card-subtitle text-muted anchored">
 Example
 </h6>
-<p><span class="math display">\[
-\begin{aligned}
-&amp;{\text{Hand}}      &amp;&amp;{\text{Bid}} &amp;&amp;{\text{\grey{Rank}}} &amp;&amp;{\text{\grey{Type}}}\phantom{\Huge{g}}&amp;{\text{\grey{Winnings}}} &amp;\\
-&amp;\text{32T3K}       &amp;&amp;\green{765} &amp;&amp;\greyblue{1} &amp;&amp;\text{\grey{One pair}}          &amp;\greygreen{765} \,\grey{\times}\, \greyblue{1}                                                        &amp;\plus\\
-&amp;\text{T55\red{J}5} &amp;&amp;\green{684} &amp;&amp;\greyblue{3} &amp;&amp;\text{\grey{Four of a kind}}        &amp;\greygreen{684} \,\grey{\times}\, \greyblue{3}                                                        &amp;\plus\\
-&amp;\text{KK677}       &amp;&amp;\green{28}  &amp;&amp;\greyblue{2} &amp;&amp;\text{\grey{Two pair}} &amp; \greygreen{28} \,\grey{\times}\, \greyblue{2}                                                        &amp;\plus\\
-&amp;\text{KT\red{JJ}T} &amp;&amp;\green{220} &amp;&amp;\greyblue{5} &amp;&amp;\text{\grey{Four of a kind}}          &amp;\greygreen{220} \,\grey{\times}\, \greyblue{5}                                                        &amp;\plus\\
-&amp;\text{QQQ\red{J}A} &amp;&amp;\green{483} &amp;&amp;\greyblue{4} &amp;&amp;\text{\grey{Four of a kind}}   &amp;\greygreen{483} \,\grey{\times}\, \greyblue{4} \llap{\lower{0.4pc}\underline{\phantom{483 \times 4}}} &amp;\\
-&amp;                   &amp;&amp;            &amp;&amp;             &amp;&amp;                                &amp;\orange{5905}                                                                                         &amp;\\
-\end{aligned}
-\]</span></p>
+<p>Todo</p>
   </div>
 </div>
 </div>
@@ -421,20 +364,14 @@ Example
 
 </div>
 <p>Create a new function, <code>hand_bid_order_wild</code>, which evaluates the maximum potential strength of a hand by considering all possible substitutions of <b class="fw-bold" style="color: #BE4844;">J</b> with other cards.</p>
-<p>Update the card order for <code>secondary_order</code> such that <b class="fw-bold" style="color: #BE4844;">Jokers</b> are the weakest.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> hand_bid_order_wild(hand_bid):</span>
-<span id="cb5-2"><a href="#cb5-2"></a>    hand, bid <span class="op">=</span> hand_bid</span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="cf">return</span> (</span>
-<span id="cb5-4"><a href="#cb5-4"></a>        <span class="bu">max</span>(primary_order(hand.replace(<span class="st">"J"</span>, c)) <span class="cf">for</span> c <span class="kw">in</span> <span class="st">"23456789TQKA"</span>),</span>
-<span id="cb5-5"><a href="#cb5-5"></a>        secondary_order(hand, <span class="st">"J23456789TQKA"</span>),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>    )</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a>hands_bids.sort(key<span class="op">=</span>hand_bid_order_wild)</span>
-<span id="cb5-10"><a href="#cb5-10"></a>answer2 <span class="op">=</span> <span class="bu">sum</span>(i <span class="op">*</span> <span class="bu">int</span>(bid) <span class="cf">for</span> i, (_, bid) <span class="kw">in</span> <span class="bu">enumerate</span>(hands_bids, <span class="dv">1</span>))</span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="bu">print</span>(answer2)</span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 5905</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> math</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>steps <span class="op">=</span> [get_steps(start_pos) <span class="cf">for</span> start_pos <span class="kw">in</span> m <span class="cf">if</span> start_pos[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="st">"A"</span>]</span>
+<span id="cb3-5"><a href="#cb3-5"></a>answer2 <span class="op">=</span> math.lcm(<span class="op">*</span>steps)</span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="bu">print</span>(answer2)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="card border-info mb-3 mx-auto">
   <div class="card-header text-white bg-info">Key Points</div>
@@ -442,7 +379,7 @@ Example
     <p class="card-text">
 </p><ul>
 <li>Compute the max <code>primary_order</code> when replacing <b class="fw-bold" style="color: #BE4844;">J</b>s with every other card</li>
-<li>Update the card order for <code>secondary_order</code> such that <b class="fw-bold" style="color: #BE4844;">Jokers</b> are the weakest</li>
+<li><b class="fw-bold" style="color: #BE4844;">Jokers</b> only affect the <code>primary_order</code> - the <code>secondary_order</code> is calculated the same way</li>
 </ul>
     <p></p>
   </div>
@@ -451,7 +388,7 @@ Example
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
   <!-- Problem Button -->
-  <a type="button" class="btn btn-secondary" href="https://adventofcode.com/2023/day/7" role="button">
+  <a type="button" class="btn btn-secondary" href="https://adventofcode.com/2023/day/8" role="button">
     <i class="bi bi-box-arrow-up-right"></i> Problem
   </a>
 
@@ -473,16 +410,20 @@ Example
 <div class="modal-dialog modal-dialog-scrollable modal-xl">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title anchored" id="inputModalLabel">2023 Day 7 Input</h5>
+  <h5 class="modal-title anchored" id="inputModalLabel">2023 Day 8 Input</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
 <div class="cell" data-file="input.txt">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>32T3K <span class="dv">765</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>T55J5 <span class="dv">684</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>KK677 <span class="dv">28</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>KTJJT <span class="dv">220</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>QQQJA <span class="dv">483</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>RL</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>AAA <span class="ot">=</span> (BBB, CCC)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>BBB <span class="ot">=</span> (DDD, EEE)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>CCC <span class="ot">=</span> (ZZZ, GGG)</span>
+<span id="cb4-6"><a href="#cb4-6"></a>DDD <span class="ot">=</span> (DDD, DDD)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>EEE <span class="ot">=</span> (EEE, EEE)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>GGG <span class="ot">=</span> (GGG, GGG)</span>
+<span id="cb4-9"><a href="#cb4-9"></a>ZZZ <span class="ot">=</span> (ZZZ, ZZZ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="modal-footer">
@@ -497,61 +438,46 @@ Example
 <div class="modal-dialog modal-dialog-scrollable modal-xl">
 <div class="modal-content">
 <div class="modal-header">
-  <h5 class="modal-title anchored" id="solutionModalLabel">2023 Day 7 Full Solution</h5>
+  <h5 class="modal-title anchored" id="solutionModalLabel">2023 Day 8 Full Solution</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
 <div class="cell" data-file="solution.py">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>import collections</span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a>with <span class="fu">open</span>(<span class="st">"input.txt"</span>, <span class="st">"r"</span>) as f<span class="sc">:</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>    lines <span class="ot">=</span> <span class="fu">f.read</span>()<span class="fu">.splitlines</span>()</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8"></a>def <span class="fu">primary_order</span>(hand)<span class="sc">:</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>    counts <span class="ot">=</span> [count <span class="cf">for</span> card, count <span class="cf">in</span> <span class="fu">collections.Counter</span>(hand)<span class="fu">.most_common</span>()]</span>
-<span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a>    possible_counts <span class="ot">=</span> [</span>
-<span id="cb7-12"><a href="#cb7-12"></a>        [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># High card</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a>        [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># One pair</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>        [<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>],  <span class="co"># Two pair</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a>        [<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>],  <span class="co"># Three of a kind</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>        [<span class="dv">3</span>, <span class="dv">2</span>],  <span class="co"># Full house</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a>        [<span class="dv">4</span>, <span class="dv">1</span>],  <span class="co"># Four of a kind</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a>        [<span class="dv">5</span>],  <span class="co"># Five of a kind</span></span>
-<span id="cb7-19"><a href="#cb7-19"></a>    ]</span>
-<span id="cb7-20"><a href="#cb7-20"></a></span>
-<span id="cb7-21"><a href="#cb7-21"></a>    return <span class="fu">possible_counts.index</span>(counts)</span>
-<span id="cb7-22"><a href="#cb7-22"></a></span>
-<span id="cb7-23"><a href="#cb7-23"></a></span>
-<span id="cb7-24"><a href="#cb7-24"></a>def <span class="fu">secondary_order</span>(hand, <span class="at">card_order=</span><span class="st">"23456789TJQKA"</span>)<span class="sc">:</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a>    return <span class="fu">tuple</span>(<span class="fu">card_order.index</span>(card) <span class="cf">for</span> card <span class="cf">in</span> hand)</span>
-<span id="cb7-26"><a href="#cb7-26"></a></span>
-<span id="cb7-27"><a href="#cb7-27"></a></span>
-<span id="cb7-28"><a href="#cb7-28"></a>def <span class="fu">hand_bid_order</span>(hand_bid)<span class="sc">:</span></span>
-<span id="cb7-29"><a href="#cb7-29"></a>    hand, bid <span class="ot">=</span> hand_bid</span>
-<span id="cb7-30"><a href="#cb7-30"></a>    return <span class="fu">primary_order</span>(hand), <span class="fu">secondary_order</span>(hand)</span>
-<span id="cb7-31"><a href="#cb7-31"></a></span>
-<span id="cb7-32"><a href="#cb7-32"></a></span>
-<span id="cb7-33"><a href="#cb7-33"></a>hands_bids <span class="ot">=</span> [<span class="fu">line.split</span>(<span class="st">" "</span>) <span class="cf">for</span> line <span class="cf">in</span> lines]</span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="fu">hands_bids.sort</span>(<span class="at">key=</span>hand_bid_order)</span>
-<span id="cb7-35"><a href="#cb7-35"></a>answer1 <span class="ot">=</span> <span class="fu">sum</span>(i <span class="sc">*</span> <span class="fu">int</span>(bid) <span class="cf">for</span> i, (_, bid) <span class="cf">in</span> <span class="fu">enumerate</span>(hands_bids, <span class="dv">1</span>))</span>
-<span id="cb7-36"><a href="#cb7-36"></a><span class="fu">print</span>(answer1)</span>
-<span id="cb7-37"><a href="#cb7-37"></a></span>
-<span id="cb7-38"><a href="#cb7-38"></a></span>
-<span id="cb7-39"><a href="#cb7-39"></a><span class="co"># Part 2</span></span>
-<span id="cb7-40"><a href="#cb7-40"></a>def <span class="fu">hand_bid_order_wild</span>(hand_bid)<span class="sc">:</span></span>
-<span id="cb7-41"><a href="#cb7-41"></a>    hand, bid <span class="ot">=</span> hand_bid</span>
-<span id="cb7-42"><a href="#cb7-42"></a>    <span class="fu">return</span> (</span>
-<span id="cb7-43"><a href="#cb7-43"></a>        <span class="fu">max</span>(<span class="fu">primary_order</span>(<span class="fu">hand.replace</span>(<span class="st">"J"</span>, c)) <span class="cf">for</span> c <span class="cf">in</span> <span class="st">"23456789TQKA"</span>),</span>
-<span id="cb7-44"><a href="#cb7-44"></a>        <span class="fu">secondary_order</span>(hand, <span class="st">"J23456789TQKA"</span>),</span>
-<span id="cb7-45"><a href="#cb7-45"></a>    )</span>
-<span id="cb7-46"><a href="#cb7-46"></a></span>
-<span id="cb7-47"><a href="#cb7-47"></a></span>
-<span id="cb7-48"><a href="#cb7-48"></a><span class="fu">hands_bids.sort</span>(<span class="at">key=</span>hand_bid_order_wild)</span>
-<span id="cb7-49"><a href="#cb7-49"></a>answer2 <span class="ot">=</span> <span class="fu">sum</span>(i <span class="sc">*</span> <span class="fu">int</span>(bid) <span class="cf">for</span> i, (_, bid) <span class="cf">in</span> <span class="fu">enumerate</span>(hands_bids, <span class="dv">1</span>))</span>
-<span id="cb7-50"><a href="#cb7-50"></a><span class="fu">print</span>(answer2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>import collections</span>
+<span id="cb5-2"><a href="#cb5-2"></a>import itertools</span>
+<span id="cb5-3"><a href="#cb5-3"></a>import math</span>
+<span id="cb5-4"><a href="#cb5-4"></a>import re</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>with <span class="fu">open</span>(<span class="st">"input.txt"</span>, <span class="st">"r"</span>) as f<span class="sc">:</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    text <span class="ot">=</span> <span class="fu">f.read</span>()</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a>def <span class="fu">get_steps</span>(pos)<span class="sc">:</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>    it <span class="ot">=</span> <span class="fu">itertools.cycle</span>(instructions)</span>
+<span id="cb5-13"><a href="#cb5-13"></a>    steps <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>    <span class="cf">while</span> pos[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">!=</span> <span class="st">"Z"</span><span class="sc">:</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a>        pos <span class="ot">=</span> m[pos][<span class="cf">next</span>(it) <span class="sc">==</span> <span class="st">"R"</span>]</span>
+<span id="cb5-16"><a href="#cb5-16"></a>        steps <span class="sc">+</span><span class="er">=</span> <span class="dv">1</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a>    return steps</span>
+<span id="cb5-19"><a href="#cb5-19"></a></span>
+<span id="cb5-20"><a href="#cb5-20"></a></span>
+<span id="cb5-21"><a href="#cb5-21"></a>instructions, m <span class="ot">=</span> <span class="fu">text.split</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22"></a>m <span class="ot">=</span> {</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    pos<span class="sc">:</span> (left, right)</span>
+<span id="cb5-24"><a href="#cb5-24"></a>    <span class="cf">for</span> pos, left, right <span class="cf">in</span> [</span>
+<span id="cb5-25"><a href="#cb5-25"></a>        <span class="fu">re.findall</span>(r<span class="st">"[A-Z0-9]{3}"</span>, line) <span class="cf">for</span> line <span class="cf">in</span> <span class="fu">m.splitlines</span>()</span>
+<span id="cb5-26"><a href="#cb5-26"></a>    ]</span>
+<span id="cb5-27"><a href="#cb5-27"></a>}</span>
+<span id="cb5-28"><a href="#cb5-28"></a>answer1 <span class="ot">=</span> <span class="fu">get_steps</span>(<span class="st">"AAA"</span>)</span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="fu">print</span>(answer1)</span>
+<span id="cb5-30"><a href="#cb5-30"></a></span>
+<span id="cb5-31"><a href="#cb5-31"></a></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co"># Part 2</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a>steps <span class="ot">=</span> [<span class="fu">get_steps</span>(start_pos) <span class="cf">for</span> start_pos <span class="cf">in</span> m <span class="cf">if</span> start_pos[<span class="sc">-</span><span class="dv">1</span>] <span class="sc">==</span> <span class="st">"A"</span>]</span>
+<span id="cb5-34"><a href="#cb5-34"></a>answer2 <span class="ot">=</span> <span class="fu">math.lcm</span>(<span class="sc">*</span>steps)</span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="fu">print</span>(answer2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="modal-footer">
@@ -798,15 +724,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../../posts/2023/06/2023-06.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">6. Wait For It</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
